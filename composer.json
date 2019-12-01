@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^1.0",
+        "laravel/ui": "^1.1",
         "owen-it/laravel-auditing": "^9.3",
         "santigarcor/laratrust": "^5.2",
         "shetabit/visitor": "^2.0",
