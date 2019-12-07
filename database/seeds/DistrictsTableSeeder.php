@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 # Models
 use App\Models\Area\Province;
+use App\Models\Area\District;
 
 class DistrictsTableSeeder extends Seeder
 {
@@ -23,13 +24,10 @@ class DistrictsTableSeeder extends Seeder
             try {
                 $province = $provinces->where('code', $row[1])->first();
                 
-                DB::table('districts')->insert([
+                District::create([
                     'province_id' => empty($province) ? null : $province->id,
                     'code' => "$row[2]",
-                    'name' => $row[3],
-
-                    'created_at' => now(),
-                    'updated_at' => now()
+                    'name' => $row[3]
                 ]);
             } catch (\Exception $e) {
                 Log::warning('Seeder district - '.$e->getMessage());

@@ -2,9 +2,11 @@
 
 use Illuminate\Database\Seeder;
 use League\Csv\Reader;
+use Illuminate\Support\Facades\Log;
 
 # Models
 use App\Models\Area\Subdistrict;
+use App\Models\Area\Village;
 
 class VillagesTableSeeder extends Seeder
 {
@@ -22,13 +24,10 @@ class VillagesTableSeeder extends Seeder
             try {
                 $subdistrict = $subdistricts->where('code', $row[1])->first();
 
-                DB::table('villages')->insert([
+                Village::create([
                     'subdistrict_id' => empty($subdistrict) ? null : $subdistrict->id,
                     'code' => "$row[2]",
-                    'name' => $row[3],
-
-                    'created_at' => now(),
-                    'updated_at' => now()
+                    'name' => $row[3]
                 ]);
             } catch (\Exception $e) {
                 Log::warning('Seeder village - '.$e->getMessage());

@@ -71,8 +71,8 @@
                     <span class="menu-title" data-i18n="">Wilayah</span>
                 </a>
                 <ul class="menu-content">
-                    <li>
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i>
+                    <li class="{{ Request::is('area/province/*') ? 'active' : '' }}">
+                        <a href="{{ route('area.province.list') }}"><i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item" data-i18n="">Provinsi</span>
                         </a>
                     </li>

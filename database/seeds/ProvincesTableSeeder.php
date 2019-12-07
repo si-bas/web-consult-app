@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use League\Csv\Reader;
 
+# Models
+use App\Models\Area\Province;
+
 class ProvincesTableSeeder extends Seeder
 {
     /**
@@ -14,12 +17,9 @@ class ProvincesTableSeeder extends Seeder
     {
         $csv = Reader::createFromPath(storage_path('files/database-csv/provinces.csv'), 'r');
         foreach ($csv as $row) {
-            DB::table('provinces')->insert([
+            Province::create([
                 'code' => $row[1],
-                'name' => $row[2],
-
-                'created_at' => now(),
-                'updated_at' => now()
+                'name' => $row[2]
             ]);
         }
     }

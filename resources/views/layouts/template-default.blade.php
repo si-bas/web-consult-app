@@ -14,6 +14,7 @@
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/app-assets/vendors/css/ui/prism.min.css') }}">
+    @stack('links')
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -73,11 +74,12 @@
     <script src="{{ asset('template-default/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js') }}"></script>
     <script src="{{ asset('template-default/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js') }}"></script>
     <script src="{{ asset('template-default/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js') }}"></script>
-    <script src="{{ asset('template-default/app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
+
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{ asset('template-default/app-assets/vendors/js/ui/prism.min.js') }}"></script>
+    @stack('scripts')
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
