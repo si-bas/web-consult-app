@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
-use Illuminate\Support\Facades\Log;
-
-# Models
-use App\Models\Area\District;
-use App\Models\Area\Subdistrict;
 
 class SubdistrictsTableSeeder extends Seeder
 {
@@ -18,20 +14,21 @@ class SubdistrictsTableSeeder extends Seeder
     public function run()
     {
         $csv = Reader::createFromPath(storage_path('files/database-csv/subdistricts.csv'), 'r');
-        $districts = District::all();
+        $csv->setHeaderOffset(0);
 
-        foreach ($csv as $row) {
-            try {
-                $district = $districts->where('code', $row[1])->first();
-                
-                Subdistrict::create([
-                    'district_id' => empty($district) ? null : $district->id,
-                    'code' => $row[2],
-                    'name' => $row[3]
-                ]);
-            } catch (\Exception $e) {
-                Log::warning('Seeder subdistrict - '.$e->getMessage());
-            }
+        $header = $csv->getHeader(); 
+        $records = $csv->getRecords();
+
+        foreach ($records as $row) {
+            $data = [
+                'id' => $row['id'],
+                'code' => $row['code'],
+                'name' => $row['name']
+            ];
+
+            $data = empty($row['district_id']) ? $data : array_merge($data, ['district_id' => $row['district_id']]);
+
+            DB::table('subdistricts')->insert($data);
         }
     }
 }

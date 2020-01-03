@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
-use Illuminate\Support\Facades\Log;
-
-# Models
-use App\Models\Area\Province;
-use App\Models\Area\District;
 
 class DistrictsTableSeeder extends Seeder
 {
@@ -18,20 +14,18 @@ class DistrictsTableSeeder extends Seeder
     public function run()
     {
         $csv = Reader::createFromPath(storage_path('files/database-csv/districts.csv'), 'r');
-        $provinces = Province::all();
+        $csv->setHeaderOffset(0);
 
-        foreach ($csv as $row) {
-            try {
-                $province = $provinces->where('code', $row[1])->first();
-                
-                District::create([
-                    'province_id' => empty($province) ? null : $province->id,
-                    'code' => "$row[2]",
-                    'name' => $row[3]
-                ]);
-            } catch (\Exception $e) {
-                Log::warning('Seeder district - '.$e->getMessage());
-            }
+        $header = $csv->getHeader(); 
+        $records = $csv->getRecords();
+
+        foreach ($records as $row) {
+            DB::table('districts')->insert([
+                'id' => $row['id'],
+                'code' => $row['code'],
+                'name' => $row['name'],
+                'province_id' => $row['province_id']
+            ]);
         }
     }
 }

@@ -77,26 +77,41 @@
                                         </div>
                                         <div class="card-content">
                                             <div class="card-body">
-                                                <form method="POST">
+                                                <form method="POST" accept="{{ route('register.submit') }}">
                                                     @csrf
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6 mb-50">
-                                                            <label for="inputfirstname4">Nama Depan</label>
-                                                            <input type="text" class="form-control" id="inputfirstname4" placeholder="Nama Depan">
+                                                            <label class="text-bold-600">Nama Depan </label>
+                                                            <input type="text" class="form-control" placeholder="Nama Depan" name="first_name" value="{{ old('first_name') }}" required>
                                                         </div>
                                                         <div class="form-group col-md-6 mb-50">
-                                                            <label for="inputlastname4">Nama Belakang</label>
-                                                            <input type="text" class="form-control" id="inputlastname4" placeholder="Nama Belakang">
+                                                            <label class="text-bold-600">Nama Belakang</label>
+                                                            <input type="text" class="form-control" placeholder="Nama Belakang" name="last_name" value="{{ old('last_name') }}" required>
                                                         </div>
                                                     </div>
-                                                
+
                                                     <div class="form-group mb-50">
-                                                        <label class="text-bold-600" for="exampleInputEmail1">Alamat Email</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Alamat Email">
+                                                        <label class="text-bold-600">NIK</label>
+                                                        <input type="text" class="form-control" placeholder="Nomor Induk Mahasiswa" name="student_id_number" value="{{ old('student_id_number') }}" required>
+                                                    </div>
+
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600">Fakultas</label>
+                                                        <input type="text" class="form-control" placeholder="Pilih Fakultas" name="faculty_id" required>
+                                                    </div>
+
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600">Program Studi</label>
+                                                        <input type="text" class="form-control" placeholder="Pilih Program Studi" name="major_id" required>
+                                                    </div>
+
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600">Alamat Email</label>
+                                                        <input type="email" class="form-control" placeholder="Alamat Email" name="email" value="{{ old('email') }}" required>
                                                     </div>
                                                     <div class="form-group mb-2">
-                                                        <label class="text-bold-600" for="exampleInputPassword1">Kata Sandi</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Kata Sandi">
+                                                        <label class="text-bold-600">Kata Sandi</label>
+                                                        <input type="password" class="form-control" placeholder="Kata Sandi" name="password" required>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary glow position-relative w-100">Daftar<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                                 </form>
