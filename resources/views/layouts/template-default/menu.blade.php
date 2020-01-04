@@ -76,8 +76,8 @@
                             <span class="menu-item" data-i18n="">Provinsi</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="{{ Request::is('area/district/*') ? 'active' : '' }}">
+                        <a href="{{ route('area.district.list') }}">
                             <i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item" data-i18n="">Kabupaten/Kota</span>
                         </a>

@@ -11,3 +11,10 @@ Route::prefix('province')->group(function () {
     Route::put('/update', 'ProvinceController@update')->name('area.province.update.submit');
     Route::delete('/delete', 'ProvinceController@delete')->name('area.province.delete.submit');
 });
+
+Route::prefix('district')->group(function () {
+    Route::get('/list', 'DistrictController@list')->name('area.district.list');
+    Route::get('/data', 'DistrictController@data')->name('area.district.data');
+    
+    Route::get('/get/provinces', 'DistrictController@getProvinces')->name('area.district.get.provinces');
+});
