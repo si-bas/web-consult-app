@@ -31,6 +31,41 @@ class ProvinceController extends Controller
             },
         ]);
 
-        return DataTables::of($provinces)->make(true);
+        return DataTables::of($provinces)
+        ->addColumn('action', function($province) {
+            return '<a href="#"><i class="badge-circle badge-circle-light-secondary bx bx-pencil font-medium-1"></i></a>';
+        })
+        ->rawColumns([
+            'action'
+        ])
+        ->make(true);
+    }
+
+    public function create(Request $request)
+    {
+        if (Province::where('code', $request->code)->count()) {
+            $error = 'Error! Kode provinsi telah digunakan';
+        } else {
+            try {
+                Province::create($request->all());
+            } catch (\Exception $e) {
+                $error = 'Error! Terjadi kesalahan saat menyimpan data provinsi';
+            }
+        }
+        
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil menyimpan data provinsi!' : $error
+        ];
+    }
+
+    public function getData(Request $request)
+    {
+        # code...
+    }
+
+    public function update(Request $request)
+    {
+        # code...
     }
 }

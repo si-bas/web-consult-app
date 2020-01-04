@@ -13,7 +13,7 @@
     <script src="{{ asset('template-default/app-assets/vendors/js/tables/datatable/vfs_fonts.js') }}"></script>
     <script>
         var defaultLang = {
-            processing: '<img src="https://loading.io/spinners/balls/index.circle-slack-loading-icon.gif"> Memuat data',
+            processing: '<img src="https://production.inovasi.or.id/images/loading.gif">',
             paginate: {
                 next: 'Selanjutnya',
                 previous: 'Sebelumnya'

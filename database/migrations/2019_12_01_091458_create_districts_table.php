@@ -16,7 +16,7 @@ class CreateDistrictsTable extends Migration
         Schema::create('districts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('province_id')->nullable();
-            $table->string('code', 20)->unique();
+            $table->string('code', 20);
             $table->string('name')->nullable();
 
             $table->softDeletes();

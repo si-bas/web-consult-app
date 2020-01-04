@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-# Requests
-use App\Http\Requests\StoreStudentRequest;
-
 # Models
 use App\User;
 use App\Models\Profile\Student;
@@ -77,8 +74,17 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function store(StoreStudentRequest $request)
+    public function store(Request $request)
     {
+        $student = new Student($request->all());
+        $student->save();
+
+        $student->user()->create([
+            'email' => $request->email,
+            'password' => $request->password,
+            'password_hint' => $request->password
+        ]);
+        
         return $request->all();
     }
 }

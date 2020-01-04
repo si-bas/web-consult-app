@@ -18,21 +18,21 @@ class UsersTableSeeder extends Seeder
         $admin = User::create([
             'name' => 'Administrator', 
             'email' => 'admin@app.com', 
-            'password' => Hash::make('default'),
+            'password' => 'default',
         ]);
         $admin->attachRole('admin');
 
         $lecturer = User::create([
             'name' => 'Contoh Akun Dosen', 
             'email' => 'dosen@app.com', 
-            'password' => Hash::make('default'),
+            'password' => 'default',
         ]);
         $lecturer->attachRole('lecturer');
 
         $student = User::create([
             'name' => 'Contoh Akun Mahasiswa', 
             'email' => 'mahasiswa@app.com', 
-            'password' => Hash::make('default'),
+            'password' => 'default',
         ]);
         $student->attachRole('student');
     }
