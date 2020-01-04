@@ -33,7 +33,15 @@ class ProvinceController extends Controller
 
         return DataTables::of($provinces)
         ->addColumn('action', function($province) {
-            return '<a href="#"><i class="badge-circle badge-circle-light-secondary bx bx-pencil font-medium-1"></i></a>';
+            return 
+            '<div class="dropdown">
+                <span class="bx bxs-cog font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                </span>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="javascript:;" onclick="showFormUpdate('.$province->id.')"><i class="bx bx-edit-alt mr-1"></i> ubah</a>
+                    <a class="dropdown-item" href="javascript:;" onclick="deleteRow('.$province->id.', \''.$province->name.'\')"><i class="bx bx-trash mr-1"></i> hapus</a>
+                </div>
+            </div>';
         })
         ->rawColumns([
             'action'
@@ -61,11 +69,40 @@ class ProvinceController extends Controller
 
     public function getData(Request $request)
     {
-        # code...
+        return Province::find($request->id);
     }
 
     public function update(Request $request)
     {
-        # code...
+        if (Province::where('code', $request->code)->where('id', '!=', $request->id)->count()) {
+            $error = 'Error! Kode telah digunakan';
+        } else {
+            try {
+                $province = Province::find($request->id);
+                $province->fill($request->all());
+                $province->save();
+            } catch (\Exception $e) {
+                $error = 'Error! Terjadi kesalahan saat mengubah data provinsi';
+            }
+        }
+        
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil mengubah data provinsi!' : $error
+        ];
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            Province::where('id', $request->id)->delete();
+        } catch (\Exception $e) {
+            $error = 'Error! Terdapat kesalahan saat menghapus provinsi';
+        }
+
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil menghapus data provinsi!' : $error
+        ];
     }
 }

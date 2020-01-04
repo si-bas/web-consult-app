@@ -27,6 +27,7 @@
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    @stack('page-links')
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -79,7 +80,7 @@
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{ asset('template-default/app-assets/vendors/js/ui/prism.min.js') }}"></script>
-    @stack('scripts')
+    @stack('src-scripts')
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -89,6 +90,8 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    @stack('scripts')
+    <script src="{{ asset('js/helper.js') }}"></script>
     <!-- END: Page JS-->
 
 </body>

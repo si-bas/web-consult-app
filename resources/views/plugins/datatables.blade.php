@@ -2,7 +2,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
 @endpush
 
-@push('scripts')
+@push('src-scripts')
     <script src="{{ asset('template-default/app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('template-default/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('template-default/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js') }}"></script>
