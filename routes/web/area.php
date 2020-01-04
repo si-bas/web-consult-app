@@ -15,6 +15,11 @@ Route::prefix('province')->group(function () {
 Route::prefix('district')->group(function () {
     Route::get('/list', 'DistrictController@list')->name('area.district.list');
     Route::get('/data', 'DistrictController@data')->name('area.district.data');
+    Route::get('/get/data', 'DistrictController@getData')->name('area.district.get.data');
     
     Route::get('/get/provinces', 'DistrictController@getProvinces')->name('area.district.get.provinces');
+    
+    Route::post('/create', 'DistrictController@create')->name('area.district.create.submit');
+    Route::put('/update', 'DistrictController@update')->name('area.district.update.submit');
+    Route::delete('/delete', 'DistrictController@delete')->name('area.district.delete.submit');
 });

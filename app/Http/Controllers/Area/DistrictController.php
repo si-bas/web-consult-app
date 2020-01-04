@@ -75,6 +75,40 @@ class DistrictController extends Controller
 
     public function getData(Request $request)
     {
-        # code...
+        return District::find($request->id)->load('province');
+    }
+
+    public function update(Request $request)
+    {
+        if (District::where('code', $request->code)->where('id', '!=', $request->id)->count()) {
+            $error = 'Error! Kode telah digunakan';
+        } else {
+            try {
+                $district = District::find($request->id);
+                $district->fill($request->all());
+                $district->save();
+            } catch (\Exception $e) {
+                $error = 'Error! Terjadi kesalahan saat mengubah data kabupaten';
+            }
+        }
+        
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil mengubah data kabupaten' : $error
+        ];
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            District::where('id', $request->id)->delete();
+        } catch (\Exception $e) {
+            $error = 'Error! Terdapat kesalahan saat menghapus provinsi';
+        }
+
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil menghapus data provinsi!' : $error
+        ];
     }
 }

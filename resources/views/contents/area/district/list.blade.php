@@ -68,7 +68,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('area.province.create.submit') }}" method="POST" class="row" id="form-create">
+                <form action="{{ route('area.district.create.submit') }}" method="POST" class="row" id="form-create">
                     @csrf
                     <div class="col-12">
                         <fieldset class="form-group">
@@ -95,6 +95,54 @@
                     <span class="d-none d-sm-block">Batalkan</span>
                 </button>
                 <button type="button" class="btn btn-primary ml-1" onclick="submitCreate()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Simpan</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Provinsi Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('area.district.update.submit') }}" method="POST" class="row" id="form-update">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id">
+                    <div class="col-12">
+                        <fieldset class="form-group">
+                            <label for="basicInput">Nama Kabupaten</label>
+                            <input type="text" class="form-control" placeholder="Tuliskan nama" name="name" required>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="basicInput">Kode Kabupaten</label>
+                            <input type="text" class="form-control" placeholder="Tuliskan kode" name="code" required>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label>Pilih Provinsi</label>
+                            <select class="select2 form-control" name="province_id" required style="width: 100%">
+                                <option></option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <button type="submit" style="display: none"></button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Batalkan</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1" onclick="submitUpdate()">
                     <i class="bx bx-check d-block d-sm-none"></i>
                     <span class="d-none d-sm-block">Simpan</span>
                 </button>
@@ -177,10 +225,36 @@
         const modal_create = $('#modal-create');
         const form_create = $('#form-create');
         const select_province_create = form_create.find('select[name=province_id]');
+        
+        const modal_update = $('#modal-update');
+        const form_update = $('#form-update');
+        const select_province_update = form_update.find('select[name=province_id]');
 
         $(function () {
             select_province_create.select2({
                 dropdownParent: modal_create,
+                placeholder: 'Pilih provinsi',
+                minimumInputLength: 0,
+                ajax: {
+                    url: "{{ route('area.district.get.provinces') }}",
+                    dataType: 'json',
+                    type: "GET",
+                    quietMillis: 50,
+                    data: function(params) {
+                        return {
+                            search: params.term
+                        }
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    },
+                }
+            });
+
+            select_province_update.select2({
+                dropdownParent: modal_update,
                 placeholder: 'Pilih provinsi',
                 minimumInputLength: 0,
                 ajax: {
@@ -220,15 +294,91 @@
                         toastr.success(result.message, 'Berhasil');
 
                         form_create.trigger('reset');
+                        select_province_create.val('').trigger('change');
+
                         modal_create.modal('hide');
 
-                        province_table.draw();
+                        district_table.draw();
                     }
+                });
+            });
 
-                }).fail((xhr, textStatus, error) => {
+            form_update.submit(e => {
+                e.preventDefault();
+
+                let form_data = form_update.serializeArray().reduce((obj, item) => {
+                    obj[item.name] = item.value;
+                    return obj;
+                }, {});
+
+                $.post(form_update.attr('action'), form_data).done(result => {
+                    let modal_body = modal_update.find('.modal-body');
                     
+                    removeAlert(modal_body);
+
+                    if (result.status == 'error') {
+                        showAlert('danger', 'bx-error', result.message, modal_body);
+                    } else {
+                        toastr.success(result.message, 'Berhasil');
+
+                        form_update.trigger('reset');
+                        modal_update.modal('hide');
+
+                        district_table.draw();
+                    }
                 });
             });
         });
+
+        const submitCreate = () => {
+            form_create.find(':submit').click();
+        }
+
+        const showFormUpdate = id => {
+            form_update.trigger('reset');
+
+            $.get("{{ route('area.district.get.data') }}", {
+                id
+            }).done(result => {
+                $.map(result, (value, index) => {
+                    bindInputValue(form_update.find(`input[name=${index}]`), value);
+                });
+
+                if (typeof result.province != 'undefined') {
+                    bindSelect2Value(select_province_update, result.province.id, result.province.name);
+                }
+
+                modal_update.modal('show');
+            });
+        }
+
+        const submitUpdate = () => {
+            form_update.find(':submit').click();
+        }
+
+        const submitDelete = id => {
+            $.post('{{ route('area.district.delete.submit') }}', {
+                _token: '{{ csrf_token() }}',
+                _method: 'DELETE',
+                id
+            }).done(result => {
+                if (result.status == 'error') {
+                    toastr.error(result.message, 'Perhatian');
+                } else {
+                    toastr.success(result.message, 'Berhasil');
+                    
+                    district_table.draw();
+                }
+            });;
+        }
+
+        const deleteRow = (id, name) => {
+            toastr.warning(`Yakin menghapus ${name}?
+            <br/>
+            <br/>
+            <button type="button" class="btn btn-secondary clear" onclick="submitDelete(${id})">Ya, hapus!</button><button type="button" class="btn btn-light clear ml-1">Tidak</button>`, 'Perhatian', {
+                positionClass: 'toast-top-center',
+            });
+        }
     </script>
 @endpush

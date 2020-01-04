@@ -25,3 +25,8 @@ const removeAlert = (tag) => {
 const bindInputValue = (tag, value) => {
     tag.val(value);
 }
+
+const bindSelect2Value = (tag, value, label) => {
+    tag.append(`<option value="${value}">${label}</option>`);
+    tag.val(value).trigger('change');
+}
