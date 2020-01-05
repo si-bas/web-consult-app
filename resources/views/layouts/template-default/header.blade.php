@@ -4,7 +4,11 @@
         <div class="navbar-container content">
             <div class="navbar-collapse" id="navbar-mobile">
                 <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
-                    
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Jam">
+                            <div id="clock"></div>
+                        </a>
+                    </li>
                 </div>
                 <ul class="nav navbar-nav float-right">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>

@@ -218,9 +218,9 @@
         });
 
         const modal_create = $('#modal-create');
-        const modal_update = $('#modal-update');
-
         const form_create = $('#form-create');
+        
+        const modal_update = $('#modal-update');
         const form_update = $('#form-update');
 
         $(function () {
