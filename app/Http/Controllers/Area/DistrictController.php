@@ -108,7 +108,7 @@ class DistrictController extends Controller
 
         return [
             'status' => empty($error) ? 'success' : 'error',
-            'message' => empty($error) ? 'Berhasil menghapus data provinsi!' : $error
+            'message' => empty($error) ? 'Berhasil menghapus data kabupaten!' : $error
         ];
     }
 }

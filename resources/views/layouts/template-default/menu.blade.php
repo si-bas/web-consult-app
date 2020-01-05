@@ -97,8 +97,8 @@
                 </ul>
             </li>
 
-            <li class=" nav-item">
-                <a href="#">
+            <li class="{{ Request::is('university/faculty/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('university.faculty.list') }}">
                     <i class="menu-livicon" data-icon="building"></i>
                     <span class="menu-title" data-i18n="">Fakultas</span>
                 </a>

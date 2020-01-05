@@ -108,7 +108,7 @@ class SubdistrictController extends Controller
 
         return [
             'status' => empty($error) ? 'success' : 'error',
-            'message' => empty($error) ? 'Berhasil menghapus data provinsi!' : $error
+            'message' => empty($error) ? 'Berhasil menghapus data kecamatan!' : $error
         ];
     }
 }
