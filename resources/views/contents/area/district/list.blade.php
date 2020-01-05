@@ -107,7 +107,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Provinsi Baru</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Perubahan Kabupaten</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="bx bx-x"></i>
                 </button>
@@ -298,7 +298,7 @@
 
                         modal_create.modal('hide');
 
-                        district_table.draw();
+                        district_table.draw(false);
                     }
                 });
             });
@@ -324,7 +324,7 @@
                         form_update.trigger('reset');
                         modal_update.modal('hide');
 
-                        district_table.draw();
+                        district_table.draw(false);
                     }
                 });
             });
@@ -367,7 +367,7 @@
                 } else {
                     toastr.success(result.message, 'Berhasil');
                     
-                    district_table.draw();
+                    district_table.draw(false);
                 }
             });;
         }
@@ -377,7 +377,7 @@
             <br/>
             <br/>
             <button type="button" class="btn btn-secondary clear" onclick="submitDelete(${id})">Ya, hapus!</button><button type="button" class="btn btn-light clear ml-1">Tidak</button>`, 'Perhatian', {
-                positionClass: 'toast-top-center',
+                positionClass: 'toast-top-right',
             });
         }
     </script>

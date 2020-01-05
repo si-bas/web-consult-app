@@ -16,6 +16,6 @@ class Village extends Model
 
     public function subdistrict()
     {
-        return $this->belongsTo('App\Modles\Area\Subdistrict', 'subdistrict_id', 'id');
+        return $this->belongsTo('App\Models\Area\Subdistrict', 'subdistrict_id', 'id');
     }
 }

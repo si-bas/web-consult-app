@@ -82,14 +82,14 @@
                             <span class="menu-item" data-i18n="">Kabupaten/Kota</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="{{ Request::is('area/subdistrict/*') ? 'active' : '' }}">
+                        <a href="{{ route('area.subdistrict.list') }}">
                             <i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item" data-i18n="">Kecamatan</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="{{ Request::is('area/village/*') ? 'active' : '' }}">
+                        <a href="{{ route('area.village.list') }}">
                             <i class="bx bx-right-arrow-alt"></i>
                             <span class="menu-item" data-i18n="">Kelurahan</span>
                         </a>

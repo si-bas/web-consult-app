@@ -23,3 +23,27 @@ Route::prefix('district')->group(function () {
     Route::put('/update', 'DistrictController@update')->name('area.district.update.submit');
     Route::delete('/delete', 'DistrictController@delete')->name('area.district.delete.submit');
 });
+
+Route::prefix('subdistrict')->group(function () {
+    Route::get('/list', 'SubdistrictController@list')->name('area.subdistrict.list');
+    Route::get('/data', 'SubdistrictController@data')->name('area.subdistrict.data');
+    Route::get('/get/data', 'SubdistrictController@getData')->name('area.subdistrict.get.data');
+    
+    Route::get('/get/districts', 'SubdistrictController@getDistricts')->name('area.subdistrict.get.districts');
+    
+    Route::post('/create', 'SubdistrictController@create')->name('area.subdistrict.create.submit');
+    Route::put('/update', 'SubdistrictController@update')->name('area.subdistrict.update.submit');
+    Route::delete('/delete', 'SubdistrictController@delete')->name('area.subdistrict.delete.submit');
+});
+
+Route::prefix('village')->group(function () {
+    Route::get('/list', 'VillageController@list')->name('area.village.list');
+    Route::get('/data', 'VillageController@data')->name('area.village.data');
+    Route::get('/get/data', 'VillageController@getData')->name('area.village.get.data');
+    
+    Route::get('/get/subdistricts', 'VillageController@getSubdistricts')->name('area.village.get.subdistricts');
+    
+    Route::post('/create', 'VillageController@create')->name('area.village.create.submit');
+    Route::put('/update', 'VillageController@update')->name('area.village.update.submit');
+    Route::delete('/delete', 'VillageController@delete')->name('area.village.delete.submit');
+});

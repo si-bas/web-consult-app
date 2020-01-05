@@ -1,6 +1,7 @@
 @extends('layouts.template-default')
 
 @include('plugins.datatables')
+@include('plugins.select2')
 @include('plugins.toastr')
 
 @section('content')
@@ -8,14 +9,14 @@
     <div class="content-header-left col-12 mb-2 mt-1">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h5 class="content-header-title float-left pr-1 mb-0">Provinsi</h5>
+                <h5 class="content-header-title float-left pr-1 mb-0">Kelurahan</h5>
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#">Wilayah</a>
+                        <li class="breadcrumb-item"><a href="javascript:;">Wilayah</a>
                         </li>
-                        <li class="breadcrumb-item active">Provinsi
+                        <li class="breadcrumb-item active">Kelurahan
                         </li>
                     </ol>
                 </div>
@@ -25,24 +26,23 @@
 </div>
 <div class="content-body">
     <div class="mb-1">
-        <button type="button" class="btn btn-primary glow" data-toggle="modal" data-target="#modal-create"><i class="bx bx-plus"></i> Provinsi Baru</button>
+        <button type="button" class="btn btn-primary glow" data-toggle="modal" data-target="#modal-create"><i class="bx bx-plus"></i> Kelurahan Baru</button>
     </div>
     <section class="card">
         <div class="card-header">
-            <h4 class="card-title">Daftar Provinsi</h4>
+            <h4 class="card-title">Daftar Kelurahan</h4>
         </div>
         <div class="card-content">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table mb-0 table-hover" id="province-table">
+                    <table class="table mb-0 table-hover" id="village-table">
                         <thead class="thead-light">
                             <tr>
                                 <th>#</th>
                                 <th>NAMA</th>
                                 <th>KODE</th>
-                                <th>JML KABUPATEN</th>
-                                <th>JML KECAMATAN</th>
-                                <th>JML KELURAHAN</th>
+                                <th>NAMA KECAMATAN</th>
+                                <th>NAMA KABUPATEN</th>
                                 <th>AKSI</th>
                                 <th></th>
                             </tr>
@@ -62,25 +62,30 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Provinsi Baru</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Kelurahan Baru</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="bx bx-x"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('area.province.create.submit') }}" method="POST" class="row" id="form-create">
+                <form action="{{ route('area.village.create.submit') }}" method="POST" class="row" id="form-create">
                     @csrf
                     <div class="col-12">
                         <fieldset class="form-group">
-                            <label for="basicInput">Nama Provinsi</label>
+                            <label for="basicInput">Nama Kelurahan</label>
                             <input type="text" class="form-control" placeholder="Tuliskan nama" name="name" required>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label for="basicInput">Kode Provinsi</label>
+                            <label for="basicInput">Kode Kelurahan</label>
                             <input type="text" class="form-control" placeholder="Tuliskan kode" name="code" required>
                         </fieldset>
+                        <fieldset class="form-group">
+                            <label>Pilih Kecamatan</label>
+                            <select class="select2 form-control" name="subdistrict_id" required style="width: 100%">
+                                <option></option>
+                            </select>
+                        </fieldset>
                     </div>
-
                     <button type="submit" style="display: none"></button>
                 </form>
             </div>
@@ -102,27 +107,32 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Perubahan Provinsi</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Formulir Perubahan Kecamatan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="bx bx-x"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('area.province.update.submit') }}" method="POST" class="row" id="form-update">
+                <form action="{{ route('area.village.update.submit') }}" method="POST" class="row" id="form-update">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id">
                     <div class="col-12">
                         <fieldset class="form-group">
-                            <label for="basicInput">Nama Provinsi</label>
+                            <label for="basicInput">Nama Kelurahan</label>
                             <input type="text" class="form-control" placeholder="Tuliskan nama" name="name" required>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label for="basicInput">Kode Provinsi</label>
+                            <label for="basicInput">Kode Kelurahan</label>
                             <input type="text" class="form-control" placeholder="Tuliskan kode" name="code" required>
                         </fieldset>
+                        <fieldset class="form-group">
+                            <label>Pilih Kecamatan</label>
+                            <select class="select2 form-control" name="subdistrict_id" required style="width: 100%">
+                                <option></option>
+                            </select>
+                        </fieldset>
                     </div>
-
                     <button type="submit" style="display: none"></button>
                 </form>
             </div>
@@ -143,23 +153,23 @@
 
 @push('scripts')
     <script>
-        let province_table;
+        let village_table;
 
         $(function () {
-            province_table = $('#province-table').DataTable({
+            village_table = $('#village-table').DataTable({
                 language: defaultLang,
                 searching: true,
                 pageLength: 10,
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route('area.province.data') }}',
+                    url: '{{ route('area.village.data') }}',
                     data: function (params) {
                         
                     }
                 },
                 order: [
-                    [7, 'asc']
+                    [6, 'asc']
                 ],
                 columnDefs: [
                     {
@@ -169,11 +179,11 @@
                     },
                     {
                         className: 'text-center',
-                        targets: [3, 4, 5, 7]
+                        targets: [5]
                     },
                     {
                         visible: false,
-                        targets: [7, 0]
+                        targets: [6, 0]
                     }
                 ],
                 columns: [{
@@ -191,19 +201,12 @@
                         name: 'code'
                     },                                    
                     {
-                        data: 'districts_count',
-                        name: 'districts_count',
-                        searchable: false
+                        data: 'subdistrict.name',
+                        name: 'subdistrict.name'
                     },
                     {
-                        data: 'subdistricts_count',
-                        name: 'subdistricts_count',
-                        searchable: false
-                    },
-                    {
-                        data: 'villages_count',
-                        name: 'villages_count',
-                        searchable: false
+                        data: 'subdistrict.district.name',
+                        name: 'subdistrict.district.name'
                     },
                     {
                         data: 'action',
@@ -218,12 +221,58 @@
         });
 
         const modal_create = $('#modal-create');
-        const modal_update = $('#modal-update');
-
         const form_create = $('#form-create');
+        const select_subdistrict_create = form_create.find('select[name=subdistrict_id]');
+
+        const modal_update = $('#modal-update');
         const form_update = $('#form-update');
+        const select_subdistrict_update = form_update.find('select[name=subdistrict_id]');
 
         $(function () {
+            select_subdistrict_create.select2({
+                dropdownParent: modal_create,
+                placeholder: 'Pilih kabupaten',
+                minimumInputLength: 0,
+                ajax: {
+                    url: "{{ route('area.village.get.subdistricts') }}",
+                    dataType: 'json',
+                    type: "GET",
+                    quietMillis: 50,
+                    data: function(params) {
+                        return {
+                            search: params.term
+                        }
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    },
+                }
+            });
+
+            select_subdistrict_update.select2({
+                dropdownParent: modal_update,
+                placeholder: 'Pilih kabupaten',
+                minimumInputLength: 0,
+                ajax: {
+                    url: "{{ route('area.village.get.subdistricts') }}",
+                    dataType: 'json',
+                    type: "GET",
+                    quietMillis: 50,
+                    data: function(params) {
+                        return {
+                            search: params.term
+                        }
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    },
+                }
+            });
+
             form_create.submit(e => {
                 e.preventDefault();
 
@@ -243,13 +292,12 @@
                         toastr.success(result.message, 'Berhasil');
 
                         form_create.trigger('reset');
+                        select_subdistrict_create.val('').trigger('change');
+
                         modal_create.modal('hide');
 
-                        province_table.draw(false);
+                        village_table.draw(false);
                     }
-
-                }).fail((xhr, textStatus, error) => {
-                    
                 });
             });
 
@@ -274,7 +322,7 @@
                         form_update.trigger('reset');
                         modal_update.modal('hide');
 
-                        province_table.draw(false);
+                        village_table.draw(false);
                     }
                 });
             });
@@ -287,33 +335,37 @@
         const showFormUpdate = id => {
             form_update.trigger('reset');
 
-            $.get("{{ route('area.province.get.data') }}", {
+            $.get("{{ route('area.village.get.data') }}", {
                 id
             }).done(result => {
                 $.map(result, (value, index) => {
                     bindInputValue(form_update.find(`input[name=${index}]`), value);
                 });
 
+                if (typeof result.subdistrict != 'undefined') {
+                    bindSelect2Value(select_subdistrict_update, result.subdistrict.id, result.subdistrict.name);
+                }
+
                 modal_update.modal('show');
             });
         }
-        
+
         const submitUpdate = () => {
             form_update.find(':submit').click();
         }
 
         const submitDelete = id => {
-            $.post('{{ route('area.province.delete.submit') }}', {
+            $.post('{{ route('area.village.delete.submit') }}', {
                 _token: '{{ csrf_token() }}',
                 _method: 'DELETE',
                 id
             }).done(result => {
                 if (result.status == 'error') {
-                    toastr.error(result.message, 'Perhatian');
+                    toastr.error(result.message, 'Perhatian', {positionClass: 'toast-top-right'});
                 } else {
-                    toastr.success(result.message, 'Berhasil');
+                    toastr.success(result.message, 'Berhasil', {positionClass: 'toast-top-right'});
                     
-                    province_table.draw(false);
+                    village_table.draw(false);
                 }
             });;
         }
