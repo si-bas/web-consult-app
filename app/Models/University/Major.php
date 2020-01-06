@@ -20,4 +20,9 @@ class Major extends Model
     {
         return $this->belongsTo('App\Models\University\Faculty', 'faculty_id', 'id');
     }
+
+    public function students()
+    {
+        return $this->hasMany('App\Models\Profile\Student', 'major_id', 'id');
+    }
 }
