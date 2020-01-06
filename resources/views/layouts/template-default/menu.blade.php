@@ -104,8 +104,8 @@
                 </a>
             </li>
 
-            <li class=" nav-item">
-                <a href="#">
+            <li class="{{ Request::is('university/major/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('university.major.list') }}">
                     <i class="menu-livicon" data-icon="briefcase"></i>
                     <span class="menu-title" data-i18n="">Jurusan</span>
                 </a>

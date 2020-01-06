@@ -9,17 +9,18 @@ use Illuminate\Support\Facades\DB;
 
 # Models
 use App\Models\University\Major;
+use App\Models\University\Faculty;
 
 class MajorController extends Controller
 {
     public function list()
     {
-        # code...
+        return view('contents.university.major.list');
     }
 
     public function data(Request $request)
     {
-        $majors = Major::select(DB::select('majors'))->with([
+        $majors = Major::select(DB::raw('majors.*'))->with([
             'faculty'
         ])->withCount([
             'students'
@@ -41,5 +42,73 @@ class MajorController extends Controller
             'action'
         ])
         ->make(true);
+    }
+
+    public function create(Request $request)
+    {
+        if (Major::where('code', $request->code)->where('faculty_id', $request->faculty_id)->count()) {
+            $error = 'Error! Kode sudah digunakan pada fakultas yang sama';
+        } else {
+            try {
+                Major::create($request->all());
+            } catch (\Exception $e) {
+                $error = 'Error! Terjadi kesalahan saat menyimpan jurusan';
+            }
+        }
+        
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil menyimpan data jurusan' : $error
+        ];
+    }
+
+    public function getFaculties(Request $request)
+    {
+        $query = Faculty::orderBy('name');
+
+        if (!empty($request->search)) {
+            $query->where('name', 'LIKE', "%$request->search%");
+        }
+
+        return $query->get(['id', 'name as text']);
+    }
+
+    public function getData(Request $request)
+    {
+        return Major::find($request->id)->load('faculty');
+    }
+
+    public function update(Request $request)
+    {
+        if (Major::where('code', $request->code)->where('faculty_id', $request->faculty_id)->where('id', '!=', $request->id)->count()) {
+            $error = 'Error! Kode sudah digunakan pada fakultas yang sama';
+        } else {
+            try {
+                $major = Major::find($request->id);
+                $major->fill($request->all());
+                $major->save();
+            } catch (\Exception $e) {
+                $error = 'Error! Terjadi kesalahan saat mengubah data jurusan';
+            }
+        }
+        
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil mengubah data jurusan' : $error
+        ];
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            Major::where('id', $request->id)->delete();
+        } catch (\Exception $e) {
+            $error = 'Error! Terjadi kesalahan saat menghapus data jurusan';
+        }
+
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil menghapus data jurusan' : $error
+        ];
     }
 }
