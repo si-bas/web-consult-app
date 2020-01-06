@@ -15,6 +15,7 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/app-assets/vendors/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template-default/app-assets/vendors/css/forms/select/select2.min.css') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -72,12 +73,12 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <p> <small> Silahkan lengkapi data diri dan menjadi bagian dari Mojokerto DUPAK</small>
+                                            <p> <small> Silahkan lengkapi data diri dan menjadi bagian dari Aplikasi</small>
                                             </p>
                                         </div>
                                         <div class="card-content">
                                             <div class="card-body">
-                                                <form method="POST" accept="{{ route('register.submit') }}">
+                                                <form method="POST" accept="{{ route('register.submit') }}" id="registration">
                                                     @csrf
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6 mb-50">
@@ -97,12 +98,16 @@
 
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">Fakultas</label>
-                                                        <input type="text" class="form-control" placeholder="Pilih Fakultas" name="faculty_id" required>
+                                                        <select class="select2 form-control" name="faculty_id" required style="width: 100%">
+                                                            <option></option>
+                                                        </select>
                                                     </div>
 
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">Program Studi</label>
-                                                        <input type="text" class="form-control" placeholder="Pilih Program Studi" name="major_id" required>
+                                                        <select class="select2 form-control" name="major_id" required style="width: 100%">
+                                                            <option></option>
+                                                        </select>
                                                     </div>
 
                                                     <div class="form-group mb-50">
@@ -116,7 +121,9 @@
                                                     <button type="submit" class="btn btn-primary glow position-relative w-100">Daftar<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                                 </form>
                                                 <hr>
-                                                <div class="text-center"><small class="mr-25">Sudah memiliki akun?</small><a href="{{ route('login') }}"><small>Masuk</small> </a></div>
+                                                <div class="text-center"><small class="mr-25">Sudah memiliki akun?</small>
+                                                    <a href="{{ route('login') }}" class="btn btn-secondary glow w-100 position-relative">Masuk<i id="icon-arrow" class="bx bx-file"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -147,6 +154,7 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="{{ asset('template-default/app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -158,6 +166,79 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="{{ asset('js/helper.js') }}"></script>
+    <script>
+        const select_faculty = $('select[name=faculty_id]');
+        const select_major = $('select[name=major_id]');
+
+        const form_registration = $('#registration');
+
+        $(function () {
+            select_faculty.select2({
+                placeholder: 'Pilih Fakultas',
+                minimumInputLength: 0,
+                ajax: {
+                    url: "{{ route('register.get.faculties') }}",
+                    dataType: 'json',
+                    type: "GET",
+                    quietMillis: 50,
+                    data: function(params) {
+                        return {
+                            search: params.term
+                        }
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    },
+                }
+            });
+
+            select_major.select2({
+                placeholder: 'Pilih Program Studi',
+                minimumInputLength: 0,
+                ajax: {
+                    url: "{{ route('register.get.majors') }}",
+                    dataType: 'json',
+                    type: "GET",
+                    quietMillis: 50,
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                            id: select_faculty.val()
+                        }
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    },
+                }
+            });
+
+            form_registration.submit(e => {
+                e.preventDefault();
+
+                let form_data = form_registration.serializeArray().reduce((obj, item) => {
+                    obj[item.name] = item.value;
+                    return obj;
+                }, {});
+
+                $.post(form_registration.attr('action'), form_data).done(result => {
+                    let card_body = form_registration.parent();
+                    
+                    removeAlert(card_body);
+
+                    if (result.status == 'error') {
+                        showAlert('danger', 'bx-error', result.message, card_body);
+                    } else {
+                        window.location = "{{ route('register.done') }}";
+                    }
+                });
+            });
+        });
+    </script>
     <!-- END: Page JS-->
 
 </body>

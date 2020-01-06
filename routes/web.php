@@ -21,4 +21,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/register', 'Auth\RegisterController@store')->name('register.submit');
+Route::namespace('Auth')->group(function () {
+    // Controllers Within The "App\Http\Controllers\Auth" Namespace
+    Route::prefix('register')->group(function () {
+        Route::post('/', 'RegisterController@store')->name('register.submit');
+    
+        Route::get('/get/faculties', 'RegisterController@getFaculties')->name('register.get.faculties');
+        Route::get('/get/majors', 'RegisterController@getMajors')->name('register.get.majors');
+        
+        Route::get('/done', 'RegisterController@done')->name('register.done');
+    });
+});

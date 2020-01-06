@@ -87,7 +87,10 @@
                                                     <button type="submit" class="btn btn-primary glow w-100 position-relative">Masuk<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                                 </form>
                                                 <hr>
-                                                <div class="text-center"><small class="mr-25">Tidak punya akun?</small><a href="{{ route('register') }}"><small>Registrasi</small></a></div>
+                                                <div class="text-center">
+                                                    <small class="mr-25">Tidak punya akun?</small>
+                                                    <a href="{{ route('register') }}" class="btn btn-secondary glow w-100 position-relative">Registrasi<i id="icon-arrow" class="bx bx-file"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

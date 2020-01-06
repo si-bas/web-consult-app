@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 # Models
 use App\User;
 use App\Models\Profile\Student;
+use App\Models\University\Faculty;
+use App\Models\University\Major;
 
 class RegisterController extends Controller
 {
@@ -76,15 +78,57 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $student = new Student($request->all());
-        $student->save();
+        if (User::where('email', $request->email)->count()) {
+            $error = 'Error! Email telah digunakan, silahkan gunakan email lain';
+        } else {
+            try {
+                $student = new Student($request->all());
+                $student->save();
 
-        $student->user()->create([
-            'email' => $request->email,
-            'password' => $request->password,
-            'password_hint' => $request->password
-        ]);
+                $student->user()->create([
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'password_hint' => $request->password
+                ]);
+            } catch (\Exception $e) {
+                $error = 'Error! Terjadi kesalahan saat melakukan registrasi';
+            }
+        }
         
-        return $request->all();
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil melakukan registrasi' : $error
+        ];
+    }
+
+    public function getFaculties(Request $request)
+    {
+        $query = Faculty::orderBy('name');
+
+        if (!empty($request->search)) {
+            $query->where('name', 'LIKE', "%$request->search%");
+        }
+
+        return $query->get(['id', 'name as text']);
+    }
+
+    public function getMajors(Request $request)
+    {
+        $query = Major::orderBy('name')->has('faculty');
+
+        if (!empty($request->search)) {
+            $query->where('name', 'LIKE', "%$request->search%");
+        }
+
+        if (!empty($request->faculty_id)) {
+            $query->where('faculty_id', $request->faculty_id);
+        }
+
+        return $query->get(['id', 'name as text']);
+    }
+
+    public function done()
+    {
+        # code...
     }
 }
