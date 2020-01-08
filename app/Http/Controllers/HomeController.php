@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (empty(Auth::user()->verified_at)) {
+            Auth::logout();
+            return redirect('login')->with('warning', 'Akun belum diverifikasi oleh Administrator');
+        }
+
         return view('home');
     }
 }

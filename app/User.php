@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-    'name', 'email', 'password', 'password_hint'
+    'name', 'email', 'password', 'password_hint', 'verified_at'
     ];
 
     /**
@@ -41,6 +41,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'verified_at' => 'verified_at'
     ];
 
     public function setPasswordAttribute($value)
