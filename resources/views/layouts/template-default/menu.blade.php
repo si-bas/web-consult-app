@@ -47,10 +47,11 @@
                 </a>
             </li>
 
-            <li class=" nav-item">
-                <a href="#">
+            <li class="{{ Request::is('user/student/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('user.student.list') }}">
                     <i class="menu-livicon" data-icon="users"></i>
                     <span class="menu-title" data-i18n="">Mahasiswa</span>
+                    <span class="" id="student-count"></span>
                 </a>
             </li>
 
@@ -160,3 +161,21 @@
         </ul>
     </div>
 </div>
+
+@role('admin')
+    @push('scripts')
+        <script>
+            const getStudentBadge = () => {
+                let el = $("#student-count");
+                $.get("{{ route('notification.badge.user.unverified.count') }}").done(function (result) {
+                    el.attr('class', result.class);
+                    el.html(result.count);
+                });
+            }
+
+            $(document).ajaxStart(function () {
+                getStudentBadge();
+            });
+        </script>
+    @endpush
+@endrole

@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         $this->attributes['password_hint'] = Crypt::encrypt($value);;
     }
+
+    public function student()
+    {
+        return $this->hasOne('App\Models\Profile\Student', 'user_id', 'id');
+    }
 }

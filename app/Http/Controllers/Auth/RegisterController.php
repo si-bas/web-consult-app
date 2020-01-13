@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 # Models
 use App\User;
@@ -82,15 +83,19 @@ class RegisterController extends Controller
             $error = 'Error! Email telah digunakan, silahkan gunakan email lain';
         } else {
             try {
-                $student = new Student($request->all());
-                $student->save();
-
-                $student->user()->create([
+                $user = User::create([
+                    'name' => $request->first_name.' '.$request->last_name,
                     'email' => $request->email,
                     'password' => $request->password,
                     'password_hint' => $request->password
                 ]);
+                $user->attachRole('student');
+                
+                $student = new Student($request->all());
+                $student->user_id = $user->id;
+                $student->save();
             } catch (\Exception $e) {
+                Log::error($e->getMessage());
                 $error = 'Error! Terjadi kesalahan saat melakukan registrasi';
             }
         }
@@ -129,6 +134,6 @@ class RegisterController extends Controller
 
     public function done()
     {
-        # code...
+        return view('auth.done');
     }
 }

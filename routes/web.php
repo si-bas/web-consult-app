@@ -32,3 +32,5 @@ Route::namespace('Auth')->group(function () {
         Route::get('/done', 'RegisterController@done')->name('register.done');
     });
 });
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

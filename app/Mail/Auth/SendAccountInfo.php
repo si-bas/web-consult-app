@@ -11,14 +11,17 @@ class SendAccountInfo extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $email, $password;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($email, $password)
     {
-        //
+        $this->email = $email;
+        $this->password = $password;
     }
 
     /**
@@ -28,6 +31,8 @@ class SendAccountInfo extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this
+        ->subject("Registrasi Aplikasi ".config('app.name'))
+        ->view('layouts.email.registration-verified');
     }
 }
