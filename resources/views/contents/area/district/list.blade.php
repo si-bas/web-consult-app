@@ -35,7 +35,7 @@
         <div class="card-content">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table mb-0 table-hover" id="district-table">
+                    <table class="table mb-0 table-hover" id="district-table" style="width: 100%">
                         <thead class="thead-light">
                             <tr>
                                 <th>#</th>

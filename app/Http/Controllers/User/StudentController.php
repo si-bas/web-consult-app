@@ -26,19 +26,23 @@ class StudentController extends Controller
 
         if (!empty($request->is_verified)) {
             $users->whereNotNull('verified_at');
+        } else {
+            $users->whereNull('verified_at');
         }
 
         return DataTables::of($users)
         ->addColumn('action_verify', function($user) {
+            $verification = empty($user->verified_at) ? '<a class="dropdown-item" href="javascript:;" onclick="verifyUser('.$user->id.')"><i class="bx bx-check mr-1"></i> verifikasi</a>
+            <hr>
+            <a class="dropdown-item" href="javascript:;"><i class="bx bx-archive mr-1"></i> arsipkan</a>' : '';
+
             return 
             '<div class="dropdown">
                 <span class="bx bxs-cog font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
                 </span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="javascript:;" onclick="showDetail('.$user->id.')"><i class="bx bxs-user-detail mr-1"></i> rincian</a>
-                    <a class="dropdown-item" href="javascript:;"><i class="bx bx-check mr-1"></i> verifikasi</a>
-                    <hr>
-                    <a class="dropdown-item" href="javascript:;"><i class="bx bx-archive mr-1"></i> arsipkan</a>
+                    '.$verification.'
                 </div>
             </div>';
         })
@@ -60,7 +64,7 @@ class StudentController extends Controller
 
         return [
             'status' => empty($error) ? 'success' : 'error',
-            'message' => empty($error) ? 'Berhasil menyimpan data fakultas' : $error
+            'message' => empty($error) ? 'Berhasil memverifikasi mahasiswa' : $error
         ];
     }
 
@@ -70,6 +74,8 @@ class StudentController extends Controller
             'student.major.faculty'
         ]);
 
-        return $user;
+        return view('contents.user.student.detail', [
+            'user' => $user
+        ]);
     }
 }

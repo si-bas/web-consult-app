@@ -7,21 +7,23 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+# Models
+use App\User;
+
 class SendAccountInfo extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $email, $password;
+    protected $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email, $password)
+    public function __construct(User $user)
     {
-        $this->email = $email;
-        $this->password = $password;
+        $this->user = $user;
     }
 
     /**
@@ -33,6 +35,8 @@ class SendAccountInfo extends Mailable
     {
         return $this
         ->subject("Registrasi Aplikasi ".config('app.name'))
-        ->view('layouts.email.registration-verified');
+        ->view('layouts.email.registration-verified', [
+            'user' => $this->user
+        ]);
     }
 }

@@ -34,6 +34,12 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/assets/css/style.css') }}">
     <!-- END: Custom CSS-->
 
+    <style>
+        .table {
+            width: 100%; !important
+        }
+    </style>
+
 </head>
 <!-- END: Head-->
 

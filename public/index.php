@@ -1,4 +1,5 @@
 <?php
+setlocale(LC_ALL, 'id_ID.utf8');
 
 /**
  * Laravel - A PHP Framework For Web Artisans

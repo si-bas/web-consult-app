@@ -8,7 +8,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Crypt;
 
 # Models
 use App\User;
@@ -41,7 +40,7 @@ class RegistrationVerified implements ShouldQueue
     {
         $user = User::find($this->user_id);
         if (!empty($user)) {
-            Mail::to($user)->send(new SendAccountInfo($user->email, Crypt::decrypt($user->password_hint)));
+            Mail::to($user)->send(new SendAccountInfo($user));
         }
     }
 }

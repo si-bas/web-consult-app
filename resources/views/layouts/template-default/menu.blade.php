@@ -40,8 +40,8 @@
                 <span>Pengguna</span>
             </li>
 
-            <li class=" nav-item">
-                <a href="#">
+            <li class="{{ Request::is('user/lecturer/*') }} nav-item">
+                <a href="{{ route('user.student.list') }}">
                     <i class="menu-livicon" data-icon="users"></i>
                     <span class="menu-title" data-i18n="">Dosen</span>
                 </a>
