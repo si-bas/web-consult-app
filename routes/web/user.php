@@ -12,6 +12,8 @@ Route::prefix('student')->group(function () {
 });
 
 Route::prefix('lecturer')->group(function () {
-    Route::get('/list', 'LecturerController@list')->name('user.student.list');
-    Route::get('/data', 'LecturerController@data')->name('user.student.data');
+    Route::get('/list', 'LecturerController@list')->name('user.lecturer.list');
+    Route::get('/data', 'LecturerController@data')->name('user.lecturer.data');
+    
+    Route::get('/form/create', 'LecturerController@formCreate')->name('user.lecturer.form.create');
 });

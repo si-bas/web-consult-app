@@ -50,8 +50,8 @@
                                     <th>#</th>
                                     <th>NAMA</th>
                                     <th>NIM</th>
-                                    <th>FAKULTAS</th>                                
                                     <th>JURUSAN</th>
+                                    <th>FAKULTAS</th>                                
                                     <th>AKSI</th>
                                     <th></th>
                                 </tr>
@@ -68,8 +68,8 @@
                                     <th>#</th>
                                     <th>NAMA</th>
                                     <th>NIM</th>
-                                    <th>FAKULTAS</th>                                
                                     <th>JURUSAN</th>
+                                    <th>FAKULTAS</th>                                
                                     <th>AKSI</th>
                                     <th></th>
                                 </tr>
@@ -163,14 +163,14 @@
                     {
                         data: 'student.student_id_number',
                         name: 'student.student_id_number'
-                    },                                    
-                    {
-                        data: 'student.major.faculty.name',
-                        name: 'student.major.faculty.name'
-                    },
+                    },                                                        
                     {
                         data: 'student.major.name',
                         name: 'student.major.name'
+                    },
+                    {
+                        data: 'student.major.faculty.name',
+                        name: 'student.major.faculty.name'
                     },
                     {
                         data: 'action_verify',
@@ -228,12 +228,12 @@
                         name: 'student.student_id_number'
                     },                                    
                     {
-                        data: 'student.major.faculty.name',
-                        name: 'student.major.faculty.name'
-                    },
-                    {
                         data: 'student.major.name',
                         name: 'student.major.name'
+                    },
+                    {
+                        data: 'student.major.faculty.name',
+                        name: 'student.major.faculty.name'
                     },
                     {
                         data: 'action_verify',

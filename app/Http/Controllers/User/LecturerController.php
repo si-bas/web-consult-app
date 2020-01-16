@@ -29,4 +29,9 @@ class LecturerController extends Controller
         })
         ->make(true);
     }
+
+    public function formCreate()
+    {
+        return view('contents.user.lecturer.form-create');
+    }
 }
