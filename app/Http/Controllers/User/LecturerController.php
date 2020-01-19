@@ -39,9 +39,10 @@ class LecturerController extends Controller
                 <span class="bx bxs-cog font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
                 </span>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="javascript:;" onclick="showDetail('.$user->id.')"><i class="bx bxs-user-detail mr-1"></i> rincian</a>
-                    <hr>
+                    <a class="dropdown-item" href="javascript:;" onclick="showDetail('.$user->id.')"><i class="bx bxs-user-detail mr-1"></i> rincian</a>                    
                     <a class="dropdown-item" href="'.route('user.lecturer.form.update', ['id' => $user->id]).'"><i class="bx bxs-pencil mr-1"></i> ubah</a>
+                    <hr>
+                    <a class="dropdown-item" href="javascript:;" onclick="actionArchive('.$user->id.')"><i class="bx bx-archive mr-1"></i> arsipkan</a>
                 </div>
             </div>';
         })
