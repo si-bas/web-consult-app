@@ -6,16 +6,28 @@
             <td>{{ $user->name }}</td>
         </tr>
         <tr>
-            <td>NIM:</td>
-            <td>{{ $user->student->student_id_number }}</td>
+            <td>NIP:</td>
+            <td>{{ $user->lecturer->nip }}</td>
         </tr>
         <tr>
             <td>Program Studi:</td>
-            <td>{{ $user->student->major->name }}</td>
+            <td>{{ $user->lecturer->major->name }}</td>
         </tr>
         <tr>
             <td>Fakultas:</td>
-            <td>{{ $user->student->major->faculty->name }}</td>
+            <td>{{ $user->lecturer->major->faculty->name }}</td>
+        </tr>
+        <tr>
+            <td>Jenis Kelamin:</td>
+            <td>{{ $user->lecturer->gender->name }}</td>
+        </tr>
+        <tr>
+            <td>Tempat/Tanggal Lahir:</td>
+            <td>{{ $user->lecturer->place_of_birth ?? '' }}, {{ $user->lecturer->date_of_birth }}</td>
+        </tr>
+        <tr>
+            <td>Alamat:</td>
+            <td>{{ $user->lecturer->address ?? '' }}</td>
         </tr>
         <tr>
             <td>Alamat Email:</td>
@@ -27,5 +39,3 @@
         </tr>
     </tbody>
 </table>
-<input type="hidden" name="id" value="{{ $user->id }}">
-<input type="hidden" name="verified_at" value="{{ $user->verified_at }}">

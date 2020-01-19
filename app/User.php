@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'password_hint'
     ];
 
     /**
@@ -71,8 +71,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Profile\Student', 'user_id', 'id');
     }
 
-    public function lecture()
+    public function lecturer()
     {
-        return $this->hasOne('App\Models\Profile\Lecture', 'user_id', 'id');
+        return $this->hasOne('App\Models\Profile\Lecturer', 'user_id', 'id');
     }
 }

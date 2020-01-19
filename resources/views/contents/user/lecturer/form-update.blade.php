@@ -26,21 +26,23 @@
 <div class="content-body">
     <section class="card">
         <div class="card-header">
-            <h4 class="card-title">Formulir Dosen Baru</h4>
+            <h4 class="card-title">Formulir Perubahan Data Dosen</h4>
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{ route('user.lecturer.create.submit') }}" method="POST" enctype="multipart/form-data" class="row" id="form-create">
+                <form action="{{ route('user.lecturer.update.submit') }}" method="POST" enctype="multipart/form-data" class="row" id="form-update">
                     @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $user->id }}">
                     <div class="col-md-6">
                         <fieldset class="form-group">
                             <label>Nama Lengkap <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" placeholder="Tuliskan nama lengkap" name="full_name" required>
+                            <input type="text" class="form-control" placeholder="Tuliskan nama lengkap" name="full_name" value="{{ $user->lecturer->full_name }}" required>
                         </fieldset>
 
                         <fieldset class="form-group">
                             <label>NIP <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" placeholder="Tuliskan NIP" name="nip" required>
+                            <input type="text" class="form-control" placeholder="Tuliskan NIP" name="nip" value="{{ $user->lecturer->nip }}" required>
                         </fieldset>
 
                         <fieldset class="form-group">
@@ -49,7 +51,7 @@
                                 <li class="d-inline-block mr-2">
                                     <fieldset>
                                         <div class="radio radio-primary">
-                                            <input type="radio" name="gender_id" id="gender_male" value="M" required>
+                                            <input type="radio" name="gender_id" id="gender_male" value="M" {{ $user->lecturer->gender->code == 'M' ? 'checked' : '' }} required>
                                             <label for="gender_male">Laki-laki</label>
                                         </div>
                                     </fieldset>
@@ -57,7 +59,7 @@
                                 <li class="d-inline-block mr-2">
                                     <fieldset>
                                         <div class="radio radio-primary">
-                                            <input type="radio" name="gender_id" id="gender_female" value="F">
+                                            <input type="radio" name="gender_id" id="gender_female" {{ $user->lecturer->gender->code == 'F' ? 'checked' : '' }} value="F">
                                             <label for="gender_female">Perempuan</label>
                                         </div>
                                     </fieldset>
@@ -67,43 +69,44 @@
 
                         <fieldset class="form-group">
                             <label>Tempat Lahir</label>
-                            <input type="text" class="form-control" placeholder="Tuliskan tempat lahir" name="place_of_birth">
+                            <input type="text" class="form-control" placeholder="Tuliskan tempat lahir" name="place_of_birth" value="{{ $user->lecturer->place_of_birth }}">
                         </fieldset>
 
                         <fieldset class="form-group">
                             <label>Tanggal Lahir</label>
-                            <input type="text" class="form-control inputmask" placeholder="dd/mm/yyyy" name="date_of_birth">
+                            <input type="text" class="form-control inputmask" placeholder="dd/mm/yyyy" name="date_of_birth" value="{{ $user->lecturer->date_of_birth_format }}">
                         </fieldset>
 
                         <fieldset class="form-group">
                             <label>Alamat</label>
-                            <textarea class="form-control" rows="3" placeholder="Tuliskan alamat lengkap" name="address"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="Tuliskan alamat lengkap" name="address">{{ $user->lecturer->address }}</textarea>
                         </fieldset>
                     </div>
                     <div class="col-md-6">
                         <fieldset class="form-group">
                             <label>Fakultas <span class="text-danger">*</span></label>
                             <select class="select2 form-control" name="faculty_id" required style="width: 100%">
-                                <option></option>
+                                <option value="{{ $user->lecturer->major->faculty->id }}">{{ $user->lecturer->major->faculty->name }}</option>
                             </select>
                         </fieldset>
 
                         <fieldset class="form-group">
                             <label>Program Studi <span class="text-danger">*</span></label>
                             <select class="select2 form-control" name="major_id" required style="width: 100%">
-                                <option></option>
+                                <option value="{{ $user->lecturer->major->id }}">{{ $user->lecturer->major->name }}</option>
                             </select>
                         </fieldset>
 
                         <fieldset class="form-group">
                             <label for="helpInputTop">Email <span class="text-danger">*</span></label>
                             <small class="text-muted">contoh: <i>someone@example.com</i></small>
-                            <input type="email" class="form-control" placeholder="Tuliskan email" name="email" required>
+                            <input type="email" class="form-control" placeholder="Tuliskan email" name="email" value="{{ $user->email }}" required>
                         </fieldset>
 
                         <fieldset class="form-group">
-                            <label>Kata Sandi <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" placeholder="Tuliskan kata sandi" name="password" required>
+                            <label>Kata Sandi</label>
+                            <small class="text-muted">diisi apabila ingin mengubah kata sandi sebelumnya</small>
+                            <input type="password" class="form-control" placeholder="Tuliskan kata sandi" name="password">
                         </fieldset>
                     </div>
                     <button type="submit" style="display: none"></button>
@@ -174,20 +177,21 @@
             });
         });
         
-        var form_create = $('#form-create');
+        var form_update = $('#form-update');
         const submitForm = () => {
-            let email = form_create.find('input[name=email]').val();
+            let email = form_update.find('input[name=email]').val();
+            let id = form_update.find('input[name=id]').val();
 
             $.get("{{ route('user.lecturer.check.email') }}", {
-                email
+                id, email
             }).done((result) => {
-                let alert_section = form_create.parent();
+                let alert_section = form_update.parent();
                 removeAlert(alert_section);
                 
                 if (result > 0) {
                     showAlert('danger', 'bx-error', 'Error! Email telah digunakan, silahkan gunakan email lain.', alert_section);
                 } else {
-                    form_create.find('button[type=submit]').click();
+                    form_update.find('button[type=submit]').click();
                 }
             });
         }
