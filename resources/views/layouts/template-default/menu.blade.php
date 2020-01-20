@@ -15,6 +15,7 @@
                 <a href="{{ route('home') }}">
                     <i class="menu-livicon" data-icon="desktop"></i>
                     <span class="menu-title" data-i18n="">Dashboard</span>
+                    <span class="badge badge-light-primary badge-pill badge-round float-right">Dev</span>
                 </a>
             </li>
 
@@ -23,9 +24,17 @@
             </li>
 
             <li class=" nav-item">
-                <a href="#">
+                <a href="{{ route('user.student.list') }}">
                     <i class="menu-livicon" data-icon="unlock"></i>
                     <span class="menu-title" data-i18n="">Verifikasi</span>
+                </a>
+            </li>
+
+            <li class="{{ Request::is('questionnaire/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('questionnaire.list') }}">
+                    <i class="menu-livicon" data-icon="notebook"></i>
+                    <span class="menu-title" data-i18n="">Kuesioner</span>
+                    <span class="badge badge-light-primary badge-pill badge-round float-right">Dev</span>
                 </a>
             </li>
 
@@ -33,6 +42,7 @@
                 <a href="#">
                     <i class="menu-livicon" data-icon="grid"></i>
                     <span class="menu-title" data-i18n="">Konsultasi</span>
+                    <span class="badge badge-light-primary badge-pill badge-round float-right">Dev</span>
                 </a>
             </li>
 
@@ -55,8 +65,8 @@
                 </a>
             </li>
 
-            <li class=" nav-item">
-                <a href="#">
+            <li class="{{ Request::is('user/administrator/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('user.administrator.list') }}">
                     <i class="menu-livicon" data-icon="users"></i>
                     <span class="menu-title" data-i18n="">Administrator</span>
                 </a>

@@ -46,7 +46,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'verified_at' => 'verified_at'
+        'verified_at' => 'datetime'
     ];
 
     public function setPasswordAttribute($value)

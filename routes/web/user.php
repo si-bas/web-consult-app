@@ -26,3 +26,15 @@ Route::prefix('lecturer')->group(function () {
     Route::get('/get/majors', 'LecturerController@getMajors')->name('user.lecturer.get.majors');
     Route::get('/check/email', 'LecturerController@checkEmail')->name('user.lecturer.check.email');
 });
+
+Route::prefix('administrator')->group(function () {
+    Route::get('/list', 'AdministratorController@list')->name('user.administrator.list');
+    Route::get('/data', 'AdministratorController@data')->name('user.administrator.data');
+    
+    Route::post('/create', 'AdministratorController@create')->name('user.administrator.create.submit');
+    Route::put('/update', 'AdministratorController@update')->name('user.administrator.update.submit');
+    
+    Route::get('/check/email', 'AdministratorController@checkEmail')->name('user.administrator.check.email');
+    Route::get('/get/data', 'AdministratorController@getData')->name('user.administrator.get.data');
+    Route::put('/switch/status', 'AdministratorController@switchStatus')->name('user.administrator.switch.status');
+});

@@ -51,29 +51,34 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+          Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
 
-        Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth'])
              ->namespace($this->namespace.'\Area')
              ->prefix('area')
              ->group(base_path('routes/web/area.php'));
 
-        Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth'])
              ->namespace($this->namespace.'\University')
              ->prefix('university')
              ->group(base_path('routes/web/university.php'));
 
-        Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth'])
              ->namespace($this->namespace.'\Notification')
              ->prefix('notification')
              ->group(base_path('routes/web/notification.php'));
 
-        Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth'])
              ->namespace($this->namespace.'\User')
              ->prefix('user')
              ->group(base_path('routes/web/user.php'));
+
+          Route::middleware(['web', 'auth'])
+             ->namespace($this->namespace.'\Questionnaire')
+             ->prefix('questionnaire')
+             ->group(base_path('routes/web/questionnaire.php'));
     }
 
     /**
@@ -85,7 +90,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+          Route::prefix('api')
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));

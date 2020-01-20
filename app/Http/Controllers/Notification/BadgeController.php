@@ -12,7 +12,9 @@ class BadgeController extends Controller
 {
     public function userUnverifiedCount()
     {
-        $count = User::whereNull('verified_at')->count();
+        $count = User::whereNull('verified_at')->whereHas('roles', function($query) {
+            $query->where('name', 'student');
+        })->count();
 
         return response()->json([
             'class' => $count > 0 ? 'badge badge-pill badge-round badge-danger float-right mr-2' : '',
