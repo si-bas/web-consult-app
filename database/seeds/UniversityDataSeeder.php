@@ -15,13 +15,23 @@ class UniversityDataSeeder extends Seeder
     public function run()
     {
         $faculty = Faculty::create([
-            'code' => 'M',
-            'name' => 'Matematika dan Ilmu Pengetahuan Alam'
+            "code" => 'K',
+            "name" => 'Keperawatan'
+        ]);
+            
+        $faculty->majors()->create([
+            "code" => 'D3',
+            "name" => 'D3',
         ]);
 
         $faculty->majors()->create([
-            'code' => '31',
-            'name' => 'Informatika'
+            "code" => 'D4',
+            "name" => 'D4',
+        ]);
+        
+        $faculty->majors()->create([
+            "code" => 'S1',
+            "name" => 'S1',
         ]);
     }
 }

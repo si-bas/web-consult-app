@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 # Models
 use App\User;
@@ -17,23 +18,10 @@ class UsersTableSeeder extends Seeder
     {
         $admin = User::create([
             'name' => 'Administrator', 
-            'email' => 'admin@app.com', 
+            'email' => 'umum.saifi@gmail.com', 
             'password' => 'default',
+            'verified_at' => Carbon::now()->toDateTimeString()
         ]);
         $admin->attachRole('admin');
-
-        $lecturer = User::create([
-            'name' => 'Contoh Akun Dosen', 
-            'email' => 'dosen@app.com', 
-            'password' => 'default',
-        ]);
-        $lecturer->attachRole('lecturer');
-
-        $student = User::create([
-            'name' => 'Contoh Akun Mahasiswa', 
-            'email' => 'mahasiswa@app.com', 
-            'password' => 'default',
-        ]);
-        $student->attachRole('student');
     }
 }

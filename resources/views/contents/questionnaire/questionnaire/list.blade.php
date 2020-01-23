@@ -65,6 +65,7 @@
             <div class="modal-body">
                 <form action="{{ route('questionnaire.create.submit') }}" method="POST" class="row" id="form-create">
                     @csrf
+                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                     <div class="col-12">
                         <fieldset class="form-group">
                             <label for="basicInput">Nama Kuesioner <span class="text-danger">*</span></label>
@@ -93,3 +94,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const form_create = $('#form-create');
+
+        const submitCreate = () => {
+            form_create.find(':submit').click();
+        }
+    </script>
+@endpush
