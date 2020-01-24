@@ -97,6 +97,73 @@
 
 @push('scripts')
     <script>
+        let questionnaire_table;
+        $(function () {
+            questionnaire_table = $('#questionnaire-table').DataTable({
+                language: defaultLang,
+                searching: true,
+                pageLength: 10,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('questionnaire.list.data') }}',
+                    data: function (params) {
+                        
+                    }
+                },
+                order: [
+                    [6, 'desc']
+                ],
+                columnDefs: [
+                    {
+                        orderable: false,
+                        searchable: false,
+                        targets: [0, 5]
+                    },
+                    {
+                        className: 'text-center',
+                        targets: [5]
+                    },
+                    {
+                        visible: false,
+                        targets: [6, 0]
+                    }
+                ],
+                columns: [{
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'is_active',
+                        name: 'is_active'
+                    },                                                        
+                    {
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'questions_count',
+                        name: 'questions_count',
+                        searchable: false
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    }
+                ]      
+            });
+        });
+
         const form_create = $('#form-create');
 
         const submitCreate = () => {
