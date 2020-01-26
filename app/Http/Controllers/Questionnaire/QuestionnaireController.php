@@ -35,7 +35,14 @@ class QuestionnaireController extends Controller
             return $questionnaire->is_required ? '<span class="text-success">Ya</span>' : '<span class="text-danger">Tidak</span>';
         })
         ->addColumn('action', function($questionnaire) {
-            return '';
+            return 
+            '<div class="dropdown">
+                <span class="bx bxs-cog font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                </span>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="'.route('questionnaire.detail', ['id' => $questionnaire->id]).'"><i class="bx bxs-user-detail mr-1"></i> rincian</a>                    
+                </div>
+            </div>';
         })
         ->rawColumns([
             'is_active', 'is_required', 'action', 'name'
@@ -69,6 +76,23 @@ class QuestionnaireController extends Controller
             Log::error($error);
         }
 
-        return redirect()->route('questionnaire.list')->with(empty($error) ? 'success' : 'error', empty($error) ? 'Berhasil menyimpan data Kuisioner!' : 'Terjadi kesalahan saat menyimpan data Kuisioner!');
+        return redirect()->route('questionnaire.list')->with(empty($error) ? 'success' : 'error', empty($error) ? 'Berhasil menyimpan data Kuesioner!' : 'Terjadi kesalahan saat menyimpan data Kuesioner!');
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $questionnaire = Questionnaire::find($request->id);
+            $questionnaire->fill($request->all());
+            $questionnaire->save();
+
+            return redirect()->route('questionnaire.detail', ['id' => $questionnaire->id])->with('success', 'Berhasil menyimpan perubahan data Kuesioner');
+        } catch (\Exception $e) {
+            $error = $e->getMessage();  
+
+            Log::error($error);
+        }
+
+        return redirect()->route('questionnaire.list')->with('error', 'Terjadi kesalahan saat menyimpan data Kuesioner!');
     }
 }

@@ -15,11 +15,16 @@ class Question extends Model
         "order",
         "text",
         "image",
-        "answer_text",
+        "type",
     ];
 
     public function questionnaire()
     {
         return $this->belongsTo('App\Models\Questionnaire\Questionnaire', 'questionnaire_id', 'id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany('App\Models\Questionnaire\Answer', 'questionnaire_question_id', 'id');
     }
 }

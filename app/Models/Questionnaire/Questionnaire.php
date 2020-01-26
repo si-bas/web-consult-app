@@ -27,4 +27,9 @@ class Questionnaire extends Model
     {
         return $this->hasMany('App\Models\Questionnaire\Question', 'questionnaire_id', 'id');
     }
+
+    public function getQuestionTypesAttribute()
+    {
+        return ['free_text' => 'Teks Bebas', 'single_select' => 'Satu Pilihan', 'multiple_select' => 'Pilihan Ganda'];
+    }
 }

@@ -68,11 +68,11 @@
                     <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                     <div class="col-12">
                         <fieldset class="form-group">
-                            <label for="basicInput">Nama Kuesioner <span class="text-danger">*</span></label>
+                            <label>Nama Kuesioner <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" placeholder="Tuliskan nama" name="name" required>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label for="basicInput">Kode Kuesioner</label>
+                            <label>Kode Kuesioner</label>
                             <small class="text-muted">(opsional)</small>
                             <input type="text" class="form-control" placeholder="Tuliskan kode" name="code">
                         </fieldset>
@@ -171,3 +171,19 @@
         }
     </script>
 @endpush
+
+@if (Session::has('success'))
+    @push('scripts')
+        <script>
+            toastr.success("{{ Session::get('success') }}", 'Berhasil');
+        </script>
+    @endpush
+@endif
+
+@if (Session::has('error'))
+    @push('scripts')
+        <script>
+            toastr.error("{{ Session::get('error') }}", 'Gagal');
+        </script>
+    @endpush
+@endif
