@@ -26,7 +26,7 @@ class DaysTableSeeder extends Seeder
         ]);
 
         Day::create([
-            "code" => 'tuesay',
+            "code" => 'tuesday',
             "name" => 'Selasa',
             "day_number" => 2,
         ]);

@@ -8,7 +8,7 @@
     <div class="content-header-left col-12 mb-2 mt-1">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h5 class="content-header-title float-left pr-1 mb-0">Formulir Jadwal Tersedia Baru</h5>
+                <h5 class="content-header-title float-left pr-1 mb-0">Formulir Perubahan Jadwal Tersedia</h5>
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
@@ -33,7 +33,7 @@
         <div class="d-flex align-items-center">
             <i class="bx bx-error-circle"></i>
             <span>
-                Pastikan jadwal yang anda tambahkan sesuai dengan jadwal ketersediaan anda.
+                Pastikan jadwal yang anda ubah sesuai dengan jadwal ketersediaan anda.
             </span>
         </div>
     </div>
@@ -43,14 +43,15 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{ route('schedule.availability.create.submit') }}" method="POST" enctype="multipart/form-data" class="row" id="form-create">
+                <form action="{{ route('schedule.availability.update.submit') }}" method="POST" enctype="multipart/form-data" class="row" id="form-update">
                     @csrf
-                    <input type="hidden" name="lecturer_id" value="{{ Auth::user()->lecturer->id }}">
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $schedule->id }}">
                     <div class="col-md-6 col-sm-12">
                         <fieldset class="form-group">
                             <label>Pilih Hari</label>
                             <select class="select2 form-control" name="day_id" required style="width: 100%" required>
-                                <option></option>
+                                <option value="{{ $schedule->day_id }}">{{ $schedule->day->name }}</option>
                             </select>
                         </fieldset>
                     </div>
@@ -59,13 +60,13 @@
                             <div class="col-md-6 col-sm-12">
                                 <fieldset class="form-group">
                                     <label for="basicInput">Waktu Awal</label>
-                                    <input type="text" class="form-control pickatime" placeholder="Pilih waktu awal" name="start_time" required>
+                                    <input type="text" class="form-control pickatime" placeholder="Pilih waktu awal" name="start_time" value="{{ $schedule->start_time }}" required>
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset class="form-group">
                                     <label for="basicInput">Waktu Akhir</label>
-                                    <input type="text" class="form-control pickatime" placeholder="Pilih waktu akhir" name="end_time" required>
+                                    <input type="text" class="form-control pickatime" placeholder="Pilih waktu akhir" name="end_time" value="{{ $schedule->end_time }}" required>
                                 </fieldset>
                             </div>
                         </div>
@@ -85,9 +86,9 @@
 
 @push('scripts')
     <script>
-        const form_create = $('#form-create');
+        const form_update = $('#form-update');
 
-        const select_day_create = form_create.find('select[name=day_id]');
+        const select_day_update = form_update.find('select[name=day_id]');
 
         $(function () {
             $('.pickatime').pickatime({
@@ -96,8 +97,8 @@
                 formatSubmit: 'HH:i',
             });
             
-            select_day_create.select2({
-                dropdownParent: form_create.parent(),
+            select_day_update.select2({
+                dropdownParent: form_update.parent(),
                 placeholder: 'Pilih hari',
                 minimumInputLength: 0,
                 ajax: {
@@ -120,16 +121,16 @@
         });
 
         const submitForm = () => {
-            let alert_section = form_create.parent();
+            let alert_section = form_update.parent();
             removeAlert(alert_section);
 
-            let beginningTime = moment(form_create.find('input[name=start_time]').val(), 'HH:i');
-            let endTime = moment(form_create.find('input[name=end_time]').val(), 'HH:i');
+            let beginningTime = moment(form_update.find('input[name=start_time]').val(), 'HH:i');
+            let endTime = moment(form_update.find('input[name=end_time]').val(), 'HH:i');
 
             if (beginningTime.isAfter(endTime)) {
                 showAlert('danger', 'bx-error', 'Error! Waktu awal tidak boleh lebih besar dari waktu akhir.', alert_section);
             } else {
-                form_create.find(':submit').click();
+                form_update.find(':submit').click();
             }
         }
     </script>
