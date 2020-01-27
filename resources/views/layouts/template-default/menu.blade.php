@@ -23,20 +23,30 @@
                 <span>Menu</span>
             </li>
 
-            <li class=" nav-item">
+            {{-- <li class=" nav-item">
                 <a href="{{ route('user.student.list') }}">
                     <i class="menu-livicon" data-icon="unlock"></i>
                     <span class="menu-title" data-i18n="">Verifikasi</span>
                 </a>
-            </li>
+            </li> --}}
 
+            @role('admin')
             <li class="{{ Request::is('questionnaire/*') ? 'active' : '' }} nav-item">
                 <a href="{{ route('questionnaire.list') }}">
                     <i class="menu-livicon" data-icon="notebook"></i>
                     <span class="menu-title" data-i18n="">Kuesioner</span>
-                    <span class="badge badge-light-primary badge-pill badge-round float-right">Dev</span>
                 </a>
             </li>
+            @endrole
+
+            @role('lecturer')
+            <li class="{{ Request::is('schedule/availability/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('schedule.availability.list') }}">
+                    <i class="menu-livicon" data-icon="calendar"></i>
+                    <span class="menu-title" data-i18n="">Jadwal Tersedia</span>
+                </a>
+            </li>
+            @endrole
 
             <li class=" nav-item">
                 <a href="#">
@@ -46,6 +56,7 @@
                 </a>
             </li>
 
+            @role('admin')
             <li class="navigation-header">
                 <span>Pengguna</span>
             </li>
@@ -121,7 +132,7 @@
                     <span class="menu-title" data-i18n="">Jurusan</span>
                 </a>
             </li>
-
+            @endrole
             <li class="navigation-header">
                 <span>Lainnya</span>
             </li>

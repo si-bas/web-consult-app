@@ -100,6 +100,9 @@ class QuestionController extends Controller
         }
 
         return DataTables::of($questions)
+        ->editColumn('text', function($question) {
+            return '<span onclick="showDetail('.$question->id.')">'.$question->text.'</span>';
+        })
         ->addColumn('action', function($question) {
             return 
             '<div class="dropdown">
@@ -114,7 +117,7 @@ class QuestionController extends Controller
             </div>';
         })
         ->rawColumns([
-            'action'
+            'action', 'text'
         ])
         ->make(true);
     }

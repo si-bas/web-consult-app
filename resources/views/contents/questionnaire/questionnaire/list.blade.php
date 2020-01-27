@@ -76,6 +76,10 @@
                             <small class="text-muted">(opsional)</small>
                             <input type="text" class="form-control" placeholder="Tuliskan kode" name="code">
                         </fieldset>
+                        <fieldset class="form-group">
+                            <label>Teks Petunjuk</label>
+                            <textarea class="form-control" rows="3" placeholder="Tuliskan petunjuk" name="guide_text"></textarea>
+                        </fieldset> 
                     </div>
                     <button type="submit" style="display: none"></button>
                 </form>

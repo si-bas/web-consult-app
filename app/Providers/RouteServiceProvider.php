@@ -79,6 +79,11 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace.'\Questionnaire')
              ->prefix('questionnaire')
              ->group(base_path('routes/web/questionnaire.php'));
+
+         Route::middleware(['web', 'auth'])
+             ->namespace($this->namespace.'\Schedule')
+             ->prefix('schedule')
+             ->group(base_path('routes/web/schedule.php'));
     }
 
     /**

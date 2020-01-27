@@ -79,7 +79,7 @@ class LecturerController extends Controller
             $lecturer->user_id = $user->id;
             $lecturer->save();
 
-            $lecturer->attachRole('lecturer');
+            $user->attachRole('lecturer');
 
             dispatch(new RegistrationLecturer($user->id));
         } catch (\Exception $e) {            

@@ -16,6 +16,7 @@ class Questionnaire extends Model
         "name",
         "is_required",
         "is_active",
+        "guide_text"
     ];
 
     public function user()

@@ -50,10 +50,13 @@
                 <div class="row mt-2">
                     <div class="col-6">
                         <h4 class="text-primary">{{ $questionnaire->name }}</h4>
-                        <span>{{ $questionnaire->user->name }}</span>
+                        <span>Dibuat oleh {{ $questionnaire->user->name }}</span>                        
                     </div>
                     <div class="col-6 d-flex justify-content-end">
                         <button type="button" class="btn btn-secondary mr-1 mb-1" data-toggle="modal" data-target="#modal-update"><i class="bx bx-pencil"></i> Ubah Kuesioner</button>
+                    </div>
+                    <div class="col-12">
+                        <p class="mt-1"><span class="text-bold-600">Petunjuk :</span> {{ $questionnaire->guide_text }}</p>
                     </div>
                 </div>
             </div>
@@ -66,7 +69,7 @@
     <section class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="card-title">Daftar Pertanyaan</h4>
-            <ul class="list-inline d-flex mb-0">
+            {{-- <ul class="list-inline d-flex mb-0">
                 <li class="d-flex align-items-center">
                     <i class='bx bxs-cog font-medium-3 mr-50'></i>
                     <div class="dropdown">
@@ -78,7 +81,7 @@
                         </div>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
         </div>
         <div class="card-content">
             <div class="card-body">
@@ -95,6 +98,12 @@
                         
                     </tbody>
                 </table>
+                <hr>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end ">
+                        <a href="{{ route('questionnaire.list') }}" class="btn btn-light-secondary mr-1 mb-1">Kembali</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -124,6 +133,10 @@
                             <small class="text-muted">(opsional)</small>
                             <input type="text" class="form-control" placeholder="Tuliskan kode" name="code" value="{{ $questionnaire->code }}">
                         </fieldset>
+                        <fieldset class="form-group">
+                            <label>Teks Petunjuk</label>
+                            <textarea class="form-control" rows="3" placeholder="Tuliskan petunjuk" name="guide_text">{{ $questionnaire->guide_text }}</textarea>
+                        </fieldset> 
                         <fieldset class="form-group">
                             <label>Status <span class="text-danger">*</span></label>
                             <ul class="list-unstyled mb-0">

@@ -32,7 +32,7 @@
             <div class="card-body">
                 <form action="{{ route('user.lecturer.create.submit') }}" method="POST" enctype="multipart/form-data" class="row" id="form-create">
                     @csrf
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-12">
                         <fieldset class="form-group">
                             <label>Nama Lengkap <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" placeholder="Tuliskan nama lengkap" name="full_name" required>
@@ -80,7 +80,7 @@
                             <textarea class="form-control" rows="3" placeholder="Tuliskan alamat lengkap" name="address"></textarea>
                         </fieldset>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-12">
                         <fieldset class="form-group">
                             <label>Fakultas <span class="text-danger">*</span></label>
                             <select class="select2 form-control" name="faculty_id" required style="width: 100%">
