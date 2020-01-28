@@ -33,4 +33,9 @@ class Questionnaire extends Model
     {
         return ['free_text' => 'Teks Bebas', 'single_select' => 'Satu Pilihan', 'multiple_select' => 'Pilihan Ganda'];
     }
+
+    public function student_questionnaire()
+    {
+        return $this->hasMany('App\Models\Questionnaire\Student_questionnaire', 'questionnaire_id', 'id');
+    }
 }

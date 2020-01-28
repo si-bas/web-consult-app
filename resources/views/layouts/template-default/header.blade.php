@@ -23,10 +23,12 @@
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
+                            @role('student', 'lecturer')
                             <a class="dropdown-item" href="#">
                                 <i class="bx bx-user mr-50"></i> Profil Saya
                             </a>
                             <div class="dropdown-divider"></div>
+                            @endrole
                             <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">

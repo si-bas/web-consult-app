@@ -3,6 +3,16 @@
 @include('plugins.select2')
 @include('plugins.inputmask')
 
+@push('styles')
+    <style>
+        .radio input[type="radio"], .checkbox input[type="checkbox"] {
+            display: block;
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="content-header row">
     <div class="content-header-left col-12 mb-2 mt-1">

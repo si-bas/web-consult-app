@@ -28,4 +28,5 @@ Route::prefix('question')->group(function () {
 Route::prefix('fill')->group(function () { 
     Route::get('/check', 'FillController@check')->name('questionnaire.fill.check');
     Route::get('/form', 'FillController@form')->name('questionnaire.fill.form');
+    Route::post('/submit', 'FillController@submit')->name('questionnaire.fill.submit');
 });

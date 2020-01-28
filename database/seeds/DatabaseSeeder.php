@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UniversityDataSeeder::class);
         $this->call(DaysTableSeeder::class);
+        $this->call(ProblemSolvingOptionsTableSeeder::class);
+        $this->call(GendersTableSeeder::class);
     }
 }
