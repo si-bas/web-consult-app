@@ -13,6 +13,7 @@ use Yadahan\AuthenticationLog\AuthenticationLogable;
 
 # Jobs
 use App\Jobs\Email\RegistrationVerified;
+use App\Jobs\Email\RegistrationStudent;
 
 class User extends Authenticatable
 {
@@ -61,7 +62,11 @@ class User extends Authenticatable
 
     public function setVerifiedAtAttribute($value)
     {
-        dispatch(new RegistrationVerified($this->id));
+        if (config('custom.student_verification') ?? true) {
+            dispatch(new RegistrationVerified($this->id));
+        } else {
+            dispatch(new RegistrationStudent($this->id));
+        }
         
         $this->attributes['verified_at'] = $value;
     }

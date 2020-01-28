@@ -24,3 +24,8 @@ Route::prefix('question')->group(function () {
     
     Route::delete('/delete', 'QuestionController@delete')->name('questionnaire.question.delete.submit');
 });
+
+Route::prefix('fill')->group(function () { 
+    Route::get('/check', 'FillController@check')->name('questionnaire.fill.check');
+    Route::get('/form', 'FillController@form')->name('questionnaire.fill.form');
+});

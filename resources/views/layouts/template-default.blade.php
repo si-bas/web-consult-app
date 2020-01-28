@@ -40,6 +40,8 @@
         }
     </style>
 
+    @stack('styles')
+
 </head>
 <!-- END: Head-->
 

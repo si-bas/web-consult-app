@@ -63,7 +63,13 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <p class="font-medium-1 text-center">Anda akan mendapatkan email informasi setelah data registrasi disetujui oleh Administrator.</p>
+                                            <p class="font-medium-1 text-center">
+                                                @if (config('custom.student_verification') ?? false)
+                                                    Anda akan mendapatkan email informasi setelah data registrasi disetujui oleh Administrator.
+                                                @else
+                                                    Anda akan mendapatkan email informasi terkait akun anda.
+                                                @endif
+                                            </p>
                                             <hr class="mt-5">
                                             <div class="text-center mt-3"><small class="mr-25">Sudah mendapatkan email?</small>
                                                 <a href="{{ route('login') }}" class="btn btn-secondary glow w-100 position-relative">Masuk<i id="icon-arrow" class="bx bx-file"></i></a>

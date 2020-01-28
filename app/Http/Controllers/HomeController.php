@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laratrust\LaratrustFacade as Laratrust;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,14 @@ class HomeController extends Controller
         if (empty(Auth::user()->verified_at)) {
             Auth::logout();
             return redirect('login')->with('warning', 'Akun belum diverifikasi oleh Administrator');
+        }
+
+        if (Laratrust::hasRole('student')) {
+            if (!Auth::user()->student->profile()->exists()) {
+                return redirect()->route('profile.student.complete');
+            }
+
+            return redirect()->route('questionnaire.fill.check');
         }
 
         return view('home');

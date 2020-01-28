@@ -11,6 +11,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+        @if (!Request::is('profile/student/complete', ''))
             <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
                 <a href="{{ route('home') }}">
                     <i class="menu-livicon" data-icon="desktop"></i>
@@ -179,6 +180,15 @@
                     </li>
                 </ul>
             </li> --}}
+        @else 
+        <li class="active nav-item">
+            <a href="javascript:;">
+                <i class="menu-livicon" data-icon="notebook"></i>
+                <span class="menu-title" data-i18n="">Kuesioner</span>
+                <span class="" id="student-count"></span>
+            </a>
+        </li>
+        @endif
         </ul>
     </div>
 </div>

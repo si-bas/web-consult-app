@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Log;
 # Models
 use App\User;
 
-class SendLecturerAccount extends Mailable
+class SendStudentAccount extends Mailable
 {
     use Queueable, SerializesModels;
-
-    protected $user;
 
     /**
      * Create a new message instance.
@@ -48,7 +46,7 @@ class SendLecturerAccount extends Mailable
 
         return $this
         ->subject("Registrasi ".config('app.name'))
-        ->view('layouts.email.registration-lecturer', [
+        ->view('layouts.email.registration-student', [
             'name' => $name,
             'email' => $email,
             'password' => $password

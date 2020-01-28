@@ -30,7 +30,7 @@ class Student extends Model
 
     public function gender()
     {
-        return $this->belongsTo('App\Models\Profile', 'gender_id', 'id');
+        return $this->belongsTo('App\Models\Profile\Gender', 'gender_id', 'id');
     }
 
     public function village()
@@ -46,5 +46,10 @@ class Student extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile\Student_profile', 'student_id', 'id')->latest();
     }
 }

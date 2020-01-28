@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
 
 # Models
 use App\User;
@@ -94,6 +95,11 @@ class RegisterController extends Controller
                 $student = new Student($request->all());
                 $student->user_id = $user->id;
                 $student->save();
+
+                if (!config('custom.student_verification') ?? false) {
+                    $user->verified_at = Carbon::now()->toDateTimeString();
+                    $user->save();
+                }
             } catch (\Exception $e) {
                 Log::error($e->getMessage());
                 $error = 'Error! Terjadi kesalahan saat melakukan registrasi';
