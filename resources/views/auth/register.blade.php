@@ -92,7 +92,7 @@
                                                     </div>
 
                                                     <div class="form-group mb-50">
-                                                        <label class="text-bold-600">NIK</label>
+                                                        <label class="text-bold-600">NIM</label>
                                                         <input type="text" class="form-control" placeholder="Nomor Induk Mahasiswa" name="student_id_number" value="{{ old('student_id_number') }}" required>
                                                     </div>
 

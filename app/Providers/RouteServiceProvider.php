@@ -55,40 +55,45 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
 
-          Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\Area')
              ->prefix('area')
              ->group(base_path('routes/web/area.php'));
 
-          Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\University')
              ->prefix('university')
              ->group(base_path('routes/web/university.php'));
 
-          Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\Notification')
              ->prefix('notification')
              ->group(base_path('routes/web/notification.php'));
 
-          Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\User')
              ->prefix('user')
              ->group(base_path('routes/web/user.php'));
 
-          Route::middleware(['web', 'auth'])
+          Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\Questionnaire')
              ->prefix('questionnaire')
              ->group(base_path('routes/web/questionnaire.php'));
 
-         Route::middleware(['web', 'auth'])
+         Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\Schedule')
              ->prefix('schedule')
              ->group(base_path('routes/web/schedule.php'));
          
-         Route::middleware(['web', 'auth'])
+         Route::middleware(['web', 'auth', 'detection'])
              ->namespace($this->namespace.'\Profile')
              ->prefix('profile')
              ->group(base_path('routes/web/profile.php'));
+         
+         Route::middleware(['web', 'auth', 'detection'])
+             ->namespace($this->namespace.'\Consult')
+             ->prefix('consult')
+             ->group(base_path('routes/web/consult.php'));
     }
 
     /**

@@ -52,4 +52,9 @@ class Student extends Model
     {
         return $this->hasOne('App\Models\Profile\Student_profile', 'student_id', 'id')->latest();
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
 }

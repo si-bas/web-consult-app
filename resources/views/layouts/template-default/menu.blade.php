@@ -12,6 +12,7 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
         @if (!Request::is('profile/student/complete', 'questionnaire/fill/*'))
+            @role(['admin', 'lecturer'])
             <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
                 <a href="{{ route('home') }}">
                     <i class="menu-livicon" data-icon="desktop"></i>
@@ -19,6 +20,7 @@
                     <span class="badge badge-light-primary badge-pill badge-round float-right">Dev</span>
                 </a>
             </li>
+            @endrole
 
             <li class="navigation-header">
                 <span>Menu</span>
@@ -40,6 +42,19 @@
             </li>
             @endrole
 
+            @role(['lecturer', 'student'])
+            <li class="{{ Request::is('profile/student/detail') ? 'active' : '' }} nav-item">
+                <a href="
+                @role('student')
+                    {{ route('profile.student.detail') }}
+                @endrole
+                ">
+                    <i class="menu-livicon" data-icon="user"></i>
+                    <span class="menu-title" data-i18n="">Profil</span>
+                </a>
+            </li>
+            @endrole
+
             @role('lecturer')
             <li class="{{ Request::is('schedule/availability/*') ? 'active' : '' }} nav-item">
                 <a href="{{ route('schedule.availability.list') }}">
@@ -49,11 +64,14 @@
             </li>
             @endrole
 
-            <li class=" nav-item">
-                <a href="#">
+            <li class="{{ Request::is('consult/student/*') ? 'active' : '' }} nav-item">
+                <a href="
+                @role('student')
+                    {{ route('consult.student.list') }}
+                @endrole
+                ">
                     <i class="menu-livicon" data-icon="grid"></i>
                     <span class="menu-title" data-i18n="">Konsultasi</span>
-                    <span class="badge badge-light-primary badge-pill badge-round float-right">Dev</span>
                 </a>
             </li>
 

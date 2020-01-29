@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 
+
 # Models
 use App\Models\Questionnaire\Questionnaire;
 use App\Models\Questionnaire\Student_questionnaire;
@@ -24,7 +25,7 @@ class FillController extends Controller
             return redirect()->route('questionnaire.fill.form', ['questionnaire' => Crypt::encrypt($questionnaire->id)]);
         } 
 
-        # Do something here
+        return redirect()->route('consult.student.list');
     }
 
     public function form(Request $request)
