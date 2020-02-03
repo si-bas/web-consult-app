@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 # Models
 use App\User;
+use App\Models\Profile\Lecturer;
 
 class StudentController extends Controller
 {
@@ -17,8 +18,13 @@ class StudentController extends Controller
             'student.major.faculty', 'student.profile' => function($query) { $query->with(['gender', 'solving_options']); }
         ]);
 
+        $avail_lecturers = Lecturer::with([
+            'major.faculty'
+        ])->get();
+
         return view('contents.consult.student.test', [
-            'user' => $user
+            'user' => $user,
+            'avail_lecturers' => $avail_lecturers
         ]);
     }
 }

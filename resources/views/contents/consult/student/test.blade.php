@@ -73,6 +73,7 @@
                                 <h6>INFROMASI PERSONAL</h6>
                                 <ul class="list-unstyled mb-2">
                                     <li class="mb-25">{{ $user->email }}</li>
+                                    <li class="mb-25">{{ $user->student->student_id_number }}</li>
                                     <li>{{ $user->student->major->faculty->name }} / {{ $user->student->major->name }} / {{ $user->student->profile->classroom }}</li>
                                 </ul>
                             </div>
@@ -100,31 +101,29 @@
                             </div>
                         </div>
                         <div class="chat-sidebar-list-wrapper pt-2">
-                            <h6 class="px-2 pt-0 pb-25 mb-0">KONSULTASI</h6>
+                            <div class="d-flex align-items-center" style="padding: 0.8rem 1.5rem;" >
+                                <button type="button" class="btn btn-primary mr-1 mb-1">
+                                    <i class="bx bx-chat"></i> Mulai Konsultasi
+                                </button>
+                            </div>
+                            <h6 class="px-2 pt-1 pb-25 mb-0">KONSULTASI</h6>
                             <ul class="chat-sidebar-list">
+                                {{-- @foreach ($avail_lecturers as $item)
                                 <li>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar m-0 mr-50"><img src="{{ asset('img/user.png') }}" height="36" width="36" alt="sidebar user image">
                                             <span class="avatar-status-online"></span>
                                         </div>
                                         <div class="chat-sidebar-name">
-                                            <h6 class="mb-0">Contoh 2 Dosen</h6><span class="text-muted">Keperawatan - D4</span>
+                                            <h6 class="mb-0">{{ $item->full_name }}</h6><span class="text-muted">{{ $item->major->faculty->name }} - {{ $item->major->name }}</span>
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach --}}
                             </ul>
-                            <h6 class="px-2 pt-2 pb-25 mb-0">DOSEN</h6>
+                            <h6 class="px-2 pt-2 pb-25 mb-0">KONSULTASI - SELESAI</h6>
                             <ul class="chat-sidebar-list">
-                                <li>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar m-0 mr-50"><img src="{{ asset('img/user.png') }}" height="36" width="36" alt="sidebar user image">
-                                            <span class="avatar-status-online"></span>
-                                        </div>
-                                        <div class="chat-sidebar-name">
-                                            <h6 class="mb-0">Contoh 1 Dosen</h6><span class="text-muted">Keperawatan - D3</span>
-                                        </div>
-                                    </div>
-                                </li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -143,11 +142,11 @@
                         <section class="chat-window-wrapper">
                             <div class="chat-start">
                                 <span class="bx bx-message chat-sidebar-toggle chat-start-icon font-large-3 p-3 mb-1"></span>
-                                <h4 class="d-none d-lg-block py-50 text-bold-500">Pilih Dosen untuk memulai konsultasi</h4>
+                                <h4 class="d-none d-lg-block py-50 text-bold-500">Mulai konsultasi</h4>
                                 <button class="btn btn-light-primary chat-start-text chat-sidebar-toggle d-block d-lg-none py-50 px-1">Mulai Konsultasi</button>
                             </div>
                             <div class="chat-area d-none">
-                                {{-- <div class="chat-header">
+                                <div class="chat-header">
                                     <header class="d-flex justify-content-between align-items-center border-bottom px-1 py-75">
                                         <div class="d-flex align-items-center">
                                             <div class="chat-sidebar-toggle d-block d-lg-none mr-1"><i class="bx bx-menu font-large-1 cursor-pointer"></i>
@@ -309,7 +308,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <!-- chat card ends --> --}}
+                                <!-- chat card ends -->
                             </div>
                         </section>
                         <!-- app chat window ends -->
@@ -444,17 +443,18 @@
         // Add class active on click of Chat users list
         $(".chat-sidebar-list-wrapper ul li").on("click", function () {
             if ($(".chat-sidebar-list-wrapper ul li").hasClass("active")) {
-            $(".chat-sidebar-list-wrapper ul li").removeClass("active");
+                $(".chat-sidebar-list-wrapper ul li").removeClass("active");
             }
             $(this).addClass("active");
             if ($(".chat-sidebar-list-wrapper ul li").hasClass("active")) {
-            chatStart.addClass("d-none");
-            chatArea.removeClass("d-none");
+                chatStart.addClass("d-none");
+                chatArea.removeClass("d-none");
+            } else {
+                chatStart.removeClass("d-none");
+                chatArea.addClass("d-none");
             }
-            else {
-            chatStart.removeClass("d-none");
-            chatArea.addClass("d-none");
-            }
+
+            
         });
         // app chat favorite star click
         $(".chat-icon-favorite i").on("click", function (e) {
