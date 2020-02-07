@@ -32,6 +32,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile.css') }}">
     <!-- END: Custom CSS-->
 
     <style>

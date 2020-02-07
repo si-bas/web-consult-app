@@ -33,6 +33,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile.css') }}">
     <!-- END: Custom CSS-->
 
 </head>
@@ -65,13 +66,24 @@
                                         <div class="card-body">
                                             <p class="font-medium-1 text-center">
                                                 @if (config('custom.student_verification') ?? false)
-                                                    Anda akan mendapatkan email informasi setelah data registrasi disetujui oleh Administrator.
+                                                    Anda akan mendapatkan email informasi kode setelah data registrasi disetujui oleh Administrator.
                                                 @else
-                                                    Anda akan mendapatkan email informasi terkait akun anda.
+                                                    Kode untuk masuk ke dalam aplikasi
                                                 @endif
                                             </p>
+                                            @if (!empty(Request::get('data')))
+                                                <div class="text-center">
+                                                    <code class="highlighter-rouge">@php
+                                                        try {
+                                                            echo Crypt::decrypt(Request::get('data'));
+                                                        } catch (\Exception $e) {
+                                                            echo "Terjadi Kesalahan";
+                                                        }
+                                                    @endphp</code>
+                                                </div>
+                                            @endif
                                             <hr class="mt-5">
-                                            <div class="text-center mt-3"><small class="mr-25">Sudah mendapatkan email?</small>
+                                            <div class="text-center mt-3"><small class="mr-25">Sudah mendapatkan kode?</small>
                                                 <a href="{{ route('login') }}" class="btn btn-secondary glow w-100 position-relative">Masuk<i id="icon-arrow" class="bx bx-file"></i></a>
                                             </div>
                                         </div>

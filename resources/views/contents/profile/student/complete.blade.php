@@ -82,7 +82,7 @@
                         <fieldset class="form-group">
                             <label>Program Studi <span class="text-danger">*</span></label>
                             <select class="select2 form-control" name="major_id" required style="width: 100%">
-                                <option value="{{ $user->student->major->id }}">{{ $user->student->major->name }}</option>
+                                <option></option>
                             </select>
                         </fieldset>
                     </div>
@@ -177,8 +177,7 @@
                     quietMillis: 50,
                     data: function(params) {
                         return {
-                            search: params.term,
-                            id: select_faculty.val()
+                            search: params.term
                         }
                     },
                     processResults: function (data, page) {

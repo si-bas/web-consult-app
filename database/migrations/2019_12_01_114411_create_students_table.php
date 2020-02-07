@@ -30,7 +30,7 @@ class CreateStudentsTable extends Migration
             $table->text('current_address')->nullable();
             $table->string('high_school_name')->nullable();
 
-            $table->bigInteger('major_id')->unsigned();
+            $table->bigInteger('major_id')->unsigned()->nullable();
             $table->string('semester')->nullable();
             $table->integer('year')->nullable();
             

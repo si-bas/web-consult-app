@@ -34,7 +34,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/assets/css/style.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile.css') }}">
     <style>
         .main-menu .navbar-header .navbar-brand .brand-logo {
             background: url("../../app-assets/images/logo/frest-logo.png") no-repeat;
@@ -73,50 +73,34 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <p> <small> Silahkan lengkapi data diri dan menjadi bagian dari Aplikasi</small>
+                                            <p>
+                                                <small>Aplikasi menjamin kerahasian data Anda</small>
                                             </p>
                                         </div>
                                         <div class="card-content">
                                             <div class="card-body">
                                                 <form method="POST" accept="{{ route('register.submit') }}" id="registration">
                                                     @csrf
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6 mb-50">
-                                                            <label class="text-bold-600">Nama Depan </label>
-                                                            <input type="text" class="form-control" placeholder="Nama Depan" name="first_name" value="{{ old('first_name') }}" required>
-                                                        </div>
-                                                        <div class="form-group col-md-6 mb-50">
-                                                            <label class="text-bold-600">Nama Belakang</label>
-                                                            <input type="text" class="form-control" placeholder="Nama Belakang" name="last_name" value="{{ old('last_name') }}" required>
-                                                        </div>
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600">Nama Lengkap </label>
+                                                        <input type="text" class="form-control" placeholder="Nama Depan" name="full_name" value="{{ old('full_name') }}">
                                                     </div>
 
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">NIM</label>
-                                                        <input type="text" class="form-control" placeholder="Nomor Induk Mahasiswa" name="student_id_number" value="{{ old('student_id_number') }}" required>
-                                                    </div>
-
-                                                    <div class="form-group mb-50">
-                                                        <label class="text-bold-600">Fakultas</label>
-                                                        <select class="select2 form-control" name="faculty_id" required style="width: 100%">
-                                                            <option></option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group mb-50">
-                                                        <label class="text-bold-600">Program Studi</label>
-                                                        <select class="select2 form-control" name="major_id" required style="width: 100%">
-                                                            <option></option>
-                                                        </select>
+                                                        <input type="text" class="form-control" placeholder="Nomor Induk Mahasiswa" name="student_id_number" value="{{ old('student_id_number') }}">
                                                     </div>
 
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">Alamat Email</label>
-                                                        <input type="email" class="form-control" placeholder="Alamat Email" name="email" value="{{ old('email') }}" required>
+                                                        <small class="text-muted">(tidak wajib)</small>
+                                                        <input type="email" class="form-control" placeholder="Alamat Email" name="email" value="{{ old('email') }}">
                                                     </div>
+
                                                     <div class="form-group mb-2">
                                                         <label class="text-bold-600">Kata Sandi</label>
-                                                        <input type="password" class="form-control" placeholder="Kata Sandi" name="password" required>
+                                                        <small class="text-muted">(tidak wajib)</small>
+                                                        <input type="password" class="form-control" placeholder="Kata Sandi" name="password">
                                                     </div>
                                                     <button type="submit" class="btn btn-primary glow position-relative w-100">Daftar<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                                 </form>
@@ -233,7 +217,7 @@
                     if (result.status == 'error') {
                         showAlert('danger', 'bx-error', result.message, card_body);
                     } else {
-                        window.location = "{{ route('register.done') }}";
+                        window.location = `{{ route('register.done') }}?data=${result.data.code}`;
                     }
                 });
             });

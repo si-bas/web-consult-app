@@ -33,6 +33,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile.css') }}">
     <!-- END: Custom CSS-->
 
 </head>
@@ -63,15 +64,22 @@
                                         </div>
                                         <div class="card-content">
                                             <div class="card-body">
-                                                <form method="POST" action="{{ route('login') }}">
+                                                <form method="POST" action="{{ route('login') }}" id="form-login">
                                                     @csrf
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600" for="exampleInputEmail1">Alamat Email</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Alamat Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Alamat Email" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="text-bold-600" for="exampleInputPassword1">Kata Sandi</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Kata Sandi" name="password" required autocomplete="current-password">
+                                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Kata Sandi" name="password" autocomplete="current-password">
+                                                    </div>
+                                                    <div class="d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                                        <div class="text-right"><a href="javascript:;" class="card-link"><small>Hanya memiliki kode?</small></a></div>
+                                                    </div>
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600" for="exampleInputCode">Kode</label>
+                                                        <input type="text" class="form-control" id="exampleInputCode" placeholder="Kode" name="code" value="{{ old('code') }}">
                                                     </div>
                                                     <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
                                                         <div class="text-left">
@@ -81,10 +89,10 @@
                                                                     <small>Ingat saya</small>
                                                                 </label>
                                                             </div>
-                                                        </div>
-                                                        <div class="text-right"><a href="javascript:;" class="card-link"><small>Lupa Kata Sandi?</small></a></div>
+                                                        </div>                                                        
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary glow w-100 position-relative">Masuk<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                                    <button type="submit" style="display: none"></button>
+                                                    <button type="button" class="btn btn-primary glow w-100 position-relative" onclick="submitLogin()">Masuk<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                                 </form>
                                                 <hr>
                                                 <div class="text-center">
@@ -135,6 +143,56 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="{{ asset('js/helper.js') }}"></script>
+    <script>
+        const form_login = $('#form-login');
+
+        $(function () {
+            form_login.keypress(function (e) {
+                if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+                    submitLogin();
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        });
+
+        const submitLogin = () => {
+            let form_data = form_login.serializeArray().reduce((obj, item) => {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+
+            if (!isEmpty(form_data.email) && !isEmpty(form_data.email)) {
+                form_login.find(':submit').click();
+            } else {
+                let card_body = form_login.parent();
+                removeAlert(card_body);
+
+                if (!isEmpty(form_data.code)) {
+                    $.post("{{ route('login.get.data') }}", form_data).done((result) => {
+                        $.each(result.data, function (indexInArray, valueOfElement) { 
+                            let input_field = form_login.find(`input[name=${indexInArray}]`);
+                            
+                            input_field.parent().hide();
+                            input_field.val(valueOfElement);
+                        });
+                        form_login.find(':submit').click();
+                    }).fail(() => {
+                        showAlert('danger', 'bx-error', 'Terjadi kesalahan', card_body);    
+                    });
+                } else {
+                    showAlert('danger', 'bx-error', 'Tidak boleh kosong', card_body);
+                }
+            }
+            
+        }
+
+        const isEmpty = (str) => {
+            return (!str || 0 === str.length);
+        }
+    </script>
     <!-- END: Page JS-->
 
 </body>

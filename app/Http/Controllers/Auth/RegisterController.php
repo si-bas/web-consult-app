@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 # Models
 use App\User;
@@ -80,35 +81,50 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        if (User::where('email', $request->email)->count()) {
-            $error = 'Error! Email telah digunakan, silahkan gunakan email lain';
-        } else {
-            try {
-                $user = User::create([
-                    'name' => $request->first_name.' '.$request->last_name,
-                    'email' => $request->email,
-                    'password' => $request->password,
-                    'password_hint' => $request->password
-                ]);
-                $user->attachRole('student');
-                
-                $student = new Student($request->all());
-                $student->user_id = $user->id;
-                $student->save();
-
-                if (!config('custom.student_verification') ?? false) {
-                    $user->verified_at = Carbon::now()->toDateTimeString();
-                    $user->save();
-                }
-            } catch (\Exception $e) {
-                Log::error($e->getMessage());
-                $error = 'Error! Terjadi kesalahan saat melakukan registrasi';
+        if (!empty($request->email)) {
+            if (User::where('email', $request->email)->count()) {
+                $error = 'Error! Email telah digunakan, silahkan gunakan email lain';
             }
         }
-        
+
+        $base_code = $request->student_id_number.'-'.Carbon::now()->toDateTimeString();
+        $code = Hash::make($base_code);
+        $rand_string = $this->generateRandomString(4);
+
+        try {
+            $user = User::create([
+                'name' => $request->full_name,
+                'email' => $request->email ?? $code.'@mailinator.com',
+                'password' => $request->password ?? $base_code,
+                'password_hint' => $request->password ?? $base_code,
+                'code' => $rand_string
+            ]);
+            $user->attachRole('student');
+
+            $full_name = $this->splitName($request->full_name); 
+            $student = new Student([
+                "first_name" => $full_name[0],
+                "last_name" => $full_name[1],
+                "student_id_number" => $request->student_id_number,
+                "user_id" => $user->id
+            ]);
+            $student->save();
+
+            if (!config('custom.student_verification') ?? false) {
+                $user->verified_at = Carbon::now()->toDateTimeString();
+                $user->save();
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            $error = 'Error! Terjadi kesalahan saat melakukan registrasi';
+        }
+           
         return [
             'status' => empty($error) ? 'success' : 'error',
-            'message' => empty($error) ? 'Berhasil melakukan registrasi' : $error
+            'message' => empty($error) ? 'Berhasil melakukan registrasi' : $error,
+            'data' => [
+                'code' => Crypt::encrypt($rand_string)
+            ]
         ];
     }
 
@@ -138,8 +154,34 @@ class RegisterController extends Controller
         return $query->get(['id', 'name as text']);
     }
 
-    public function done()
+    public function done(Request $request)
     {
         return view('auth.done');
+    }
+
+    private function splitName($name) {
+        $name = trim($name);
+        $last_name = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
+        $first_name = trim( preg_replace('#'.$last_name.'#', '', $name ) );
+        return array($first_name, $last_name);
+    }
+
+    private function generateRandomString($length = 4) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        
+        while (true) {
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+
+            $count = User::where('code', $randomString)->count();
+            if ($count == 0) {
+                break;
+            }
+        }
+
+        return $randomString;
     }
 }
