@@ -31,6 +31,6 @@ class Consult extends Model
 
     public function messages()
     {
-        return $this->hasMany('App\Models\Consultatation\Message', 'consult_id', 'id');
+        return $this->hasMany('App\Models\Consultatation\Message', 'consult_id', 'id')->orderBy('created_at', 'ASC');
     }
 }

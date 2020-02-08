@@ -34,7 +34,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('template-default/assets/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile-auth.css') }}">
     <style>
         .main-menu .navbar-header .navbar-brand .brand-logo {
             background: url("../../app-assets/images/logo/frest-logo.png") no-repeat;

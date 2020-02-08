@@ -33,7 +33,7 @@ class StudentController extends Controller
             $user = User::find(Auth::id())->load([
                 'student.major'
             ]);
-    
+                
             $profile = $user->student->profile()->create($request->all());
             foreach ($request->options as $option_id) {
                 $profile->solving_options()->attach($option_id);

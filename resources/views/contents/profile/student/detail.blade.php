@@ -39,17 +39,27 @@
                         <img src="{{ asset('img/user.png') }}" alt="users view avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
                     </a>
                     <div class="media-body pt-25">
-                        <h4 class="media-heading"><span class="users-view-name">{{ $user->student->full_name }} </span><span class="text-muted font-medium-1"></span><span class="users-view-username text-muted font-medium-1 ">Mahasiswa</span></h4>
-                        <span>ID:</span>
-                        <span class="users-view-id">{{ sprintf('%03d', $user->student->id) }}</span>
+                        <h4 class="media-heading"><span class="users-view-name">{{ $user->student->full_name }} </span></h4>
+                        <span>Sebagai:</span>
+                        <span class="users-view-id">Mahasiswa</span>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-5 px-0 d-flex justify-content-end align-items-center px-1 mb-2">
+            {{-- <div class="col-12 col-sm-5 px-0 d-flex justify-content-end align-items-center px-1 mb-2">
                 <a href="javascript:;" onclick="showForm()" class="btn btn-sm btn-primary">Ubah</a>
+            </div> --}}
+        </div>
+        <div class="alert alert-primary alert-dismissible mb-2" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <div class="d-flex align-items-center">
+                <i class="bx bx-error-circle"></i>
+                <span>
+                    Hanya Anda yang dapat melihat data diri Anda.
+                </span>
             </div>
         </div>
-
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
@@ -58,8 +68,8 @@
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
-                                        <td>Terdaftar:</td>
-                                        <td>{{ \Carbon\Carbon::parse($user->created_at)->formatLocalized("%d %B %Y") }}</td>
+                                        <td width="50%">Terdaftar:</td>
+                                        <td width="50%">{{ \Carbon\Carbon::parse($user->created_at)->formatLocalized("%d %B %Y") }}</td>
                                     </tr>
                                     <tr>
                                         <td>NIM:</td>
@@ -67,11 +77,11 @@
                                     </tr>
                                     <tr>
                                         <td>Fakultas:</td>
-                                        <td class="users-view-verified">{{ $user->student->major->faculty->name }}</td>
+                                        <td class="users-view-verified">{{ $user->student->profile->major->faculty->name }}</td>
                                     </tr>
                                     <tr>
                                         <td>Program Studi:</td>
-                                        <td class="users-view-role">{{ $user->student->major->name }}</td>
+                                        <td class="users-view-role">{{ $user->student->profile->major->name }}</td>
                                     </tr>
                                     <tr>
                                         <td>Semester/Kelas:</td>
@@ -84,8 +94,8 @@
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
-                                        <td>Email:</td>
-                                        <td>{{ $user->email }}</td>
+                                        <td width="50%">Email:</td>
+                                        <td width="50%">{{ $user->getEmail() }}</td>
                                     </tr>
                                     <tr>
                                         <td>Umur:</td>
@@ -101,6 +111,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end mt-1">
+                            <a href="javascript:;" onclick="showForm()" class="btn btn-sm btn-primary">Ubah</a>
                         </div>
                     </div>
                 </div>
@@ -137,21 +150,21 @@
                             <fieldset class="form-group">
                                 <label>Fakultas <span class="text-danger">*</span></label>
                                 <select class="select2 form-control" name="faculty_id" required style="width: 100%">
-                                    <option value="{{ $user->student->major->faculty->id }}">{{ $user->student->major->faculty->name }}</option>
+                                    <option value="{{ $user->student->profile->major->faculty->id }}">{{ $user->student->profile->major->faculty->name }}</option>
                                 </select>
                             </fieldset>
     
                             <fieldset class="form-group">
                                 <label>Program Studi <span class="text-danger">*</span></label>
                                 <select class="select2 form-control" name="major_id" required style="width: 100%">
-                                    <option value="{{ $user->student->major->id }}">{{ $user->student->major->name }}</option>
+                                    <option value="{{ $user->student->profile->major->id }}">{{ $user->student->profile->major->name }}</option>
                                 </select>
                             </fieldset>
     
                             <fieldset class="form-group">
                                 <label for="helpInputTop">Email <span class="text-danger">*</span></label>
                                 <small class="text-muted">contoh: <i>someone@example.com</i></small>
-                                <input type="email" class="form-control" placeholder="Tuliskan email" name="email" value="{{ $user->email }}" required>
+                                <input type="email" class="form-control" placeholder="Tuliskan email" name="email" value="{{ $user->getEmail() }}" required>
                             </fieldset>
     
                             <fieldset class="form-group">
@@ -161,8 +174,8 @@
                             </fieldset>
                         </div>                        
                         <div class="col-12 d-flex justify-content-end mt-1">
-                            <button type="submit" class="btn btn-primary mr-1 mb-1">Simpan</button>
                             <a href="javascript:;" onclick="hideForm()" class="btn btn-light-secondary mr-1 mb-1">Batalkan</a>
+                            <button type="submit" class="btn btn-primary mr-1 mb-1">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -224,6 +237,7 @@
 
         const showForm = () => {
             card_update.slideDown('slow');
+            $('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
         }
 
         const hideForm = () => {

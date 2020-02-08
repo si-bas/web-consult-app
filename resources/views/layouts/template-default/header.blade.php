@@ -4,11 +4,14 @@
         <div class="navbar-container content">
             <div class="navbar-collapse" id="navbar-mobile">
                 <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
-                    <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Jam">
-                            <div id="clock"></div>
-                        </a>
-                    </li>
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs is-active" href="#"><i class="ficon bx bx-menu"></i></a></li>
+                        <li class="nav navbar-nav bookmark-icons">
+                            <a class="clock nav-link" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Jam">
+                                <div id="clock"></div>
+                            </a>
+                        </li>
+                    </ul>                    
                 </div>
                 <ul class="nav navbar-nav float-right">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
@@ -23,12 +26,6 @@
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            @role('student', 'lecturer')
-                            <a class="dropdown-item" href="#">
-                                <i class="bx bx-user mr-50"></i> Profil Saya
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            @endrole
                             <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">

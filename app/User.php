@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Profile\Lecturer', 'user_id', 'id');
     }
+
+    public function getEmail()
+    {
+        return preg_match('/\@mailinator.com\b/', $this->email) ? '' : $this->email;
+    }
 }

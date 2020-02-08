@@ -1,14 +1,76 @@
-@media (max-width: 576px) {
-    .card-body {
-        flex: 1 1 auto;
-        padding: 0;
-    }
-
-    .p-2 {
-        padding: 1.25rem !important;
-    }
+.table-mobile {
+    visibility:hidden;
+    overflow:hidden;
+    position:absolute;
 }
 
-@media (max-width: 359px) {
 
+
+@media (max-width: 576px) {
+    html body.navbar-sticky .app-content .content-wrapper {
+        padding: 2.8rem 1rem 0;
+        margin-top: 3rem;
+    }
+
+    div.content-header-left {
+        visibility:hidden;
+        overflow:hidden;
+        position:absolute;
+    }
+
+    .header-navbar .navbar-wrapper {
+        background-color: #1a233a;
+    }
+
+    .header-navbar .navbar-container ul.nav li i.ficon {
+        font-size: 1.5rem;
+        color: #FFFFFF;
+        vertical-align: middle;
+        cursor: pointer;
+        -webkit-text-stroke: 0;
+    }
+
+    .clock {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .clock #clock {
+        color: #FFFFFF;
+    }
+
+    .dataTables_length {
+        visibility:hidden;
+        overflow:hidden;
+        position:absolute;
+    }
+
+    .dataTables_filter {
+        visibility:hidden;
+        overflow:hidden;
+        position:absolute;
+    }
+
+    .table-mobile {
+        visibility:visible;
+        overflow:visible;
+        position:static;
+    }
+
+    .table-desktop {
+        visibility:hidden;
+        overflow:hidden;
+        position:absolute;
+    }
+
+    footer.footer {
+        padding: 0.5rem 2.2rem;
+    }
+
+    footer .copyright {
+        float: right !important;
+    }
 }

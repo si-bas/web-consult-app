@@ -15,8 +15,8 @@
         var defaultLang = {
             processing: '<img src="https://production.inovasi.or.id/images/loading.gif">',
             paginate: {
-                next: 'Selanjutnya',
-                previous: 'Sebelumnya'
+                next: '<i class="bx bxs-right-arrow"></i>',
+                previous: '<i class="bx bxs-left-arrow"></i>'
             },
             lengthMenu: "Menampilkan _MENU_ baris",
             search: 'Cari:',
@@ -24,3 +24,4 @@
         };
     </script>    
 @endpush
+

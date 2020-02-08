@@ -19,16 +19,9 @@ class StudentController extends Controller
 {
     public function list()
     {
-        $user = User::find(Auth::id())->load([
-            'student.major.faculty', 'student.profile' => function($query) { $query->with(['gender', 'solving_options']); }
-        ]);
+        $consults = Consult::where('student_id', Auth::user()->student->id)->get();
 
-        $consults = Consult::with([
-            'schedule.day', 'lecturer'
-        ])->where('student_id', Auth::user()->student->id)->get();
-
-        return view('contents.consult.student.test', [
-            'user' => $user,
+        return view('contents.consult.student.list', [
             'consults' => $consults
         ]);
     }
@@ -45,11 +38,14 @@ class StudentController extends Controller
         ]);
 
         return DataTables::of($users)
+        ->editColumn('name', function($user) {
+            return '<a href="javascript:;" onclick="showDetail('.$user->id.')">'.$user->name.'</a>';
+        })
         ->addColumn('action', function($user) {
             return '<button type="button" class="btn mr-1 mb-1 btn-outline-primary btn-sm" onclick="showDetail('.$user->id.')">Pilih</button>';
         })
         ->rawColumns([
-            'action'
+            'action', 'name'
         ])
         ->make(true);
     }
@@ -82,6 +78,15 @@ class StudentController extends Controller
         ]);
 
         return redirect()->route('consult.student.list', ['consult' => $consult->id]);
+    }
+
+    public function chat(Request $request)
+    {
+        $consult = Consult::find($request->id);
+
+        return view('contents.consult.student.chat', [
+            'consult' => $consult
+        ]);
     }
 
     public function getMessages(Request $request)
