@@ -19,7 +19,7 @@ class StudentController extends Controller
 {
     public function list()
     {
-        $consults = Consult::where('student_id', Auth::user()->student->id)->get();
+        $consults = Consult::where('student_id', Auth::user()->student->id)->orderBy('created_at', 'DESC')->get();
 
         return view('contents.consult.student.list', [
             'consults' => $consults

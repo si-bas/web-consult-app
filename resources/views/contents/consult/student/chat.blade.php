@@ -105,6 +105,7 @@
             });
 
             $('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+            form_chat.find('input[name=message]').val('');
         }
 
         $(function () {
