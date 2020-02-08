@@ -103,6 +103,8 @@
                 id: current_chat_id,
                 message: message
             });
+
+            $('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
         }
 
         $(function () {
