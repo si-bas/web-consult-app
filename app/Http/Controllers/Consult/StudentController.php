@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Carbon;
 
 # Models
 use App\User;
@@ -19,7 +20,7 @@ class StudentController extends Controller
 {
     public function list()
     {
-        $consults = Consult::where('student_id', Auth::user()->student->id)->orderBy('created_at', 'DESC')->get();
+        $consults = Consult::where('student_id', Auth::user()->student->id)->orderBy('updated_at', 'DESC')->get();
 
         return view('contents.consult.student.list', [
             'consults' => $consults
@@ -89,6 +90,19 @@ class StudentController extends Controller
         ]);
     }
 
+    public function chatFirstLoad(Request $request)
+    {
+        $consult = Consult::find($request->id)->load([
+            'messages' => function($query) {
+                $query->latest()->take(5);
+            }
+        ]);
+
+        return view('contents.consult.student.chat.first-load', [
+            'consult' => $consult
+        ]);
+    }
+
     public function getMessages(Request $request)
     {
         $consult = Consult::find($request->id)->load([
@@ -100,8 +114,29 @@ class StudentController extends Controller
         ]);
     }
 
+    public function getMessagesMore(Request $request)
+    {
+        $consult = Consult::find($request->id)->load([
+            'messages' => function($query) use($request) {
+                $query->latest()->skip($request->skip)->take(5);
+            }
+        ]);
+
+        return [
+            'view' => view('contents.consult.student.chat.more', [
+                'consult' => $consult
+            ])->render(),
+            'count' => $consult->messages->count(),
+            'skip' => $request->skip+5
+        ];
+    }
+
     public function saveMessage(Request $request)
     {
+        Consult::where('id', $request->id)->update([
+            'updated_at' => Carbon::now()->toDateTimeString()
+        ]);
+
         Message::create([
             "consult_id" => $request->id,
             "user_id" => Auth::user()->id,

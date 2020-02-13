@@ -46,6 +46,12 @@ class StudentController extends Controller
                 </div>
             </div>';
         })
+        ->addColumn('faculty_name', function($user) {
+            return $user->student->profile->major->faculty->name ?? '-';
+        })
+        ->addColumn('major_name', function($user) {
+            return $user->student->profile->major->name ?? '-';
+        })
         ->rawColumns([
             'action_verify'
         ])

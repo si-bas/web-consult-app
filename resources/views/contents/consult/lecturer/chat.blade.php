@@ -13,7 +13,7 @@
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('consult.student.list') }}">Konsultasi</a>
+                            <a href="{{ route('consult.lecturer.list') }}">Konsultasi</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Chat
@@ -34,12 +34,12 @@
                 </div>
             </a>
             <div class="media-body">
-                <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">{{ $consult->lecturer->full_name }}</a>
+                <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">Mahasiswa #{{ $consult->student->id }}</a>
                 </h6>
                 <span class="text-muted font-small-3">{{ $consult->schedule->day->name }}, {{ $consult->schedule->start_time }} - {{ $consult->schedule->end_time }}</span>
             </div>
             <div class="heading-elements">
-                <button type="button" class="btn btn-sm btn-light-secondary" onclick="window.location.href='{{ route('consult.student.list') }}'">Kembali</button>
+                <button type="button" class="btn btn-sm btn-light-secondary" onclick="window.location.href='{{ route('consult.lecturer.list') }}'">Kembali</button>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
             
             chat_room.append(html);
 
-            $.post("{{ route('consult.student.save.messages.submit') }}", {
+            $.post("{{ route('consult.lecturer.save.messages.submit') }}", {
                 _token: "{{ csrf_token() }}",
                 id: current_chat_id,
                 message: message
@@ -117,7 +117,7 @@
         $(function () {
             $.LoadingOverlay('show');
 
-            $.get("{{ route('consult.student.chat.first.load') }}", {
+            $.get("{{ route('consult.lecturer.chat.first.load') }}", {
                 id: current_chat_id
             }).done(function (result) {
                 chat_room.append(result);
@@ -130,7 +130,7 @@
         const showMore = (e) => {
             $.LoadingOverlay('show');
 
-            $.get("{{ route('consult.student.get.messages.more') }}", {
+            $.get("{{ route('consult.lecturer.get.messages.more') }}", {
                 id: current_chat_id,
                 skip: chat_skip
             }).done(function (result) {                

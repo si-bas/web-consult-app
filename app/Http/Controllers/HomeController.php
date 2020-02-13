@@ -38,6 +38,10 @@ class HomeController extends Controller
             return redirect()->route('questionnaire.fill.check');
         }
 
+        if (Laratrust::hasRole('lecturer')) {
+            return redirect()->route('consult.lecturer.list');
+        }
+
         return view('home');
     }
 }

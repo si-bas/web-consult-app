@@ -12,7 +12,7 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
         @if (!Request::is('profile/student/complete', 'questionnaire/fill/*'))
-            @role(['admin', 'lecturer'])
+            @role(['admin'])
             <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
                 <a href="{{ route('home') }}">
                     <i class="menu-livicon" data-icon="desktop"></i>
@@ -64,11 +64,14 @@
             </li>
             @endrole
 
-            <li class="{{ Request::is('consult/student/*') ? 'active' : '' }} nav-item">
+            <li class="{{ Request::is('consult/student/*', 'consult/lecturer/*') ? 'active' : '' }} nav-item">
                 <a href="
-                @role('student')
-                    {{ route('consult.student.list') }}
-                @endrole
+                    @role('student')
+                        {{ route('consult.student.list') }}
+                    @endrole
+                    @role('lecturer')
+                        {{ route('consult.lecturer.list') }}
+                    @endrole
                 ">
                     <i class="menu-livicon" data-icon="grid"></i>
                     <span class="menu-title" data-i18n="">Konsultasi</span>

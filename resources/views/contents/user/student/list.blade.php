@@ -30,17 +30,17 @@
             <div class="card-body">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="unverified-tab" data-toggle="tab" href="#unverified" aria-controls="unverified" role="tab" aria-selected="false">
-                            <i class="bx bx-user align-middle"></i>
-                            <span class="align-middle">Belum Terverifikasi</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="verified-tab" data-toggle="tab" href="#verified" aria-controls="verified" role="tab" aria-selected="false">
+                        <a class="nav-link active" id="verified-tab" data-toggle="tab" href="#verified" aria-controls="verified" role="tab" aria-selected="false">
                             <i class="bx bx-user-check align-middle"></i>
                             <span class="align-middle">Sudah Terverifikasi</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="unverified-tab" data-toggle="tab" href="#unverified" aria-controls="unverified" role="tab" aria-selected="false">
+                            <i class="bx bx-user align-middle"></i>
+                            <span class="align-middle">Belum Terverifikasi</span>
+                        </a>
+                    </li>                    
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="unverified" aria-labelledby="unverified-tab" role="tabpanel">
@@ -139,7 +139,7 @@
                     {
                         orderable: false,
                         searchable: false,
-                        targets: [0, 5]
+                        targets: [0, 5, 3, 4]
                     },
                     {
                         className: 'text-center',
@@ -165,12 +165,13 @@
                         name: 'student.student_id_number'
                     },                                                        
                     {
-                        data: 'student.major.name',
-                        name: 'student.major.name'
+                        data: 'major_name',
+                        name: 'major_name',
+                       
                     },
                     {
-                        data: 'student.major.faculty.name',
-                        name: 'student.major.faculty.name'
+                        data: 'faculty_name',
+                        name: 'faculty_name'
                     },
                     {
                         data: 'action_verify',
@@ -202,7 +203,7 @@
                     {
                         orderable: false,
                         searchable: false,
-                        targets: [0, 5]
+                        targets: [0, 5, 3, 4]
                     },
                     {
                         className: 'text-center',
@@ -228,12 +229,13 @@
                         name: 'student.student_id_number'
                     },                                    
                     {
-                        data: 'student.major.name',
-                        name: 'student.major.name'
+                        data: 'major_name',
+                        name: 'major_name',
+                       
                     },
                     {
-                        data: 'student.major.faculty.name',
-                        name: 'student.major.faculty.name'
+                        data: 'faculty_name',
+                        name: 'faculty_name'
                     },
                     {
                         data: 'action_verify',

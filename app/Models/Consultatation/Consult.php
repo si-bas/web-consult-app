@@ -17,11 +17,17 @@ class Consult extends Model
         "reason",
         "is_meeting",
         "is_done",
+        "updated_at"
     ];
 
     public function lecturer()
     {
         return $this->belongsTo('App\Models\Profile\Lecturer', 'lecturer_id', 'id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo('App\Models\Profile\Student', 'student_id', 'id');
     }
 
     public function schedule()
@@ -31,6 +37,6 @@ class Consult extends Model
 
     public function messages()
     {
-        return $this->hasMany('App\Models\Consultatation\Message', 'consult_id', 'id')->orderBy('created_at', 'ASC');
+        return $this->hasMany('App\Models\Consultatation\Message', 'consult_id', 'id');
     }
 }
