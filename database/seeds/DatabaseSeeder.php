@@ -14,14 +14,18 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
 
-        $this->call(ProvincesTableSeeder::class);
-        $this->call(DistrictsTableSeeder::class);
-        $this->call(SubdistrictsTableSeeder::class);
-        $this->call(VillagesTableSeeder::class);
-
         $this->call(UniversityDataSeeder::class);
         $this->call(DaysTableSeeder::class);
         $this->call(ProblemSolvingOptionsTableSeeder::class);
         $this->call(GendersTableSeeder::class);
+
+        $this->call(QuestionnaiesTableSeeder::class);
+        $this->call(QuestionnaieQuestonsTableSeeder::class);
+        $this->call(CreateQuestionnaireAnswersTable::class);
+
+        $this->call(ProvincesTableSeeder::class);
+        $this->call(DistrictsTableSeeder::class);
+        $this->call(SubdistrictsTableSeeder::class);
+        $this->call(VillagesTableSeeder::class);
     }
 }
