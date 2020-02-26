@@ -2,11 +2,10 @@
 
 use Illuminate\Database\Seeder;
 use League\Csv\Reader;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
-# Models
-use App\Models\Questionnaire\Question;
-
-class QuestionnaieQuestonsTableSeeder extends Seeder
+class QuestionnaieQuestionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,6 +20,10 @@ class QuestionnaieQuestonsTableSeeder extends Seeder
         $header = $csv->getHeader(); 
         $records = $csv->getRecords();
 
-        Question::insert($records);
+        foreach ($records as $row) {
+            $row = collect($row);
+
+            if(empty($row['deleted_at'])) DB::table('questionnaire_questions')->insert($row->except(['created_at', 'updated_at', 'deleted_at'])->toArray());
+        }
     }
 }

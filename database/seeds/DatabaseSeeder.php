@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(GendersTableSeeder::class);
 
         $this->call(QuestionnaiesTableSeeder::class);
-        $this->call(QuestionnaieQuestonsTableSeeder::class);
-        $this->call(CreateQuestionnaireAnswersTable::class);
+        $this->call(QuestionnaieQuestionsTableSeeder::class);
+        $this->call(QuestionnaieAnswersTableSeeder::class);
 
         $this->call(ProvincesTableSeeder::class);
         $this->call(DistrictsTableSeeder::class);
