@@ -32,22 +32,24 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <table class="table mb-0 table-hover" id="lecturer-table" style="width: 100%">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>#</th>
-                            <th>NAMA</th>
-                            <th>NIP</th>
-                            <th>JURUSAN</th>
-                            <th>FAKULTAS</th>                                
-                            <th>AKSI</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table mb-0 table-hover" id="lecturer-table" style="width: 100%">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>NAMA</th>
+                                <th>NIP</th>
+                                <th>JURUSAN</th>
+                                <th>FAKULTAS</th>                                
+                                <th>AKSI</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>

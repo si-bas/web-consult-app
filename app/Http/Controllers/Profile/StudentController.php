@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\User;
 use App\Models\Questionnaire\Problem_solving_option;
 use App\Models\Profile\Student;
+use App\Models\University\Major;
 
 class StudentController extends Controller
 {
@@ -77,5 +78,22 @@ class StudentController extends Controller
         }
 
         return redirect()->route('profile.student.detail')->with('error', 'Terjadi kesalahan saat mengubah data profil');
+    }
+    
+    public function getMajors(Request $request)
+    {
+        $query = Major::orderBy('name')->has('faculty')->with([
+            'faculty'
+        ]);
+
+        if (!empty($request->search)) {
+            $query->where('name', 'LIKE', "%$request->search%");
+        }
+
+        if (!empty($request->faculty_id)) {
+            $query->where('faculty_id', $request->faculty_id);
+        }
+
+        return $query->get(['id', 'name as text', 'faculty_id']);
     }
 }

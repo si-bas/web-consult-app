@@ -9,7 +9,7 @@
                 <p class="text-muted"><small>{{ $item->timestamp }}</small></p>
             </div>
         </div>
-        <div class="card-body py-0">
+        <div class="card-body py-0 chat-message" data-id="{{ $item->id }}">
             <p>{{ $item->message }}</p>
         </div>
         <hr class="{{ $key == 0 ? 'first-section' : '' }}">

@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  db: 
+    image: mysql:8.0.18
+    ports: 
+      - 3306:3306
+    container_name: consult_db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: terserahlw
+      MYSQL_DATABASE: homestead

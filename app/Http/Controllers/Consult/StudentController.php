@@ -143,4 +143,19 @@ class StudentController extends Controller
             "message" => $request->message
         ]);
     }
+
+    public function getMessagesNew(Request $request)
+    {
+        $messages = Message::whereHas('consult', function($query) {
+            $query->where('student_id', Auth::user()->student->id);
+        })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
+
+        return [
+            'view' => view('contents.consult.student.chat.new', [
+                'messages' => $messages
+            ])->render(),
+
+            'count' => $messages->count()
+        ];
+    }
 }

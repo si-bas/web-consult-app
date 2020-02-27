@@ -171,7 +171,7 @@
                 placeholder: 'Pilih Program Studi',
                 minimumInputLength: 0,
                 ajax: {
-                    url: "{{ route('user.lecturer.get.majors') }}",
+                    url: "{{ route('profile.student.get.majors') }}",
                     dataType: 'json',
                     type: "GET",
                     quietMillis: 50,
@@ -182,7 +182,12 @@
                     },
                     processResults: function (data, page) {
                         return {
-                            results: data
+                            results: $.map(data, function (data) {
+                                return {
+                                    text: data.faculty.name+' - '+data.text,
+                                    id: data.id
+                                }
+                            })
                         };
                     },
                 }

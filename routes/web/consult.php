@@ -18,7 +18,7 @@ Route::prefix('student')->group(function () {
     Route::get('/get/messages/more', 'StudentController@getMessagesMore')->name('consult.student.get.messages.more');
     
     Route::post('/save/messages', 'StudentController@saveMessage')->name('consult.student.save.messages.submit');
-    
+    Route::get('/get/messages/new', 'StudentController@getMessagesNew')->name('consult.student.get.messages.new');
 });
 
 Route::prefix('lecturer')->group(function () {

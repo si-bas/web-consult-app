@@ -1,7 +1,9 @@
 @if ($consult->messages()->exists())
-    <div class="text-center mb-2">
-        <a href="javascript:;" onclick="showMore(this)">selengkapnya. . .</a>
-    </div>
+    @if ($consult->messages()->count() > 5)
+        <div class="text-center mb-2">
+            <a href="javascript:;" onclick="showMore(this)">selengkapnya. . .</a>
+        </div>
+    @endif
     @foreach ($consult->messages->sortBy('created_at') as $key => $item)
         <div class="card-header user-profile-header pt-0 pb-0">
             <div class="avatar mr-50 align-top">
@@ -12,7 +14,7 @@
                 <p class="text-muted"><small>{{ $item->timestamp }}</small></p>
             </div>
         </div>
-        <div class="card-body py-0">
+        <div class="card-body py-0 chat-message" data-id="{{ $item->id }}">
             <p>{{ $item->message }}</p>
         </div>
         <hr class="{{ $key == 0 ? 'first-section' : '' }}">

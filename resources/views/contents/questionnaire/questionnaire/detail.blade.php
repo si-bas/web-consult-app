@@ -48,15 +48,17 @@
                 </div>
                 <!-- logo and title -->
                 <div class="row mt-2">
-                    <div class="col-6">
+                    <div class="col-12">
                         <h4 class="text-primary">{{ $questionnaire->name }}</h4>
                         <span>Dibuat oleh {{ $questionnaire->user->name }}</span>                        
                     </div>
-                    <div class="col-6 d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary mr-1 mb-1" data-toggle="modal" data-target="#modal-update"><i class="bx bx-pencil"></i> Ubah Kuesioner</button>
-                    </div>
                     <div class="col-12">
                         <p class="mt-1"><span class="text-bold-600">Petunjuk :</span> {{ $questionnaire->guide_text }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-secondary mr-1 mb-1 pull-right" data-toggle="modal" data-target="#modal-update"><i class="bx bx-pencil"></i> Ubah Kuesioner</button>
                     </div>
                 </div>
             </div>
