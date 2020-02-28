@@ -19,7 +19,15 @@ class LecturerController extends Controller
 {
     public function list()
     {
-        $consults = Consult::where('lecturer_id', Auth::user()->lecturer->id)->orderBy('updated_at', 'DESC')->get();
+        $consults = Consult::where('lecturer_id', Auth::user()->lecturer->id)
+        ->withCount([
+            'messages' => function($query) {
+                $query->whereDoesntHave('readers', function($query) {
+                    $query->where('user_id', Auth::user()->id);
+                });
+            }
+        ])
+        ->orderBy('updated_at', 'DESC')->get();
 
         return view('contents.consult.lecturer.list', [
             'consults' => $consults
@@ -69,7 +77,9 @@ class LecturerController extends Controller
             }
         ]);
 
-        dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        if ($consult->messages->count() > 0) {
+            dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        }
 
         return [
             'view' => view('contents.consult.lecturer.chat.more', [
@@ -103,7 +113,9 @@ class LecturerController extends Controller
             $query->where('lecturer_id', Auth::user()->lecturer->id);
         })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
 
-        dispatch(new SaveReadMessages($messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        if ($messages->count() > 0) {
+            dispatch(new SaveReadMessages($messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        }
 
         return [
             'view' => view('contents.consult.lecturer.chat.new', [

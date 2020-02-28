@@ -85,6 +85,8 @@
                 id: current_chat_id,
                 message: message
             });
+
+            $('#empty').remove();
             
             form_chat.find('textarea[name=message]').val('');
             scrollToBottom();

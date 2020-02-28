@@ -38,16 +38,12 @@ class SaveReadMessages implements ShouldQueue
      */
     public function handle()
     {
-        if (is_array($this->message_ids)) {
-            foreach ($this->message_ids as $id) {
-                Reader::updateOrCreate([
-                    'message_id' => $id, 'user_id' => $this->user_id 
-                ], [
-                    'read_at' => $this->datetime
-                ]);
-            }
-        } else {
-            Log::warning('SaveReadMessages - Invalid array of message id');
+        foreach ($this->message_ids as $id) {
+            Reader::updateOrCreate([
+                'message_id' => $id, 'user_id' => $this->user_id 
+            ], [
+                'read_at' => $this->datetime
+            ]);
         }
     }
 

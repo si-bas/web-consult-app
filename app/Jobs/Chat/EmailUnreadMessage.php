@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 # Models
 use App\User;
@@ -42,7 +43,12 @@ class EmailUnreadMessage implements ShouldQueue
         })->first();
 
         if (!empty($message)) {
-            # send email here...
+            Log::info($message);
         }
+    }
+
+    public function failed(\Exception $exception)
+    {
+        Log::error($exception->getMessage());
     }
 }

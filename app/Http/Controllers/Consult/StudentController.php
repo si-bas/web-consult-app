@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 # Models
 use App\User;
@@ -23,7 +24,15 @@ class StudentController extends Controller
 {
     public function list()
     {
-        $consults = Consult::where('student_id', Auth::user()->student->id)->orderBy('updated_at', 'DESC')->get();
+        $consults = Consult::where('student_id', Auth::user()->student->id)
+        ->withCount([
+            'messages' => function($query) {
+                $query->whereDoesntHave('readers', function($query) {
+                    $query->where('user_id', Auth::user()->id);
+                });
+            }
+        ])
+        ->orderBy('updated_at', 'DESC')->get();
 
         return view('contents.consult.student.list', [
             'consults' => $consults
@@ -127,7 +136,9 @@ class StudentController extends Controller
             }
         ]);
 
-        dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        if ($consult->messages->count() > 0) {
+            dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        }
 
         return [
             'view' => view('contents.consult.student.chat.more', [
@@ -152,7 +163,7 @@ class StudentController extends Controller
             "message" => $request->message
         ]);
 
-        dispatch(new EmailUnreadMessage($consult->student->user_id, $consult->lecturer->user_id, $message->id));
+        dispatch((new EmailUnreadMessage($consult->student->user_id, $consult->lecturer->user_id, $message->id))->delay(now()->addMinutes(15)));
     }
 
     public function getMessagesNew(Request $request)
@@ -161,7 +172,9 @@ class StudentController extends Controller
             $query->where('student_id', Auth::user()->student->id);
         })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
 
-        dispatch(new SaveReadMessages($messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        if ($messages->count() > 0) {
+            dispatch(new SaveReadMessages($messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+        }
 
         return [
             'view' => view('contents.consult.student.chat.new', [

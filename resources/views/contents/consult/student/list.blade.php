@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="list-content">
-                            <span class="list-title">{{ $item->lecturer->full_name }}</span>
+                            <span class="list-title">{{ $item->lecturer->full_name }} {!! $item->messages_count > 0 ? '<span class="danger ml-1">( '.$item->messages_count.' pesan baru)</span>' : '' !!}</span>
                             <small class="text-muted d-block">{{ $item->schedule->day->name }}, {{ $item->schedule->start_time }} - {{ $item->schedule->end_time }}</small>
                         </div>
                     </div>
