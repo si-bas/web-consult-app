@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Consultatation;
+namespace App\Models\Consultation;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,7 +20,7 @@ class Message extends Model
 
     public function consult()
     {
-        return $this->belongsTo('App\Models\Consultatation\Consult', 'consult_id', 'id');
+        return $this->belongsTo('App\Models\Consultation\Consult', 'consult_id', 'id');
     }
 
     public function user()
@@ -31,5 +31,10 @@ class Message extends Model
     public function getTimestampAttribute()
     {
         return Carbon::parse($this->created_at)->format('d/m/Y @ H:i');
+    }
+    
+    public function readers()
+    {
+        return $this->hasMany('App\Models\Consultation\Reader', 'message_id', 'id');
     }
 }

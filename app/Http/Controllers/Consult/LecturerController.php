@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+
 # Models
-use App\Models\Consultatation\Consult;
-use App\Models\Consultatation\Message;
+use App\Models\Consultation\Consult;
+use App\Models\Consultation\Message;
+
+# Jobs
+use App\Jobs\Chat\SaveReadMessages;
+use App\Jobs\Chat\EmailUnreadMessage;
 
 class LecturerController extends Controller
 {
@@ -38,6 +43,8 @@ class LecturerController extends Controller
             }
         ]);
 
+        dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+
         return view('contents.consult.lecturer.chat.first-load', [
             'consult' => $consult
         ]);
@@ -62,6 +69,8 @@ class LecturerController extends Controller
             }
         ]);
 
+        dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+
         return [
             'view' => view('contents.consult.lecturer.chat.more', [
                 'consult' => $consult
@@ -73,15 +82,19 @@ class LecturerController extends Controller
 
     public function saveMessage(Request $request)
     {
-        Consult::where('id', $request->id)->update([
-            'updated_at' => Carbon::now()->toDateTimeString()
+        $consult = Consult::find($request->id)->load([
+            'student', 'lecturer'
         ]);
+        $consult->updated_at = Carbon::now()->toDateTimeString();
+        $consult->save();
 
-        Message::create([
+        $message = Message::create([
             "consult_id" => $request->id,
             "user_id" => Auth::user()->id,
             "message" => $request->message
         ]);
+
+        dispatch((new EmailUnreadMessage($consult->student->user_id, $consult->lecturer->user_id, $message->id))->delay(now()->addMinutes(15)));
     }
 
     public function getMessagesNew(Request $request)
@@ -89,6 +102,8 @@ class LecturerController extends Controller
         $messages = Message::where('consult_id', $request->id)->whereHas('consult', function($query) {
             $query->where('lecturer_id', Auth::user()->lecturer->id);
         })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
+
+        dispatch(new SaveReadMessages($messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
 
         return [
             'view' => view('contents.consult.lecturer.chat.new', [

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Consultatation;
+namespace App\Models\Consultation;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,6 +37,6 @@ class Consult extends Model
 
     public function messages()
     {
-        return $this->hasMany('App\Models\Consultatation\Message', 'consult_id', 'id');
+        return $this->hasMany('App\Models\Consultation\Message', 'consult_id', 'id');
     }
 }

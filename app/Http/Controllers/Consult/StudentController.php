@@ -11,10 +11,13 @@ use Illuminate\Support\Carbon;
 
 # Models
 use App\User;
-use App\Models\Profile\Lecturer;
 use App\Models\Schedule\Lecturer as Schedule;
-use App\Models\Consultatation\Consult;
-use App\Models\Consultatation\Message;
+use App\Models\Consultation\Consult;
+use App\Models\Consultation\Message;
+
+# Jobs
+use App\Jobs\Chat\SaveReadMessages;
+use App\Jobs\Chat\EmailUnreadMessage;
 
 class StudentController extends Controller
 {
@@ -98,6 +101,8 @@ class StudentController extends Controller
             }
         ]);
 
+        dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+
         return view('contents.consult.student.chat.first-load', [
             'consult' => $consult
         ]);
@@ -122,6 +127,8 @@ class StudentController extends Controller
             }
         ]);
 
+        dispatch(new SaveReadMessages($consult->messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
+
         return [
             'view' => view('contents.consult.student.chat.more', [
                 'consult' => $consult
@@ -133,15 +140,19 @@ class StudentController extends Controller
 
     public function saveMessage(Request $request)
     {
-        Consult::where('id', $request->id)->update([
-            'updated_at' => Carbon::now()->toDateTimeString()
+        $consult = Consult::find($request->id)->load([
+            'student', 'lecturer'
         ]);
+        $consult->updated_at = Carbon::now()->toDateTimeString();
+        $consult->save();
 
-        Message::create([
+        $message = Message::create([
             "consult_id" => $request->id,
             "user_id" => Auth::user()->id,
             "message" => $request->message
         ]);
+
+        dispatch(new EmailUnreadMessage($consult->student->user_id, $consult->lecturer->user_id, $message->id));
     }
 
     public function getMessagesNew(Request $request)
@@ -149,6 +160,8 @@ class StudentController extends Controller
         $messages = Message::where('consult_id', $request->id)->whereHas('consult', function($query) {
             $query->where('student_id', Auth::user()->student->id);
         })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
+
+        dispatch(new SaveReadMessages($messages->pluck('id'), Auth::user()->id, Carbon::now()->toDateTimeString()));
 
         return [
             'view' => view('contents.consult.student.chat.new', [
