@@ -13,7 +13,11 @@
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('questionnaire.list') }}">Kuesioner</a>
+                        <li class="breadcrumb-item">
+                            Kuesioner
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('questionnaire.list') }}">Daftar Kuesioner</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Rincian
@@ -71,35 +75,24 @@
     <section class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="card-title">Daftar Pertanyaan</h4>
-            {{-- <ul class="list-inline d-flex mb-0">
-                <li class="d-flex align-items-center">
-                    <i class='bx bxs-cog font-medium-3 mr-50'></i>
-                    <div class="dropdown">
-                        <div class="dropdown-toggle mr-1" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Pengaturan
-                        </div>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="javascript:;">Standar Tipe Jawaban</a>
-                        </div>
-                    </div>
-                </li>
-            </ul> --}}
         </div>
         <div class="card-content">
             <div class="card-body">
-                <table class="table mb-0 table-hover" id="questions-table" style="width: 100%">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>NO.</th>
-                            <th>PERTANYAAN</th>
-                            <th>AKSI</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table mb-0 table-hover" id="questions-table" style="width: 100%">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>NO.</th>
+                                <th>PERTANYAAN</th>
+                                <th>AKSI</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
                 <hr>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end ">

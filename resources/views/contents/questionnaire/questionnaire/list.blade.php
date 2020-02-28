@@ -13,8 +13,11 @@
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active">
+                        <li class="breadcrumb-item">
                             Kuesioner
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Daftar Kuesioner
                         </li>
                     </ol>
                 </div>

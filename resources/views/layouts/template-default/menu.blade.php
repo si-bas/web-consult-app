@@ -33,12 +33,26 @@
                 </a>
             </li> --}}
 
-            @role('admin')
-            <li class="{{ Request::is('questionnaire/*') ? 'active' : '' }} nav-item">
-                <a href="{{ route('questionnaire.list') }}">
+            @role('admin')            
+            <li class=" nav-item">
+                <a href="#">
                     <i class="menu-livicon" data-icon="notebook"></i>
                     <span class="menu-title" data-i18n="">Kuesioner</span>
                 </a>
+                <ul class="menu-content">
+                    <li class="{{ Request::is('questionnaire/list', 'questionnaire/detail', 'questionnaire/question/*') ? 'active' : '' }}"">
+                        <a href="{{ route('questionnaire.list') }}"><i class="bx bx-right-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="">Daftar Kuesioner</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('questionnaire/respondent/*') ? 'active' : '' }}">
+                        <a href="{{ route('questionnaire.respondent.list') }}">
+                            <i class="bx bx-right-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="">Daftar Responden</span>
+                        </a>
+                    </li>
+                    
+                </ul>
             </li>
             @endrole
 

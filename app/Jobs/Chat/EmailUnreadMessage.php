@@ -8,10 +8,14 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 # Models
 use App\User;
 use App\Models\Consultation\Message;
+
+# Mails
+use App\Mail\Mail\Chat\SendUnreadNotification;
 
 class EmailUnreadMessage implements ShouldQueue
 {
@@ -42,8 +46,10 @@ class EmailUnreadMessage implements ShouldQueue
             $query->where('user_id', $this->to_user_id);
         })->first();
 
-        if (!empty($message)) {
-            Log::info($message);
+        $user = User::find($this->to_user_id);
+
+        if (!empty($user) && !empty($message)) {
+            Mail::to($user)->send(new SendUnreadNotification($user, $message));
         }
     }
 

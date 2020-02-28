@@ -30,3 +30,8 @@ Route::prefix('fill')->group(function () {
     Route::get('/form', 'FillController@form')->name('questionnaire.fill.form');
     Route::post('/submit', 'FillController@submit')->name('questionnaire.fill.submit');
 });
+
+Route::prefix('respondent')->group(function () {
+    Route::get('/list', 'RespondentController@list')->name('questionnaire.respondent.list');
+    Route::get('/data', 'RespondentController@data')->name('questionnaire.respondent.data');
+});

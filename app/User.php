@@ -85,4 +85,9 @@ class User extends Authenticatable
     {
         return preg_match('/\@mailinator.com\b/', $this->email) ? '' : $this->email;
     }
+
+    public function getRoleAttribute()
+    {
+        return $this->roles->last();
+    }
 }
