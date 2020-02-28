@@ -146,7 +146,7 @@ class StudentController extends Controller
 
     public function getMessagesNew(Request $request)
     {
-        $messages = Message::whereHas('consult', function($query) {
+        $messages = Message::where('consult_id', $request->id)->whereHas('consult', function($query) {
             $query->where('student_id', Auth::user()->student->id);
         })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
 

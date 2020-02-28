@@ -83,4 +83,19 @@ class LecturerController extends Controller
             "message" => $request->message
         ]);
     }
+
+    public function getMessagesNew(Request $request)
+    {
+        $messages = Message::where('consult_id', $request->id)->whereHas('consult', function($query) {
+            $query->where('lecturer_id', Auth::user()->lecturer->id);
+        })->where('id', '>', $request->max_id)->orderBy('id', 'ASC')->get();
+
+        return [
+            'view' => view('contents.consult.lecturer.chat.new', [
+                'messages' => $messages
+            ])->render(),
+
+            'count' => $messages->count()
+        ];
+    }
 }

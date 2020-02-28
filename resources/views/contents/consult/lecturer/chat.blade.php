@@ -80,22 +80,22 @@
                 currentdate.getHours() + ":" +
                 currentdate.getMinutes();
 
-            let html = `
-                <div class="card-header user-profile-header pt-0 pb-0">
-                    <div class="avatar mr-50 align-top">
-                        <img src="{{ asset('img/user.png') }}" alt="avtar images" width="32" height="32">
-                    </div>
-                    <div class="d-inline-block mt-25">
-                        <h6 class="mb-0 text-bold-500 font-small-3">Anda</h6>
-                        <p class="text-muted"><small>${date}</small></p>
-                    </div>
-                </div>
-                <div class="card-body py-0">
-                    <p>${message}</p>
-                </div>
-                <hr>`;
+            // let html = `
+            //     <div class="card-header user-profile-header pt-0 pb-0">
+            //         <div class="avatar mr-50 align-top">
+            //             <img src="{{ asset('img/user.png') }}" alt="avtar images" width="32" height="32">
+            //         </div>
+            //         <div class="d-inline-block mt-25">
+            //             <h6 class="mb-0 text-bold-500 font-small-3">Anda</h6>
+            //             <p class="text-muted"><small>${date}</small></p>
+            //         </div>
+            //     </div>
+            //     <div class="card-body py-0">
+            //         <p>${message}</p>
+            //     </div>
+            //     <hr>`;
             
-            chat_room.append(html);
+            // chat_room.append(html);
 
             $.post("{{ route('consult.lecturer.save.messages.submit') }}", {
                 _token: "{{ csrf_token() }}",
@@ -124,6 +124,8 @@
                 scrollToBottom();
 
                 $.LoadingOverlay('hide', true);
+
+                checkNewMessage();
             });
         });
 
@@ -144,6 +146,30 @@
 
                 $.LoadingOverlay('hide', true);
             });
+        }
+
+        const checkNewMessage = () => {
+            let data = [];
+            $('.chat-message').each(function (element) {
+                data.push($(this).data("id"));
+            });
+
+            max_id = Math.max.apply(null, data);
+
+            $.get("{{ route('consult.lecturer.get.messages.new') }}", {
+                id: current_chat_id,
+                max_id: max_id
+            }).done(function (result) {
+                if (result.count > 0) {
+                    $('#chat-room').append(result.view);
+                    scrollToBottom();
+                }
+
+                setTimeout(
+                    function () {
+                        checkNewMessage();
+                    }, 2000);
+            });                        
         }
     </script>
 @endpush

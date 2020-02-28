@@ -5,11 +5,11 @@
                 <img src="{{ asset('img/user.png') }}" alt="avtar images" width="32" height="32">
             </div>
             <div class="d-inline-block mt-25">
-                <h6 class="mb-0 text-bold-500 font-small-3" style="{{ $item->user->id == Auth::user()->id ? 'color:#5a8dee;' : '' }}">{{ $item->user->name == Auth::user()->name ? 'Anda' : 'Mahasiswa #'.$item->user->student->id }}</h6>
+                <h6 class="mb-0 text-bold-500 font-small-3" style="{{ $item->user->id == Auth::user()->id ? 'color:#5a8dee;' : '' }}">{{ $item->user->id == Auth::user()->id ? 'Anda' : 'Mahasiswa #'.$item->user->student->id }}</h6>
                 <p class="text-muted"><small>{{ $item->timestamp }}</small></p>
             </div>
         </div>
-        <div class="card-body py-0">
+        <div class="card-body py-0 chat-message" data-id="{{ $item->id }}">
             <p>{{ $item->message }}</p>
         </div>
         <hr class="{{ $key == 0 ? 'first-section' : '' }}">

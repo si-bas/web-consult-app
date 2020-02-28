@@ -140,7 +140,8 @@
             max_id = Math.max.apply(null, data);
 
             $.get("{{ route('consult.student.get.messages.new') }}", {
-                max_id
+                id: current_chat_id,
+                max_id: max_id
             }).done(function (result) {
                 if (result.count > 0) {
                     $('#chat-room').append(result.view);

@@ -30,4 +30,6 @@ Route::prefix('lecturer')->group(function () {
     Route::get('/get/messages/more', 'LecturerController@getMessagesMore')->name('consult.lecturer.get.messages.more');
 
     Route::post('/save/messages', 'LecturerController@saveMessage')->name('consult.lecturer.save.messages.submit');
+
+    Route::get('/get/messages/new', 'LecturerController@getMessagesNew')->name('consult.lecturer.get.messages.new');
 });
