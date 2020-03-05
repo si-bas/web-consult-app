@@ -31,7 +31,7 @@
             <div class="card-body">
                <p>Lihat video dibawah ini hingga selesai, kemudian klik selanjutnya.</p> 
                <hr>
-               <video width="100%" controls>
+               <video width="100%" controls autoplay>
                     <source src="{{ asset($video->path.$video->filename) }}">                    
                     Your browser does not support HTML5 video.
                 </video>
