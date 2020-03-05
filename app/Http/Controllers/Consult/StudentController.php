@@ -24,19 +24,23 @@ class StudentController extends Controller
 {
     public function list()
     {
-        $consults = Consult::where('student_id', Auth::user()->student->id)
-        ->withCount([
-            'messages' => function($query) {
-                $query->whereDoesntHave('readers', function($query) {
-                    $query->where('user_id', Auth::user()->id);
-                });
-            }
-        ])
-        ->orderBy('updated_at', 'DESC')->get();
+        if (Auth::user()->student->need_consult) {
+            $consults = Consult::where('student_id', Auth::user()->student->id)
+            ->withCount([
+                'messages' => function($query) {
+                    $query->whereDoesntHave('readers', function($query) {
+                        $query->where('user_id', Auth::user()->id);
+                    });
+                }
+            ])
+            ->orderBy('updated_at', 'DESC')->get();
 
-        return view('contents.consult.student.list', [
-            'consults' => $consults
-        ]);
+            return view('contents.consult.student.list', [
+                'consults' => $consults
+            ]);
+        }
+
+        return view('contents.consult.student.congratulation');
     }
     
     public function selectLecturer()
