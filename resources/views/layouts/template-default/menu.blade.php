@@ -11,7 +11,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-        @if (!Request::is('profile/student/complete', 'questionnaire/fill/*'))
+        @if (!Request::is('profile/student/complete', 'questionnaire/fill/*', 'information/consent/form', 'content/required/*'))
             @role(['admin'])
             <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
                 <a href="{{ route('home') }}">
@@ -219,8 +219,25 @@
         <li class="active nav-item">
             <a href="javascript:;">
                 <i class="menu-livicon" data-icon="notebook"></i>
-                <span class="menu-title" data-i18n="">Kuesioner</span>
+                <span class="menu-title" data-i18n="">
+                    @if (Request::is('information/consent/form'))
+                        Informasi Penelitian
+                    @elseif(Request::is('content/required/show/video'))
+                        Konten Video
+                    @else
+                        Kuesioner
+                    @endif
+                </span>
                 <span class="" id="student-count"></span>
+            </a>
+        </li>
+
+        <li class=" nav-item">
+            <a href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+                          document.getElementById('logout-form').submit();">
+                <i class="menu-livicon" data-icon="close"></i>
+                <span class="menu-title" data-i18n="">Keluar</span>
             </a>
         </li>
         @endif

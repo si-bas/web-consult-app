@@ -83,24 +83,32 @@
                                                     @csrf
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">Nama Lengkap </label>
-                                                        <input type="text" class="form-control" placeholder="Nama Depan" name="full_name" value="{{ old('full_name') }}">
+                                                        <input type="text" class="form-control" placeholder="Nama Depan" name="full_name" value="{{ old('full_name') }}" required>
                                                     </div>
 
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">NIM</label>
-                                                        <input type="text" class="form-control" placeholder="Nomor Induk Mahasiswa" name="student_id_number" value="{{ old('student_id_number') }}">
+                                                        <input type="text" class="form-control" placeholder="Nomor Induk Mahasiswa" name="student_id_number" value="{{ old('student_id_number') }}" required>
                                                     </div>
 
                                                     <div class="form-group mb-50">
                                                         <label class="text-bold-600">Alamat Email</label>
-                                                        <small class="text-muted">(tidak wajib)</small>
-                                                        <input type="email" class="form-control" placeholder="Alamat Email" name="email" value="{{ old('email') }}">
+                                                        <input type="email" class="form-control" placeholder="Alamat Email" name="email" value="{{ old('email') }}" required>
                                                     </div>
 
                                                     <div class="form-group mb-2">
-                                                        <label class="text-bold-600">Kata Sandi</label>
-                                                        <small class="text-muted">(tidak wajib)</small>
-                                                        <input type="password" class="form-control" placeholder="Kata Sandi" name="password">
+                                                        <label class="text-bold-600">Kata Sandi</label>                                                        
+                                                        <input type="password" class="form-control" placeholder="Kata Sandi" name="password" required>
+                                                    </div>
+                                                    <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                                        <div class="text-left">
+                                                            <div class="checkbox checkbox-sm">
+                                                                <input type="checkbox" class="form-check-input" id="agreement" name="agreement" required>
+                                                                <label class="checkboxsmall" for="agreement">
+                                                                    <small>Saya setuju untuk mengikuti program website ini</small>
+                                                                </label>
+                                                            </div>
+                                                        </div>                                                        
                                                     </div>
                                                     <button type="submit" class="btn btn-primary glow position-relative w-100">Daftar<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                                 </form>

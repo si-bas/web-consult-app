@@ -70,6 +70,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="url_back" value="{{ Request::get('url') }}">
                     <button type="submit" style="display: none"></button>
                     <div class="col-12 d-flex justify-content-end mt-1">
                         <button type="button" class="btn btn-primary mr-1 mb-1" onclick="submitForm()">Simpan</button>

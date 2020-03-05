@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Laratrust\LaratrustFacade as Laratrust;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 # Models
 use App\Models\Schedule\Day;
@@ -64,7 +65,15 @@ class AvailabilityController extends Controller
 
             $schedule->save();
 
-            return redirect()->route('schedule.availability.list')->with('success', 'Berhasil membuat jadwal');
+            if (!empty($request->url_back)) {
+                try {
+                    $url_back = Crypt::decrypt($request->url_back);
+                } catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                }
+            }
+
+            return empty($url_back) ? redirect()->route('schedule.availability.list')->with('success', 'Berhasil membuat jadwal') : redirect()->to($url_back);
         } catch (\Exception $e) {
             $error = $e->getMessage();  
 

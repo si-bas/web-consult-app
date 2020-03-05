@@ -34,7 +34,8 @@ class QuestionController extends Controller
                 foreach ($request->answers as $answer) {
                     $question->answers()->create([
                         "text" => $answer['answer_text'],
-                        "type" => $question->type == 'single_select' ? 'radio' : 'checkbox'
+                        "type" => $question->type == 'single_select' ? 'radio' : 'checkbox',
+                        "poin" => $answer['answer_poin']
                     ]);
                 }
             }
@@ -72,13 +73,15 @@ class QuestionController extends Controller
                     $answer_db = Answer::find($answer['answer_id']);
                     $answer_db->fill([
                         "text" => $answer['answer_text'],
-                        "type" => $question->type == 'single_select' ? 'radio' : 'checkbox'
+                        "type" => $question->type == 'single_select' ? 'radio' : 'checkbox',
+                        "poin" => $answer['answer_poin']
                     ]);
                     $answer_db->save();
                 } else {
                     $question->answers()->create([
                         "text" => $answer['answer_text'],
-                        "type" => $question->type == 'single_select' ? 'radio' : 'checkbox'
+                        "type" => $question->type == 'single_select' ? 'radio' : 'checkbox',
+                        "poin" => $answer['answer_poin']
                     ]);
                 }
             }

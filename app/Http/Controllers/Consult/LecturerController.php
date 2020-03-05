@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 # Models
 use App\Models\Consultation\Consult;
 use App\Models\Consultation\Message;
+use App\Models\Schedule\Lecturer as Schedule;
 
 # Jobs
 use App\Jobs\Chat\SaveReadMessages;
@@ -30,7 +31,8 @@ class LecturerController extends Controller
         ->orderBy('updated_at', 'DESC')->get();
 
         return view('contents.consult.lecturer.list', [
-            'consults' => $consults
+            'consults' => $consults,
+            'has_schedule' => Schedule::where('lecturer_id', Auth::user()->lecturer->id)->count() > 0
         ]);
     }
 

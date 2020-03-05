@@ -26,6 +26,10 @@ class Student extends Model
         "semester",
         "year",
         "user_id",
+
+        "need_consult",
+        "approve_consent",
+        "is_done"
     ];
 
     public function gender()
@@ -56,5 +60,10 @@ class Student extends Model
     public function getFullNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    public function filled_questionnaires()
+    {
+        return $this->hasMany('App\Models\Questionnaire\Student_questionnaire', 'student_id', 'id');
     }
 }

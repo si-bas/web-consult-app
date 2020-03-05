@@ -25,4 +25,9 @@ class Student_answer extends Model
     {
         return $this->belongsTo('App\Model\Questionnaire\Student_questionnaire', 'student_questionnaire_id', 'id');
     }
+
+    public function answer()
+    {
+        return $this->belongsTo('App\Models\Questionnaire\answer', 'answer', 'id');
+    }
 }

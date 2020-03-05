@@ -13,6 +13,8 @@ class Student_questionnaire extends Model
     protected $fillable = [
         "student_id",
         "questionnaire_id",
+        "questionnaire_result_id",
+        "status"
     ];
 
     public function student()
@@ -28,5 +30,10 @@ class Student_questionnaire extends Model
     public function student_answers()
     {
         return $this->hasMany('App\Models\Questionnaire\Student_answer', 'student_questionnaire_id', 'id');
+    }
+
+    public function result()
+    {
+        return $this->belongsTo('App\Models\Questionnaire\Result', 'questionnaire_result_id', 'id');
     }
 }

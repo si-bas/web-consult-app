@@ -15,7 +15,7 @@ use App\User;
 use App\Models\Consultation\Message;
 
 # Mails
-use App\Mail\Mail\Chat\SendUnreadNotification;
+use App\Mail\Chat\SendUnreadNotification;
 
 class EmailUnreadMessage implements ShouldQueue
 {

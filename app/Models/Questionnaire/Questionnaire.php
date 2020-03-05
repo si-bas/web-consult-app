@@ -38,4 +38,9 @@ class Questionnaire extends Model
     {
         return $this->hasMany('App\Models\Questionnaire\Student_questionnaire', 'questionnaire_id', 'id');
     }
+
+    public function results()
+    {
+        return $this->hasMany('App\Models\Questionnaire\Result', 'questionnaire_id', 'id');
+    }
 }

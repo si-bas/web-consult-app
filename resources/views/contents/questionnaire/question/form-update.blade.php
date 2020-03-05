@@ -74,10 +74,14 @@
                                         @foreach ($question->answers as $answer)
                                         <div data-repeater-item>
                                             <div class="row justify-content-between">
-                                                <div class="col-md-10 col-sm-12 form-group">
+                                                <div class="col-md-8 col-sm-12 form-group">
                                                     <input type="hidden" name="answer_id" value="{{ $answer->id }}">
-                                                    <label for="Email">Pilihan Jawaban </label>
+                                                    <label>Pilihan Jawaban </label>
                                                     <input type="text" class="form-control answers" placeholder="Tuliskan teks pilihan" name="answer_text" value="{{ $answer->text }}" required>
+                                                </div>
+                                                <div class="col-md-2 col-sm-12 form-group">                                                    
+                                                    <label>Nilai </label>
+                                                    <input type="text" class="form-control answers" placeholder="Skor" name="answer_poin" value="{{ $answer->poin }}" required>
                                                 </div>
                                                 <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
                                                     <button class="btn btn-danger text-nowrap px-1" data-repeater-delete type="button"> <i class="bx bx-x"></i>
@@ -91,9 +95,13 @@
                                     @else
                                     <div data-repeater-item>
                                         <div class="row justify-content-between">
-                                            <div class="col-md-10 col-sm-12 form-group">
-                                                <label for="Email">Pilihan Jawaban </label>
+                                            <div class="col-md-8 col-sm-12 form-group">
+                                                <label>Pilihan Jawaban </label>
                                                 <input type="text" class="form-control answers" placeholder="Tuliskan teks pilihan" name="answer_text" required>
+                                            </div>
+                                            <div class="col-md-2 col-sm-12 form-group">                                                    
+                                                <label>Nilai </label>
+                                                <input type="text" class="form-control answers" placeholder="Skor" name="answer_poin" required>
                                             </div>
                                             <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
                                                 <button class="btn btn-danger text-nowrap px-1" data-repeater-delete type="button"> <i class="bx bx-x"></i>
@@ -118,7 +126,7 @@
                         <div class="col-12 d-flex justify-content-end ">
                             <button type="button" class="btn btn-primary mr-1 mb-1" onclick="submitForm()">Simpan</button>
                             <a href="{{ route('questionnaire.detail', [
-                                'id' => $question->id
+                                'id' => $question->questionnaire->id
                             ]) }}" class="btn btn-light-secondary mr-1 mb-1">Batalkan</a>
                         </div>
                     </div>

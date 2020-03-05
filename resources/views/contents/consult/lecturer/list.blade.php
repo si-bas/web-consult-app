@@ -19,6 +19,28 @@
         </div>
     </div>
 </div>
+@if (!$has_schedule)
+<div class="alert alert-danger alert-dismissible mb-2" role="alert" id="schedule-alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <div class="d-flex align-items-center">
+        <i class="bx bxs-error"></i>
+        <span>
+            Anda tidak memiliki jadwal tersedia, silahkan buat jadwal ketersediaan terlebih dahulu dengan klik disini.
+        </span>
+    </div>
+</div>
+@push('scripts')
+    <script>
+        $(function () {
+            $('#schedule-alert').click(function () {
+                window.location = "{{ route('schedule.availability.form.create', ['url' => Crypt::encrypt(Request::url())]) }}";
+            });
+        });
+    </script>
+@endpush
+@endif
 <div class="alert alert-primary alert-dismissible mb-2" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">×</span>
@@ -62,6 +84,19 @@
                 <span class="font-medium-1">Belum ada Chat.</span>
             </div>
             @endif
+        </div>
+    </div>
+</div>
+
+<div class="card widget-notification">
+    <div class="card-header border-bottom">
+        <h4 class="card-title d-flex align-items-center">Bertemu</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body p-0">
+            <div class="text-center mt-3 mb-3">
+                <span class="font-medium-1">Belum ada permintaan bertemu.</span>
+            </div>
         </div>
     </div>
 </div>

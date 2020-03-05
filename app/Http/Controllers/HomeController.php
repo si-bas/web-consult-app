@@ -31,6 +31,10 @@ class HomeController extends Controller
         }
 
         if (Laratrust::hasRole('student')) {
+            if (!Auth::user()->student->approve_consent) {
+                return redirect()->route('information.consent.form');
+            }
+
             if (!Auth::user()->student->profile()->exists()) {
                 return redirect()->route('profile.student.complete');
             }
