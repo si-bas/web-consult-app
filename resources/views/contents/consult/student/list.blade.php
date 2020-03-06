@@ -26,23 +26,24 @@
     <div class="d-flex align-items-center">
         <i class="bx bx-error-circle"></i>
         <span>
-            Aplikasi sangat merahasiakan data Anda, Dosen tidak dapat mengetahui data diri Anda.
+            Aplikasi sangat merahasiakan data Anda, Dosen/Konselor tidak dapat mengetahui data diri Anda.
         </span>
     </div>
 </div>
 <div class="card widget-notification">
     <div class="card-header border-bottom">
-        <h4 class="card-title d-flex align-items-center">Chat</h4>
+        <h4 class="card-title d-flex align-items-center">Percakapan/Pertemuan</h4>
+        @if (empty($consult))            
         <div class="heading-elements">
             <button type="button" onclick="location.href = '{{ route('consult.student.select.lecturer') }}';" class="btn btn-sm btn-primary">Kontrak Dosen</button>
         </div>
+        @endif
     </div>
     <div class="card-content">
         <div class="card-body p-0">
-            @if (count($consults) > 0)
+            @if (!empty($consult))
             <ul class="list-group list-group-flush">
-                @foreach ($consults as $item)
-                <li class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between" onclick="location.href = '{{ route('consult.student.chat', ['id' => $item->id]) }}';">
+                <li class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between" onclick="location.href = '{{ $consult->is_meeting ? 'javascript:;' : route('consult.student.chat', ['id' => $consult->id]) }}';">
                     <div class="list-left d-flex">
                         <div class="list-icon mr-1">
                             <div class="avatar bg-rgba-primary m-0 p-25">
@@ -52,17 +53,16 @@
                             </div>
                         </div>
                         <div class="list-content">
-                            <span class="list-title">{{ $item->lecturer->full_name }} {!! $item->messages_count > 0 ? '<span class="danger ml-1">( '.$item->messages_count.' pesan baru)</span>' : '' !!}</span>
-                            <small class="text-muted d-block">{{ $item->schedule->day->name }}, {{ $item->schedule->start_time }} - {{ $item->schedule->end_time }}</small>
+                            <span class="list-title">{{ $consult->lecturer->full_name }} {!! $consult->messages_count > 0 ? '<span class="danger ml-1">( '.$consult->messages_count.' pesan baru)</span>' : '' !!}</span>
+                            <small class="text-muted d-block">{{ $consult->schedule->day->name }}, {{ $consult->schedule->start_time }} - {{ $consult->schedule->end_time }}</small>
+                            <small class="text-muted d-block">{{ $consult->is_meeting ? 'Pertemuan' : 'Percakapan Online' }} | Status {{ $consult->is_done ? 'Selesai' : 'Belum Selesai' }}</small>                            
                         </div>
-                    </div>
-
+                    </div>                    
                 </li>
-                @endforeach
             </ul>
             @else
             <div class="text-center mt-3 mb-3">
-                <span class="font-medium-1">Belum ada Chat.</span>
+                <span class="font-medium-1">Belum ada Percakapan/Pertemuan.</span>
             </div>
             @endif
         </div>

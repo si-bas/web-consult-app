@@ -1,13 +1,14 @@
 @extends('layouts.template-default')
 
 @include('plugins.datatables')
+@include('plugins.toastr')
 
 @section('content')
 <div class="content-header row">
     <div class="content-header-left col-12 mb-2 mt-1">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h5 class="content-header-title float-left pr-1 mb-0">Dosen</h5>
+                <h5 class="content-header-title float-left pr-1 mb-0">Konsultasi</h5>
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
@@ -16,7 +17,7 @@
                             <a href="{{ route('consult.student.list') }}">Konsultasi</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Dosen
+                            Dosen/Konselor
                         </li>
                     </ol>
                 </div>
@@ -24,13 +25,25 @@
         </div>
     </div>
 </div>
+<div class="alert alert-primary alert-dismissible mb-2" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <div class="d-flex align-items-center">
+        <i class="bx bx-error-circle"></i>
+        <span>
+            Aplikasi sangat merahasiakan data Anda, Dosen/Konselor tidak dapat mengetahui data diri Anda.
+        </span>
+    </div>
+</div>
 <div class="content-body">
     <section class="card">
         <div class="card-header">
-            <h4 class="card-title">Daftar Dosen</h4>
+            <h4 class="card-title">Pilih Dosen/Konselor</h4>
         </div>
         <div class="card-content">
             <div class="card-body">
+                <p>Klik pada nama dosen/konselor untuk memilih, kemudian pilih jadwal ketersediaan dosen/konselor yang diinginkan.</p>
                 <div class="table-responsive">
                     <table class="table mb-0 table-hover" id="lecturer-table" style="width: 100%">
                         <thead>
@@ -159,6 +172,19 @@
                 modal_detail.find('.modal-body').html(result);
                 modal_detail.modal('show');
             });
+        }
+
+        const selectSchedule = (id) => {
+            if (modal_detail.find('input[name=is_meeting]').is(':checked')) {
+                let is_meeting = modal_detail.find('input[name=is_meeting]:checked').val();
+
+                let url = `{{ route('consult.student.select.schedule') }}?id=${id}&is_meeting=${is_meeting}`;
+
+                window.location = url;
+                
+            } else {
+                toastr.error('Silahkan pilih metode konsultasi', 'Gagal');
+            }
         }
     </script>
 @endpush

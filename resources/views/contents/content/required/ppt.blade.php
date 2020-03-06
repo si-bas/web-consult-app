@@ -14,7 +14,7 @@
                             Konten
                         </li>
                         <li class="breadcrumb-item active">
-                            Video
+                            Powerpoint
                         </li>
                     </ol>
                 </div>
@@ -25,24 +25,23 @@
 <div class="content-body">
     <section class="card">
         <div class="card-header">
-            <h4 class="card-title">{{ $video->title }}</h4>
+            <h4 class="card-title">Powerpoint</h4>
         </div>
         <div class="card-content">
             <div class="card-body">
-               <p>Lihat video dibawah ini hingga selesai, kemudian klik selanjutnya.</p> 
+               <p>Pelajari terlebih dahulu powerpoint dibawah ini, kemudian klik selanjutnya.</p> 
                <hr>
-                <video width="100%" controls autoplay>
-                    <source src="{{ asset($video->path.$video->filename) }}">                    
-                    Your browser does not support HTML5 video.
-                </video>
+               <iframe src="https://onedrive.live.com/embed?resid=D59BB4CB45A630CF%218996&amp;authkey=%21AG8JxxtZ2NvWzk4&amp;em=2&amp;wdAr=1.3333333333333333" width="100%" height="400px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                 <hr>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end ">
-                        <button type="submit" class="btn btn-primary mt-2" onclick="location.href='{{ route('content.required.next.video', ['video' => Crypt::encrypt($video->id)]) }}';">Selanjutnya</button> 
+                        <button type="submit" class="btn btn-primary mt-2" onclick="location.href='{{ route('content.required.check') }}';">Selanjutnya</button> 
                     </div>
                 </div>
+                            
             </div>                        
         </div>
     </section>
+    
 </div>
 @endsection

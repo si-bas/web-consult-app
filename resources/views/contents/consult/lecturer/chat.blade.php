@@ -1,13 +1,24 @@
 @extends('layouts.template-default')
 
 @include('plugins.loadingoverly')
+@include('plugins.sweetalert')
+
+@push('styles')
+    <style>
+        .modal-body {
+            position: relative;
+            flex: 1 1 auto;
+            padding: 1.3rem 1.3rem;
+        }
+    </style>
+@endpush
 
 @section('content')
 <div class="content-header row">
     <div class="content-header-left col-12 mb-2 mt-1">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h5 class="content-header-title float-left pr-1 mb-0">Chat</h5>
+                <h5 class="content-header-title float-left pr-1 mb-0">Percakapan</h5>
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
@@ -16,12 +27,23 @@
                             <a href="{{ route('consult.lecturer.list') }}">Konsultasi</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Chat
+                            Percakapan
                         </li>
                     </ol>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="alert alert-primary alert-dismissible mb-2" role="alert" style="margin-bottom: 10px !important;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <div class="d-flex align-items-center">
+        <i class="bx bx-error-circle"></i>
+        <span>
+            Klik pada nama Mahasiswa untuk melihat hasil kuis dan melakukan aksi.
+        </span>
     </div>
 </div>
 <div class="card">
@@ -34,7 +56,13 @@
                 </div>
             </a>
             <div class="media-body">
-                <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">Mahasiswa #{{ $consult->student->id }}</a>
+                <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);" onclick="showAction()">
+                    @if ($consult->is_meeting)
+                    {{ $consult->student->full_name }}
+                    @else 
+                    Mahasiswa #{{ $consult->student->id }}
+                    @endif
+                </a>
                 </h6>
                 <span class="text-muted font-small-3">{{ $consult->schedule->day->name }}, {{ $consult->schedule->start_time }} - {{ $consult->schedule->end_time }}</span>
             </div>
@@ -50,10 +78,35 @@
         <div class="col-12">
             <form class="d-flex align-items-center" onsubmit="chatMessagesSend();" action="javascript:void(0);">
                 {{-- <input type="text" class="form-control chat-message-send mx-1" name="message" placeholder="Tuliskan disini..."> --}}
-                <textarea class="form-control chat-message-send mx-1" name="message" placeholder="Tuliskan disini..." rows="2"></textarea>
-                <button type="submit" class="btn btn-primary glow send d-lg-flex"><i class="bx bx-paper-plane"></i>
+                <textarea class="form-control chat-message-send mx-1" name="message" placeholder="Tuliskan disini..." rows="2" {{ $consult->is_meeting ? 'disabled' : '' }}></textarea>
+                <button type="submit" class="btn btn-primary glow send d-lg-flex" {{ $consult->is_meeting ? 'disabled' : '' }}><i class="bx bx-paper-plane"></i>
                     <span class="d-none d-lg-block ml-1">Send</span></button>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="student-action" tabindex="-1" role="dialog" aria-labelledby="studentDetail" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title white">Kuis & Aksi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach ($quizzes as $item)
+                    {!! $item->result_html !!}
+                @endforeach
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="btn btn-light-primary mr-3" onclick="showConfirm()">
+                    Tandai selesai
+                </button>
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -170,6 +223,29 @@
                         checkNewMessage();
                     }, 2000);
             });                        
+        }
+
+        const modal_action = $('#student-action');
+
+        const showAction = () => {
+            modal_action.modal('show');
+        }
+
+        const showConfirm = () => {
+            Swal.fire({
+                title: 'Anda Yakin?',
+                text: "Menandai konsultasi mahasiswa ini sebagai selesai",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, selesai!',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    window.location = "{{ route('consult.lecturer.done', ['id' => $consult->id]) }}";
+                }
+            })
         }
     </script>
 @endpush

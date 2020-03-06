@@ -69,28 +69,28 @@
                             </ul>
                         </fieldset>
 
-                        <fieldset class="form-group">
+                        {{-- <fieldset class="form-group">
                             <label>Agama <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" placeholder="Tuliskan agama" name="religion" required>
-                        </fieldset>
+                        </fieldset> --}}
 
                         <fieldset class="form-group">
                             <label>Semester <span class="text-danger">*</span></label>
                             <input type="text" class="form-control number-only" placeholder="Tuliskan angka" name="semester" required>
                         </fieldset>
 
-                        <fieldset class="form-group">
+                        {{-- <fieldset class="form-group">
                             <label>Program Studi <span class="text-danger">*</span></label>
                             <select class="select2 form-control" name="major_id" required style="width: 100%">
                                 <option></option>
                             </select>
-                        </fieldset>
+                        </fieldset> --}}
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <fieldset class="form-group">
+                        {{-- <fieldset class="form-group">
                             <label>Kelas <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" placeholder="Tuliskan kelas" name="classroom" required>
-                        </fieldset>
+                        </fieldset> --}}
 
                         <fieldset class="form-group">
                             <label>Apa yang anda lakukan jika ada masalah sebelum pergi ke dosen PA (boleh isi lebih dari 1) <span class="text-danger">*</span></label>
@@ -159,7 +159,7 @@
             };
         }(jQuery));
 
-        const select_major = $('select[name=major_id]');
+        // const select_major = $('select[name=major_id]');
         let cbx_group = $("input:checkbox[name='options[]']");
 
         $(function () {
@@ -167,31 +167,31 @@
                 return /^\d*$/.test(value);    // Allow digits only, using a RegExp
             });
 
-            select_major.select2({
-                placeholder: 'Pilih Program Studi',
-                minimumInputLength: 0,
-                ajax: {
-                    url: "{{ route('profile.student.get.majors') }}",
-                    dataType: 'json',
-                    type: "GET",
-                    quietMillis: 50,
-                    data: function(params) {
-                        return {
-                            search: params.term
-                        }
-                    },
-                    processResults: function (data, page) {
-                        return {
-                            results: $.map(data, function (data) {
-                                return {
-                                    text: data.faculty.name+' - '+data.text,
-                                    id: data.id
-                                }
-                            })
-                        };
-                    },
-                }
-            });
+            // select_major.select2({
+            //     placeholder: 'Pilih Program Studi',
+            //     minimumInputLength: 0,
+            //     ajax: {
+            //         url: "{{ route('profile.student.get.majors') }}",
+            //         dataType: 'json',
+            //         type: "GET",
+            //         quietMillis: 50,
+            //         data: function(params) {
+            //             return {
+            //                 search: params.term
+            //             }
+            //         },
+            //         processResults: function (data, page) {
+            //             return {
+            //                 results: $.map(data, function (data) {
+            //                     return {
+            //                         text: data.faculty.name+' - '+data.text,
+            //                         id: data.id
+            //                     }
+            //                 })
+            //             };
+            //         },
+            //     }
+            // });
 
             $('button[type="submit"]').on('click', function() {
                 cbx_group.prop('required', true);

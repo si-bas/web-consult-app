@@ -11,7 +11,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-        @if (!Request::is('profile/student/complete', 'questionnaire/fill/*', 'information/consent/form', 'content/required/*'))
+        @if (!Request::is('profile/student/complete', 'questionnaire/fill/*', 'information/consent/form', 'content/required/*', 'quiz/required/*'))
             @role(['admin'])
             <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
                 <a href="{{ route('home') }}">
@@ -224,6 +224,8 @@
                         Informasi Penelitian
                     @elseif(Request::is('content/required/show/video'))
                         Konten Video
+                    @elseif(Request::is('quiz/required/*'))
+                        Kuis
                     @else
                         Kuesioner
                     @endif

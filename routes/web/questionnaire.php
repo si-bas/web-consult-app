@@ -29,9 +29,19 @@ Route::prefix('fill')->group(function () {
     Route::get('/check', 'FillController@check')->name('questionnaire.fill.check');
     Route::get('/form', 'FillController@form')->name('questionnaire.fill.form');
     Route::post('/submit', 'FillController@submit')->name('questionnaire.fill.submit');
+
+    Route::get('/done', 'FillController@done')->name('questionnaire.fill.done');
 });
 
 Route::prefix('respondent')->group(function () {
     Route::get('/list', 'RespondentController@list')->name('questionnaire.respondent.list');
     Route::get('/data', 'RespondentController@data')->name('questionnaire.respondent.data');
+});
+
+Route::prefix('post')->group(function () { 
+    Route::get('/check', 'PostController@check')->name('questionnaire.post.check');
+    Route::get('/form', 'PostController@form')->name('questionnaire.post.form');
+    Route::post('/submit', 'PostController@submit')->name('questionnaire.post.submit');
+
+    Route::get('/done', 'PostController@done')->name('questionnaire.post.done');
 });

@@ -40,6 +40,27 @@
         </tr>
     </tbody>
 </table>
+<h5 class="mb-1"><i class="bx bx-info-circle"></i> Konsultasi Via</h5>
+<p>Pilih salah satu:</p>
+<ul class="list-unstyled mb-3">
+    <li class="mr-2 mb-1">
+        <fieldset>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="custom-1-1" name="is_meeting" value="1" required>
+                <label class="custom-control-label" for="custom-1-1">Pertemuan</label>
+            </div>
+        </fieldset>
+    </li>
+    <li class="mr-2 mb-1">
+        <fieldset>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="custom-1-2" name="is_meeting" value="0" required>
+                <label class="custom-control-label" for="custom-1-2">Percakapan Online (Chat)</label>
+            </div>
+        </fieldset>
+    </li>
+</ul>
+
 <h5 class="mb-1"><i class="bx bx-info-circle"></i> Jadwal Kontrak</h5>
 <table class="table mb-0 table-hover" style="width: 100%">
     <thead>
@@ -54,7 +75,7 @@
         @foreach ($schedules as $i => $item)
             <tr>
                 <td>
-                    <a href="{{ route('consult.student.select.schedule', ['id' => $item->id]) }}">{{ $item->day->name }}</a>
+                    <a href="javascript:;" onclick="selectSchedule({{ $item->id }})">{{ $item->day->name }}</a>
                 </td>
                 <td>
                     {{ $item->start_time }}
@@ -63,7 +84,7 @@
                     {{ $item->end_time }}
                 </td>
                 <td class="text-center">
-                    <a href="{{ route('consult.student.select.schedule', ['id' => $item->id]) }}" class="btn mr-1 mb-1 btn-outline-primary btn-sm">Pilih</a>
+                    <a href="javascript:;" onclick="selectSchedule({{ $item->id }})">Pilih</a>
                 </td>
             </tr>
         @endforeach

@@ -21,7 +21,7 @@
     @endforeach
 @else 
     <div class="text-center mt-3 mb-3" id="empty">
-        <span class="font-medium-1">Belum ada Chat.</span>
+        <span class="font-medium-1">Belum ada Percakapan.</span>
     </div>
     <hr class="first-section">
 @endif

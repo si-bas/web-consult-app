@@ -7,7 +7,7 @@
     <div class="content-header-left col-12 mb-2 mt-1">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h5 class="content-header-title float-left pr-1 mb-0">Chat</h5>
+                <h5 class="content-header-title float-left pr-1 mb-0">Percakapan</h5>
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb p-0 mb-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
@@ -16,12 +16,23 @@
                             <a href="{{ route('consult.student.list') }}">Konsultasi</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Chat
+                            Percakapan
                         </li>
                     </ol>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="alert alert-primary alert-dismissible mb-2" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <div class="d-flex align-items-center">
+        <i class="bx bx-error-circle"></i>
+        <span>
+            Aplikasi sangat merahasiakan data Anda, Dosen/Konselor tidak dapat mengetahui data diri Anda.
+        </span>
     </div>
 </div>
 <div class="card">
@@ -38,9 +49,9 @@
                 </h6>
                 <span class="text-muted font-small-3">{{ $consult->schedule->day->name }}, {{ $consult->schedule->start_time }} - {{ $consult->schedule->end_time }}</span>
             </div>
-            <div class="heading-elements">
+            {{-- <div class="heading-elements">
                 <button type="button" class="btn btn-sm btn-light-secondary" onclick="window.location.href='{{ route('consult.student.list') }}'">Kembali</button>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="card-content mt-2" id="chat-room">

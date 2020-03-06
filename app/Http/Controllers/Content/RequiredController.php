@@ -15,6 +15,17 @@ use App\Models\Content\Student_video;
 
 class RequiredController extends Controller
 {
+    public function powerpoint()
+    {
+        $video_count = Student_video::where('student_id', Auth::user()->student->id)->count();
+
+        if ($video_count == 0) {            
+            return view('contents.content.required.ppt');
+        }
+
+        return redirect()->route('content.required.check');
+    }
+
     public function check()
     {
         $video = Video::whereDoesntHave('viewers', function($query) {

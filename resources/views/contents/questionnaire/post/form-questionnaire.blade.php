@@ -32,11 +32,11 @@
 <div class="content-body">
     <section class="card">
         <div class="card-header">
-            <h4 class="card-title">Kuesioner #{{ $questionnaire->code }}</h4>
+            <h4 class="card-title">Kuesioner Pasca #{{ $questionnaire->code }}</h4>
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form class="row" action="{{ route('questionnaire.fill.submit') }}" method="POST" enctype="multipart/form-data">
+                <form class="row" action="{{ route('questionnaire.post.submit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="questionnaire_id" value="{{ $questionnaire->id }}">
                     <div class="col-12">

@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Consultation\Consult;
 use App\Models\Consultation\Message;
 use App\Models\Schedule\Lecturer as Schedule;
+use App\Models\Quiz\Student_quiz;
 
 # Jobs
 use App\Jobs\Chat\SaveReadMessages;
@@ -41,8 +42,18 @@ class LecturerController extends Controller
         $consult = Consult::find($request->id);
 
         return view('contents.consult.lecturer.chat', [
-            'consult' => $consult
+            'consult' => $consult,
+            'quizzes' => Student_quiz::where('student_id', $consult->student_id)->get()
         ]);
+    }
+
+    public function done(Request $request)
+    {
+        $consult = Consult::find($request->id);
+        $consult->is_done = true;
+        $consult->save();
+
+        return redirect()->route('consult.lecturer.list');
     }
 
     public function chatFirstLoad(Request $request)

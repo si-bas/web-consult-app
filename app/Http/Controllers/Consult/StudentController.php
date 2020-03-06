@@ -25,7 +25,7 @@ class StudentController extends Controller
     public function list()
     {
         if (Auth::user()->student->need_consult) {
-            $consults = Consult::where('student_id', Auth::user()->student->id)
+            $consult = Consult::where('student_id', Auth::user()->student->id)
             ->withCount([
                 'messages' => function($query) {
                     $query->whereDoesntHave('readers', function($query) {
@@ -33,10 +33,22 @@ class StudentController extends Controller
                     });
                 }
             ])
-            ->orderBy('updated_at', 'DESC')->get();
+            ->orderBy('updated_at', 'DESC')->first();
+
+            if (empty($consult)) {
+                return redirect()->route('consult.student.select.lecturer');
+            }
+
+            if ($consult->is_done) {
+                return redirect()->route('questionnaire.post.check');
+            }
+
+            if (!$consult->is_meeting) {
+                return redirect()->route('consult.student.chat', ['id' => $consult->id]);
+            }            
 
             return view('contents.consult.student.list', [
-                'consults' => $consults
+                'consult' => $consult
             ]);
         }
 
@@ -92,6 +104,7 @@ class StudentController extends Controller
             "lecturer_id" => $schedule->lecturer_id,
             "student_id" => Auth::user()->student->id,
             "lecturer_schedule_id" => $schedule->id,
+            "is_meeting" => $request->is_meeting
         ]);
 
         return redirect()->route('consult.student.list', ['consult' => $consult->id]);
@@ -100,6 +113,10 @@ class StudentController extends Controller
     public function chat(Request $request)
     {
         $consult = Consult::find($request->id);
+
+        if ($consult->is_done) {
+            return redirect()->route('questionnaire.post.check');
+        }
 
         return view('contents.consult.student.chat', [
             'consult' => $consult

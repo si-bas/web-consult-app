@@ -6,31 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 # Models
 use App\Models\Questionnaire\Questionnaire;
 use App\Models\Questionnaire\Student_questionnaire;
-use App\Models\Quiz\Student_quiz;
 
-# Mail
-use App\Mail\Questionnaire\SendCongratulation;
-
-class FillController extends Controller
+class PostController extends Controller
 {
     public function check()
     {
         $questionnaire = Questionnaire::whereDoesntHave('student_questionnaire', function($query) {
-            $query->where('student_id', Auth::user()->student->id)->where('status', 'pre');
+            $query->where('student_id', Auth::user()->student->id)->where('status', 'post');
         })->orderBy('code', 'ASC')->first(); 
 
         if (!empty($questionnaire)) {
-            return redirect()->route('questionnaire.fill.form', ['questionnaire' => Crypt::encrypt($questionnaire->id)]);
+            return redirect()->route('questionnaire.post.form', ['questionnaire' => Crypt::encrypt($questionnaire->id)]);
         } 
 
-        return redirect()->route('questionnaire.fill.done');        
+        return redirect()->route('questionnaire.post.done'); 
     }
 
     public function form(Request $request)
@@ -44,13 +39,13 @@ class FillController extends Controller
                 }
             ]);
 
-            return view('contents.questionnaire.fill.form-questionnaire', [
+            return view('contents.questionnaire.post.form-questionnaire', [
                 'questionnaire' => $questionnaire
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
 
-            return redirect()->route('questionnaire.fill.check');
+            return redirect()->route('questionnaire.post.check');
         }
     }
 
@@ -59,7 +54,7 @@ class FillController extends Controller
         $questionnaire = Student_questionnaire::create([
             "student_id" => Auth::user()->student->id,
             "questionnaire_id" => $request->questionnaire_id,
-            "status" => "pre"
+            "status" => "post"
         ]);
 
         foreach ($request->answers as $key => $value) {
@@ -98,30 +93,11 @@ class FillController extends Controller
 
         $questionnaire->save();
 
-        if ($questionnaire->questionnaire_id == 1) {
-
-            $student = Auth::user()->student;
-            if ($questionnaire->questionnaire_result_id == 2) {                
-                $student->need_consult = true;
-            } else {
-                $student->need_consult = false;
-            }
-            $student->save();
-
-            Mail::to(Auth::user())->send(new SendCongratulation(Auth::user()));
-        }
-
-        return redirect()->route('questionnaire.fill.check');
+        return redirect()->route('questionnaire.post.check');
     }
 
     public function done()
     {
-        $quiz_count = Student_quiz::where('student_id', Auth::user()->student->id)->count();
-
-        if ($quiz_count == 0) {            
-            return view('contents.questionnaire.fill.done');
-        }
-
-        return redirect()->route('quiz.required.check');
+        return view('contents.questionnaire.post.done');
     }
 }
