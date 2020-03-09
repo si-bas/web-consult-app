@@ -12,6 +12,7 @@
         "arcanedev/log-viewer": "^5.1",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
+        "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.5",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^6.2",
