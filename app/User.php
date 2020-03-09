@@ -10,17 +10,19 @@ use Laratrust\Traits\LaratrustUserTrait;
 use Shetabit\Visitor\Traits\Visitor;
 use Illuminate\Support\Facades\Hash;
 use Yadahan\AuthenticationLog\AuthenticationLogable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 # Jobs
 use App\Jobs\Email\RegistrationVerified;
 use App\Jobs\Email\RegistrationStudent;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use LaratrustUserTrait;
     use Notifiable;
     use Visitor;
     use AuthenticationLogable;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.

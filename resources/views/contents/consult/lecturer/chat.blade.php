@@ -118,9 +118,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <button type="button" class="btn btn-success">
+                {{-- <button type="button" class="btn btn-success">
                     Unduh Data
-                </button>
+                </button> --}}
             </div>
             <div class="modal-footer">                
                 <button type="button" class="btn btn-light-primary mr-3" onclick="showConfirm()">

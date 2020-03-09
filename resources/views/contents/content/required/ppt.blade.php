@@ -34,9 +34,9 @@
                <iframe src="https://onedrive.live.com/embed?resid=D59BB4CB45A630CF%218996&amp;authkey=%21AG8JxxtZ2NvWzk4&amp;em=2&amp;wdAr=1.3333333333333333" width="100%" height="400px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
                 <hr>
                 <div class="row">
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <button type="submit" class="btn btn-secondary mt-2" onclick="location.href='{{ route('content.required.powerpoint.download') }}';">Unduh PPT</button> 
-                    </div>
+                    </div> --}}
                     <div class="col-6 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary mt-2" onclick="location.href='{{ route('content.required.check') }}';">Selanjutnya</button> 
                     </div>

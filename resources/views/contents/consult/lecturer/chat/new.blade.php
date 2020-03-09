@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="card-body py-0 chat-message" data-id="{{ $item->id }}">
-        <p>{{ $item->message }}</p>
+        <p>{!! $item->message !!}</p>
     </div>
     <hr class="{{ $key == 0 ? 'first-section' : '' }}">
 @endforeach

@@ -4,11 +4,13 @@ namespace App\Models\Profile;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Student extends Model
+class Student extends Model implements Auditable
 {
     use SoftDeletes;
-
+    use \OwenIt\Auditing\Auditable;
+    
     protected $table = 'students';
     protected $fillable = [
         "student_id_number",

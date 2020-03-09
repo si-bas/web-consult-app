@@ -134,7 +134,7 @@
         <div class="card-body p-0">
             @if (count($consults->where('is_done', 1)) > 0)
             <ul class="list-group list-group-flush">
-                @foreach ($consults->where('is_meeting', 1) as $item)
+                @foreach ($consults->where('is_done', 1) as $item)
                 <li class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between" onclick="location.href = '{{ route('consult.lecturer.chat', ['id' => $item->id]) }}';">
                     <div class="list-left d-flex">
                         <div class="list-icon mr-1">

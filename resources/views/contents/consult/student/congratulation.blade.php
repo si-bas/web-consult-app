@@ -27,7 +27,15 @@
         </div>
         <div class="card-content">
             <div class="card-body">                     
-                <p class="mt-1">Anda akan mendapatkan notifikasi via Email untuk mengisi kuesioner kembali.</p>    
+                <p class="mt-1">Anda akan mendapatkan notifikasi via Email untuk mengisi kuesioner kembali atau langsung mengisi kuesioner pasca dengan</p>    
+                <div class="row">
+                    {{-- <div class="col-6">
+                        <button type="submit" class="btn btn-secondary mt-2" onclick="location.href='{{ route('content.required.powerpoint.download') }}';">Unduh PPT</button> 
+                    </div> --}}
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mt-2" onclick="location.href='{{ route('questionnaire.post.check') }}';">Kuesioner Pasca</button> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>

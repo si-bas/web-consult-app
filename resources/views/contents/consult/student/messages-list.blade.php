@@ -42,7 +42,7 @@
                         <div class="chat-body">
                 {{-- @endif --}}
                             <div class="chat-message">
-                                <p>{{ $item->message }}</p>
+                                <p>{!! $item->message !!}</p>
                                 <span class="chat-time">{{ $item->timestamp }}</span>
                             </div>
                 {{-- @if ($last_user_id != $item->user_id) --}}

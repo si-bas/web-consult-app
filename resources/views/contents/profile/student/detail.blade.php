@@ -77,15 +77,15 @@
                                     </tr>
                                     <tr>
                                         <td>Fakultas:</td>
-                                        <td class="users-view-verified">{{ $user->student->profile->major->faculty->name }}</td>
+                                        <td class="users-view-verified">{{ $user->student->profile->major->faculty->name ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Program Studi:</td>
-                                        <td class="users-view-role">{{ $user->student->profile->major->name }}</td>
+                                        <td class="users-view-role">{{ $user->student->profile->major->name ?? '' }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Semester/Kelas:</td>
-                                        <td>{{ $user->student->profile->semester }} / {{ $user->student->profile->classroom }}</td>
+                                        <td>Semester:</td>
+                                        <td>{{ $user->student->profile->semester }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -148,23 +148,27 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <fieldset class="form-group">
-                                <label>Fakultas <span class="text-danger">*</span></label>
-                                <select class="select2 form-control" name="faculty_id" required style="width: 100%">
-                                    <option value="{{ $user->student->profile->major->faculty->id }}">{{ $user->student->profile->major->faculty->name }}</option>
+                                <label>Fakultas</label>
+                                <select class="select2 form-control" name="faculty_id" style="width: 100%">
+                                    @if ($user->student->profile->major()->exists())
+                                        <option value="{{ $user->student->profile->major->faculty->id }}">{{ $user->student->profile->major->faculty->name }}</option>
+                                    @endif
                                 </select>
                             </fieldset>
     
                             <fieldset class="form-group">
-                                <label>Program Studi <span class="text-danger">*</span></label>
-                                <select class="select2 form-control" name="major_id" required style="width: 100%">
-                                    <option value="{{ $user->student->profile->major->id }}">{{ $user->student->profile->major->name }}</option>
+                                <label>Program Studi</label>
+                                <select class="select2 form-control" name="major_id" style="width: 100%">
+                                    @if ($user->student->profile->major()->exists())
+                                        <option value="{{ $user->student->profile->major->id }}">{{ $user->student->profile->major->name }}</option>
+                                    @endif
                                 </select>
                             </fieldset>
     
                             <fieldset class="form-group">
                                 <label for="helpInputTop">Email <span class="text-danger">*</span></label>
                                 <small class="text-muted">contoh: <i>someone@example.com</i></small>
-                                <input type="email" class="form-control" placeholder="Tuliskan email" name="email" value="{{ $user->getEmail() }}" required>
+                                <input type="email" class="form-control" placeholder="Tuliskan email" name="email" value="{{ $user->email }}" required>
                             </fieldset>
     
                             <fieldset class="form-group">

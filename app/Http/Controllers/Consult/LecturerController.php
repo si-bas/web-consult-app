@@ -55,6 +55,12 @@ class LecturerController extends Controller
         $consult->is_done = true;
         $consult->save();
 
+        Message::create([
+            "consult_id" => $consult->id,
+            "user_id" => Auth::user()->id,
+            "message" => 'Terima kasih, konsultasi telah selesai. Silahkan mengisi formulir kuesioner pasca dengan cara refresh halaman ini atau <a href="'.config('app.url').'">klik disini.</a><br><br>Pesan ini dibuat secara otomatis.'
+        ]);
+
         return redirect()->route('consult.lecturer.list');
     }
 

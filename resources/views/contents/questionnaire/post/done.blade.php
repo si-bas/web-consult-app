@@ -23,11 +23,11 @@
     <div class="card">
         <div class="card-header">
             <h3 class="greeting-text text-center">Terima Kasih!</h3>
-            <p class="mb-0">Telah mengisi kuesioner dan kuis, melihat konten yang telah disediakan, melakukan konsultasi, serta mengisi kuesioner pasca.</p>
+            <p class="mb-0">Telah mengisi kuesioner dan kuis, melihat konten yang telah disediakan, melakukan konsultasi, serta mengisi kuesioner pasca dan formulir evaluasi.</p>
         </div>
         <div class="card-content">
             <div class="card-body">                     
-                <p class="mt-1">Teks pendukung disini.</p>    
+                <p class="mt-1"></p>    
             </div>
         </div>
     </div>
