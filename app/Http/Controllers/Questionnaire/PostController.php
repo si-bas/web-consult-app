@@ -25,7 +25,7 @@ class PostController extends Controller
             return redirect()->route('questionnaire.post.form', ['questionnaire' => Crypt::encrypt($questionnaire->id)]);
         } 
 
-        return redirect()->route('questionnaire.post.done'); 
+        return redirect()->route('evaluation.form.fill'); 
     }
 
     public function form(Request $request)

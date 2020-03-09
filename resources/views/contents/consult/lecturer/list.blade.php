@@ -58,7 +58,7 @@
     </div>
     <div class="card-content">
         <div class="card-body p-0">
-            @if (count($consults->where('is_meeting', 0)) > 0)
+            @if (count($consults->where('is_meeting', 0)->where('is_done', 0)) > 0)
             <ul class="list-group list-group-flush">
                 @foreach ($consults->where('is_meeting', 0) as $item)
                 <li class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between" onclick="location.href = '{{ route('consult.lecturer.chat', ['id' => $item->id]) }}';">
@@ -95,7 +95,7 @@
     </div>
     <div class="card-content">
         <div class="card-body p-0">
-            @if (count($consults->where('is_meeting', 1)) > 0)
+            @if (count($consults->where('is_meeting', 1)->where('is_done', 0)) > 0)
             <ul class="list-group list-group-flush">
                 @foreach ($consults->where('is_meeting', 1) as $item)
                 <li class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between" onclick="location.href = '{{ route('consult.lecturer.chat', ['id' => $item->id]) }}';">
@@ -120,6 +120,43 @@
             @else
             <div class="text-center mt-3 mb-3">
                 <span class="font-medium-1">Belum ada permintaan bertemu.</span>
+            </div>
+            @endif            
+        </div>
+    </div>
+</div>
+
+<div class="card widget-notification">
+    <div class="card-header border-bottom">
+        <h4 class="card-title d-flex align-items-center">Selesai</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body p-0">
+            @if (count($consults->where('is_done', 1)) > 0)
+            <ul class="list-group list-group-flush">
+                @foreach ($consults->where('is_meeting', 1) as $item)
+                <li class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between" onclick="location.href = '{{ route('consult.lecturer.chat', ['id' => $item->id]) }}';">
+                    <div class="list-left d-flex">
+                        <div class="list-icon mr-1">
+                            <div class="avatar bg-rgba-primary m-0 p-25">
+                                <div class="avatar-content">
+                                    <i class="bx bx-user text-primary font-medium-5"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-content">
+                            <span class="list-title">{{ $item->student->full_name }} {!! $item->messages_count > 0 ? '<span class="danger ml-1">( '.$item->messages_count.' pesan baru)</span>' : '' !!}</span>
+                            <small class="text-muted d-block">{{ $item->schedule->day->name }}, {{ $item->schedule->start_time }} - {{ $item->schedule->end_time }}</small>
+                            <small class="text-muted d-block">{{ $item->is_meeting ? 'Pertemuan' : 'Percakapan Online' }}</small>
+                        </div>
+                    </div>
+
+                </li>
+                @endforeach
+            </ul>
+            @else
+            <div class="text-center mt-3 mb-3">
+                <span class="font-medium-1">Belum ada yang terselesaikan.</span>
             </div>
             @endif            
         </div>

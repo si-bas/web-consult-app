@@ -20,8 +20,8 @@
         <hr class="{{ $key == 0 ? 'first-section' : '' }}">
     @endforeach
 @else 
-    <div class="text-center mt-3 mb-3" id="empty">
+    <div class="text-center mt-3 mb-3" id="empty" style="display: none">
         <span class="font-medium-1">Belum ada Percakapan.</span>
     </div>
-    <hr class="first-section">
+    <hr class="first-section" style="display: none">
 @endif
