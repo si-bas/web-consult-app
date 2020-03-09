@@ -109,6 +109,11 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace.'\Quiz')
             ->prefix('quiz')
             ->group(base_path('routes/web/quiz.php'));
+
+        Route::middleware(['web', 'auth'])
+            ->namespace($this->namespace.'\Counseling')
+            ->prefix('counseling')
+            ->group(base_path('routes/web/counseling.php'));
     }
 
     /**

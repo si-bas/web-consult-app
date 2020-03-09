@@ -1,6 +1,6 @@
 <div class="card collapse-header" style="margin-bottom: 10px;">
     <div id="headingCollapse2" class="card-header" data-toggle="collapse" role="button" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-        <h4 class="card-title">Kuis #2</h4>
+        <h5 class="card-title">Kuis #2 <br> (Klik untuk melihat)</h5>
     </div>
     <div id="collapse2" role="tabpanel" aria-labelledby="headingCollapse2" class="collapse">
         <div class="card-content">

@@ -133,13 +133,13 @@
               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                 <tr>
                   <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">{{ config('app.name') }}</span>
-                    {{-- <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>. --}}
+                    <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">Aplikasi {{ config('app.name') }}</span>
+                    <br> Email ini dibuat secara otomatis, mohon untuk tidak membalas email ini.
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    Powered by <a href="javascript:;" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">AvocaCode</a>.
+                    Powered by <a href="http://htmlemail.io" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">AvocaCode</a>.
                   </td>
                 </tr>
               </table>

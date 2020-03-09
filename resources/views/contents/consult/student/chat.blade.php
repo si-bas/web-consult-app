@@ -165,6 +165,8 @@
                     function () {
                         checkNewMessage();
                     }, 2000);
+            }).fail(function() {
+                location.reload();
             });                        
         }
     </script>

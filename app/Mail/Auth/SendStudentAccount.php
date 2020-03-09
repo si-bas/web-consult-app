@@ -35,6 +35,7 @@ class SendStudentAccount extends Mailable
     {
         $name = $this->user->name;
         $email = $this->user->email;
+        $code = $this->user->code;
 
         try {
             $password = Crypt::decrypt($this->user->password_hint);
@@ -49,7 +50,8 @@ class SendStudentAccount extends Mailable
         ->view('layouts.email.registration-student', [
             'name' => $name,
             'email' => $email,
-            'password' => $password
+            'password' => $password,
+            'code' => $code
         ]);
     }
 }

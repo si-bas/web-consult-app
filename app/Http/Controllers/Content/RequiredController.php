@@ -26,6 +26,13 @@ class RequiredController extends Controller
         return redirect()->route('content.required.check');
     }
 
+    public function powerpointDownload()
+    {
+        $path = storage_path('files/content/Solution.pptx');
+
+        return response()->download($path);
+    }
+
     public function check()
     {
         $video = Video::whereDoesntHave('viewers', function($query) {

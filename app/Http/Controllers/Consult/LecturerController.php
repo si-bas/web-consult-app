@@ -12,6 +12,7 @@ use App\Models\Consultation\Consult;
 use App\Models\Consultation\Message;
 use App\Models\Schedule\Lecturer as Schedule;
 use App\Models\Quiz\Student_quiz;
+use App\Models\Counseling\Student_counseling;
 
 # Jobs
 use App\Jobs\Chat\SaveReadMessages;
@@ -43,7 +44,8 @@ class LecturerController extends Controller
 
         return view('contents.consult.lecturer.chat', [
             'consult' => $consult,
-            'quizzes' => Student_quiz::where('student_id', $consult->student_id)->get()
+            'quizzes' => Student_quiz::where('student_id', $consult->student_id)->get(),
+            'counselings' => Student_counseling::where('student_id', $consult->student_id)->with(['question'])->get()
         ]);
     }
 

@@ -8,15 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 # Models
 use App\Models\Questionnaire\Questionnaire;
 use App\Models\Questionnaire\Student_questionnaire;
 use App\Models\Quiz\Student_quiz;
 
-# Mail
-use App\Mail\Questionnaire\SendCongratulation;
+# Jobs
+use App\Jobs\Quesionnaire\EmailCongratulation;
 
 class FillController extends Controller
 {
@@ -108,7 +107,7 @@ class FillController extends Controller
             }
             $student->save();
 
-            Mail::to(Auth::user())->send(new SendCongratulation(Auth::user()));
+            dispatch(new EmailCongratulation(Auth::user()->id));
         }
 
         return redirect()->route('questionnaire.fill.check');
@@ -119,7 +118,11 @@ class FillController extends Controller
         $quiz_count = Student_quiz::where('student_id', Auth::user()->student->id)->count();
 
         if ($quiz_count == 0) {            
-            return view('contents.questionnaire.fill.done');
+            $url_next = Auth::user()->student->need_consult ? route('counseling.form.fill') : route('quiz.required.check');
+
+            return view('contents.questionnaire.fill.done', [
+                'url_next' => $url_next
+            ]);
         }
 
         return redirect()->route('quiz.required.check');

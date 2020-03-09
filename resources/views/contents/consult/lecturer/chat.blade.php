@@ -10,6 +10,14 @@
             flex: 1 1 auto;
             padding: 1.3rem 1.3rem;
         }
+
+        .information .card .card-title {
+            font-size: 1rem;
+        }
+
+        .information .card .card-header {
+            padding: 0.5rem 1.7rem;
+        }
     </style>
 @endpush
 
@@ -42,7 +50,7 @@
     <div class="d-flex align-items-center">
         <i class="bx bx-error-circle"></i>
         <span>
-            Klik pada nama Mahasiswa untuk melihat hasil kuis dan melakukan aksi.
+            Klik pada nama Mahasiswa untuk melakukan aksi.
         </span>
     </div>
 </div>
@@ -71,6 +79,21 @@
             </div>
         </div>
     </div>
+    <div class="card-content mt-2 information">
+    <h4 style="font-size: 1rem; padding: 0rem 1.7rem;"><b>Hasil Kuis</b></h4>    
+       <div class="row">
+        @foreach ($quizzes as $item)
+            <div class="col-md-4 col-12">
+                {!! $item->result_html !!}
+            </div>
+        @endforeach
+       </div>
+       <div class="row">
+           <div class="col-12">
+                @include('contents.consult.lecturer.chat.counseling')
+           </div>
+       </div>
+    </div>
     <div class="card-content mt-2" id="chat-room">
         
     </div>
@@ -89,15 +112,15 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title white">Kuis & Aksi</h5>
+                <h5 class="modal-title white">Aksi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="bx bx-x"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                @foreach ($quizzes as $item)
-                    {!! $item->result_html !!}
-                @endforeach
+            <div class="modal-body text-center">
+                <button type="button" class="btn btn-success">
+                    Unduh Data
+                </button>
             </div>
             <div class="modal-footer">                
                 <button type="button" class="btn btn-light-primary mr-3" onclick="showConfirm()">
@@ -222,7 +245,9 @@
                     function () {
                         checkNewMessage();
                     }, 2000);
-            });                        
+            }).fail(function() {
+                location.reload();
+            });        
         }
 
         const modal_action = $('#student-action');

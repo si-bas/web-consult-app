@@ -4,11 +4,36 @@
     position:absolute;
 }
 
+@media (max-width: 1200px) and (min-width: 568px) {
+    #clock {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
 
+    .header-navbar.fixed-top {        
+        position: unset;        
+    }
+    
+    html body.navbar-sticky .app-content .content-wrapper {        
+        margin-top: unset;
+    }
+
+    footer.footer {
+        padding: 0.5rem 2.2rem;
+    }
+
+    html body.navbar-sticky .app-content .content-wrapper {
+        padding: 2.8rem 1rem 0;
+        margin-top: 3rem;
+    }
+}
 
 @media (max-width: 576px) {
     html body.navbar-sticky .app-content .content-wrapper {
-        padding: 2.8rem 1rem 0;
+        padding: 2.8rem 0rem 0;
         margin-top: 3rem;
     }
 

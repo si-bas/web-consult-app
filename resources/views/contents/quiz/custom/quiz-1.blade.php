@@ -208,7 +208,7 @@
                         <p class="text-bold-400">Skala rentang angka distorsi kognitif atau pikiran negatif yang dialami adalah? (1-10) </p>
                         <select class="form-control mb-1" name="distortion_scale" required>  
                             <option value="" selected disabled>Silhkan Pilih</option>                          
-                            @for ($i = 1; $i <= 10; $i++)
+                            @for ($i = 0; $i <= 10; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>

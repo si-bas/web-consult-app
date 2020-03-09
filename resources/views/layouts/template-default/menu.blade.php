@@ -11,6 +11,14 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+        @role(['student'])
+        <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
+            <a href="{{ route('home') }}">
+                <i class="menu-livicon" data-icon="desktop"></i>
+                <span class="menu-title" data-i18n="">Home</span>                
+            </a>
+        </li>
+        @endrole
         @if (!Request::is('profile/student/complete', 'questionnaire/fill/*', 'information/consent/form', 'content/required/*', 'quiz/required/*'))
             @role(['admin'])
             <li class="{{ Request::is('home', 'dashboard') ? 'active' : '' }} nav-item">
