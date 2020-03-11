@@ -100,7 +100,10 @@ class StudentController extends Controller
     {
         $schedule = Schedule::find($request->id);
 
-        $consult = Consult::create([
+        $consult = Consult::updateOrCreate([
+            "lecturer_id" => $schedule->lecturer_id,
+            "student_id" => Auth::user()->student->id
+        ], [
             "lecturer_id" => $schedule->lecturer_id,
             "student_id" => Auth::user()->student->id,
             "lecturer_schedule_id" => $schedule->id,

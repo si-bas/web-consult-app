@@ -35,7 +35,7 @@ class SendUnreadNotification extends Mailable
      */
     public function build()
     {   
-        $role = $this->user->role->name;
+        $role = $this->user->student()->exists() ? 'student' : 'lecturer';
 
         $url = route('consult.'.$role.'.list');
 
