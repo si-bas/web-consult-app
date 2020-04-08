@@ -43,9 +43,7 @@ class SendCustomMessage implements ShouldQueue
         ini_set('memory_limit', '-1'); ini_set('max_execution_time', 0); set_time_limit(0);
 
         foreach ($this->getStudents() as $student) {
-            Log::info($student->full_name." : ".$student->student->user->email);
-
-            Mail::to('umum.saifi@gmail.com')->send(new CustomMessage($student->full_name, $this->data->text));   
+            Mail::to($student->student->user->email)->send(new CustomMessage($student->full_name, $this->data->text));   
         }
     }
 
