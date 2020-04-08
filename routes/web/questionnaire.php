@@ -36,6 +36,8 @@ Route::prefix('fill')->group(function () {
 Route::prefix('respondent')->group(function () {
     Route::get('/list', 'RespondentController@list')->name('questionnaire.respondent.list');
     Route::get('/data', 'RespondentController@data')->name('questionnaire.respondent.data');
+    
+    Route::get('/download', 'RespondentController@download')->name('questionnaire.respondent.download');
 });
 
 Route::prefix('post')->group(function () { 

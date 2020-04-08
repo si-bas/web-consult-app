@@ -119,6 +119,11 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace.'\Evaluation')
             ->prefix('evaluation')
             ->group(base_path('routes/web/evaluation.php'));
+
+        Route::middleware(['web', 'auth'])
+            ->namespace($this->namespace.'\Report')
+            ->prefix('report')
+            ->group(base_path('routes/web/report.php'));
     }
 
     /**

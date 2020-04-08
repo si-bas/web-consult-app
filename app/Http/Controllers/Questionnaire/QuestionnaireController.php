@@ -21,7 +21,7 @@ class QuestionnaireController extends Controller
     public function data(Request $request)
     {
         $questionnaires = Questionnaire::select(DB::raw('questionnaires.*'))->withCount([
-            'questions'
+            'questions', 'student_questionnaire'
         ]);
 
         return DataTables::of($questionnaires)

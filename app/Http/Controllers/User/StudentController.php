@@ -21,7 +21,7 @@ class StudentController extends Controller
     public function data(Request $request)
     {
         $users = User::select(DB::raw('users.*'))->has('student')->with([
-            'student.major.faculty'
+            'student.profile'
         ]);
 
         if (!empty($request->is_verified)) {
@@ -46,11 +46,11 @@ class StudentController extends Controller
                 </div>
             </div>';
         })
-        ->addColumn('faculty_name', function($user) {
-            return $user->student->profile->major->faculty->name ?? '-';
+        ->addColumn('student.profile.age', function($user) {
+            return $user->student->profile->age ?? '-';
         })
-        ->addColumn('major_name', function($user) {
-            return $user->student->profile->major->name ?? '-';
+        ->addColumn('student.profile.semester', function($user) {
+            return $user->student->profile->semester ?? '-';
         })
         ->rawColumns([
             'action_verify'

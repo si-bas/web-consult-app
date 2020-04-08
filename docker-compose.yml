@@ -1,12 +1,42 @@
 version: '3.1'
 
 services:
-  db: 
-    image: mysql:8.0.18
-    ports: 
-      - 3306:3306
-    container_name: consult_db
+  webserver:
+    build: 
+      context: ./docker/webserver
+    container_name: 'consult-webserver'
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: 
+      - ./:/var/www/html
+      - ./docker/webserver/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/webserver/vhosts:/etc/apache2/sites-enabled
+      - ./docker/webserver/logs:/var/log/apache2
+    networks:
+      consult_net:
+          ipv4_address: 172.28.1.1
+  mysql:
+    build: ./docker/mysql
     command: --default-authentication-plugin=mysql_native_password
+    container_name: 'consult-mysql'
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/logs:/var/log/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: terserahlw
+      MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: homestead
+      MYSQL_USER: consult
+      MYSQL_PASSWORD: consult
+    networks:
+      consult_net:
+          ipv4_address: 172.28.1.2
+
+networks:
+  consult_net:
+      ipam:
+          driver: default
+          config:
+              - subnet: 172.28.0.0/16

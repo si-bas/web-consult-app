@@ -64,6 +64,18 @@
             </li>
             @endrole
 
+            @role('admin')      
+            <li class="navigation-header">
+                <span>Laporan</span>
+            </li>
+            <li class="{{ Request::is('report/questionnaire/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('report.questionnaire.list') }}">
+                    <i class="menu-livicon" data-icon="pen"></i>
+                    <span class="menu-title" data-i18n="">Hasil Kuesioner</span>
+                </a>
+            </li>
+            @endrole
+
             @role(['lecturer', 'student'])
             <li class="{{ Request::is('profile/student/detail') ? 'active' : '' }} nav-item">
                 <a href="
@@ -86,6 +98,7 @@
             </li>
             @endrole
 
+            @role(['student', 'lecturer'])
             <li class="{{ Request::is('consult/student/*', 'consult/lecturer/*') ? 'active' : '' }} nav-item">
                 <a href="
                     @role('student')
@@ -99,7 +112,7 @@
                     <span class="menu-title" data-i18n="">Konsultasi</span>
                 </a>
             </li>
-
+            @endrole
             @role('admin')
             <li class="navigation-header">
                 <span>Pengguna</span>

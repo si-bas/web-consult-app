@@ -153,8 +153,8 @@
                         name: 'is_active'
                     },                                                        
                     {
-                        data: 'id',
-                        name: 'id'
+                        data: 'student_questionnaire_count',
+                        name: 'student_questionnaire_count'
                     },
                     {
                         data: 'questions_count',

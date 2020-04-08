@@ -139,7 +139,7 @@
                 </tr>
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
-                    Powered by <a href="http://htmlemail.io" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">AvocaCode</a>.
+                    Powered by <a href="avocacode.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">AvocaCode</a>.
                   </td>
                 </tr>
               </table>

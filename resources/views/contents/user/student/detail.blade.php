@@ -10,12 +10,12 @@
             <td>{{ $user->student->student_id_number }}</td>
         </tr>
         <tr>
-            <td>Program Studi:</td>
-            <td>{{ $user->student->major->name }}</td>
+            <td>Umur:</td>
+            <td>{{ $user->student->profile->age }} tahun</td>
         </tr>
         <tr>
-            <td>Fakultas:</td>
-            <td>{{ $user->student->major->faculty->name }}</td>
+            <td>Semester:</td>
+            <td>{{ $user->student->profile->semester }}</td>
         </tr>
         <tr>
             <td>Alamat Email:</td>

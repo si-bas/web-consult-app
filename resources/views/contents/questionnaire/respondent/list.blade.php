@@ -26,9 +26,6 @@
     </div>
 </div>   
 <div class="content-body">
-    <div class="mb-1">
-        <button type="button" class="btn btn-success glow"><i class="bx bxs-archive-in"></i> Unduh Rekap (Excel)</button>
-    </div>
     <section class="card">
         <div class="card-header">
             <h4 class="card-title">Daftar Responden</h4>
@@ -43,7 +40,8 @@
                                 <th>NAMA</th>
                                 <th>NIM</th>
                                 <th>KUESIONER</th>
-                                <th>DIISI PADA</th>                                
+                                <th>DIISI PADA</th>
+                                <th>KATEGORI</th>                                
                                 <th>AKSI</th>
                                 <th></th>
                             </tr>
@@ -57,6 +55,7 @@
         </div>
     </section>
 </div>
+
 @endsection
 
 @push('scripts')
@@ -77,21 +76,21 @@
                     }
                 },
                 order: [
-                    [6, 'desc']
+                    [7, 'desc']
                 ],
                 columnDefs: [
                     {
                         orderable: false,
                         searchable: false,
-                        targets: [0, 5]
+                        targets: [0, 6]
                     },
                     {
                         className: 'text-center',
-                        targets: [5]
+                        targets: [6]
                     },
                     {
                         visible: false,
-                        targets: [6, 0]
+                        targets: [7, 0]
                     }
                 ],
                 columns: [{
@@ -115,6 +114,10 @@
                     {
                         data: 'created_at',
                         name: 'created_at'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
                     },
                     {
                         data: 'action',

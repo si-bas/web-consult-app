@@ -41,3 +41,5 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/error/device', function () {
     return view('error.not-support');
 })->name('error.device');
+
+Route::get('/test', 'Test\TestController@test');
