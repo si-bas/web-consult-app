@@ -74,6 +74,12 @@
                     <span class="menu-title" data-i18n="">Hasil Kuesioner</span>
                 </a>
             </li>
+            <li class="{{ Request::is('report/activity/*') ? 'active' : '' }} nav-item">
+                <a href="{{ route('report.activity.list') }}">
+                    <i class="menu-livicon" data-icon="servers"></i>
+                    <span class="menu-title" data-i18n="">Aktifitas Mahasiswa</span>
+                </a>
+            </li>
             @endrole
 
             @role(['lecturer', 'student'])

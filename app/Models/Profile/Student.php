@@ -68,4 +68,9 @@ class Student extends Model implements Auditable
     {
         return $this->hasMany('App\Models\Questionnaire\Student_questionnaire', 'student_id', 'id');
     }
+
+    public function evaluation()
+    {
+        return $this->hasOne('App\Models\Evaluation\Student_evaluation', 'student_id', 'id')->latest();
+    }
 }

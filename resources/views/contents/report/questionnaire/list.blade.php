@@ -77,7 +77,7 @@
                     <div class="d-flex align-items-center">
                         <i class="bx bxs-info-circle"></i>
                         <span>
-                            Hasil rekap kuesioner akan dikirimkan ke e-mail yang anda cantumkan.
+                            Hasil rekap kuesioner akan dikirimkan ke e-mail yang anda cantumkan dalam waktu 10-20 menit.
                         </span>
                     </div>
                 </div>

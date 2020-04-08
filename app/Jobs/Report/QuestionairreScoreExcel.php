@@ -46,6 +46,8 @@ class QuestionairreScoreExcel implements ShouldQueue
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1'); ini_set('max_execution_time', 0); set_time_limit(0);
+        
         $attachments = [];
         switch ($this->category) {
             case 'pre':
@@ -75,7 +77,8 @@ class QuestionairreScoreExcel implements ShouldQueue
                         $query->select(DB::raw('SUM(questionnaire_answers.poin) as scoresum'))->join('questionnaire_answers', 'student_questionnaire_answer.answer', '=', 'questionnaire_answers.id');
                     }
                 ])->where('status', $category);
-            }
+            }, 
+            'evaluation'
         ])->get();
 
         $alphas = range('A', 'Z');
@@ -90,12 +93,20 @@ class QuestionairreScoreExcel implements ShouldQueue
         $sheet->setCellValue('F1', 'TERDAFTAR PADA');
         $sheet->setCellValue('G1', 'STATUS');
         $sheet->setCellValue('H1', 'RIWAYA KEKERASAN FISIK/SEKSUAL');        
-        $sheet->setCellValue('I1', 'JIKA ADA MASALAH');        
+        $sheet->setCellValue('I1', 'JIKA ADA MASALAH');   
 
         $start_column = 9;
         
         foreach ($questionnaires as $i => $column) {
             $sheet->setCellValue($alphas[$i+$start_column].'1', $column->name);
+            $latest_i = $i;
+        }
+
+        if ($category == 'post') {
+            $sheet->setCellValue($alphas[(++$latest_i)+$start_column].'1', 'KONDISI PERASAAN SEBELUMNYA');
+            $sheet->setCellValue($alphas[(++$latest_i)+$start_column].'1', 'KEMAMPUAN MENGATASI MASALAH SEBELUMNYA');
+            $sheet->setCellValue($alphas[(++$latest_i)+$start_column].'1', 'KONDISI PERASAAN SETELAHNYA');
+            $sheet->setCellValue($alphas[(++$latest_i)+$start_column].'1', 'KEMAMPUAN MENGATASI MASALAH SETELAHNYA');
         }
 
         foreach ($students as $row_number => $row) {
@@ -119,7 +130,22 @@ class QuestionairreScoreExcel implements ShouldQueue
                     if ($i == 0) {
                         $sheet->setCellValue('G'.($row_number+2), '');
                     }
-                }    
+                } 
+                
+                $latest_i = $i;
+            }
+
+            if ($category == 'post') {
+                if ($row->evaluation()->exists()) {                    
+                    $sheet->setCellValue($alphas[(++$latest_i)+$start_column].($row_number+2), $row->evaluation->feeling_before ?? '-');
+                    $sheet->setCellValue($alphas[(++$latest_i)+$start_column].($row_number+2), $row->evaluation->ability_before ?? '-');
+                    $sheet->setCellValue($alphas[(++$latest_i)+$start_column].($row_number+2), $row->evaluation->feeling_after ?? '-');
+                    $sheet->setCellValue($alphas[(++$latest_i)+$start_column].($row_number+2), $row->evaluation->feeling_after ?? '-');
+                } else {
+                    for ($i = 0; $i < 4; $i++) { 
+                        $sheet->setCellValue($alphas[(++$latest_i)+$start_column].($row_number+2), '-');
+                    }
+                }
             }
         }
 
