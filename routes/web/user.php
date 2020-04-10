@@ -9,6 +9,11 @@ Route::prefix('student')->group(function () {
     Route::post('/verify', 'StudentController@verify')->name('user.student.verify.submit');
     
     Route::get('/detail', 'StudentController@detail')->name('user.student.detail');
+    
+    Route::get('/update/form', 'StudentController@updateForm')->name('user.student.update.form');
+    Route::post('/update', 'StudentController@update')->name('user.student.update.submit');
+    
+    Route::get('/check/email', 'StudentController@checkEmail')->name('user.student.check.email');
 });
 
 Route::prefix('lecturer')->group(function () {

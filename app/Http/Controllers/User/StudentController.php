@@ -11,6 +11,9 @@ use Yajra\DataTables\Facades\DataTables;
 # Models
 use App\User;
 
+# Jobs
+use App\Jobs\Email\RegistrationStudent;
+
 class StudentController extends Controller
 {
     public function list()
@@ -43,6 +46,7 @@ class StudentController extends Controller
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="javascript:;" onclick="showDetail('.$user->id.')"><i class="bx bxs-user-detail mr-1"></i> rincian</a>
                     '.$verification.'
+                    <a class="dropdown-item" href="javascript:;" onclick="updateForm('.$user->id.')"><i class="bx bxs-pencil mr-1"></i> Ubah</a>
                 </div>
             </div>';
         })
@@ -83,5 +87,48 @@ class StudentController extends Controller
         return view('contents.user.student.detail', [
             'user' => $user
         ]);
+    }
+
+    public function updateForm(Request $request)
+    {
+        $user = User::find($request->id)->load([
+            'student'
+        ]);
+
+        return view('contents.user.student.form-update', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $user = User::find($request->id);
+            $email = $user->email;
+            $user->email = $request->email;
+            
+            if (!empty($request->password)) {
+                $user->password = $request->password;
+                $user->password_hint = $request->password;
+            }
+
+            $user->save();
+
+            if ($email != $request->email || !empty($request->password)) {
+                dispatch(new RegistrationStudent($user->id));
+            }
+        } catch (\Exception $e) {
+            $error = "Error! Terjadi kesalahan saat menyimpan data mahasiswa";
+        }
+
+        return [
+            'status' => empty($error) ? 'success' : 'error',
+            'message' => empty($error) ? 'Berhasil menyimpan data mahasiswa' : $error
+        ];
+    }
+
+    public function checkEmail(Request $request)
+    {
+        return User::where('id', '!=', $request->id)->where('email', $request->email)->count();
     }
 }

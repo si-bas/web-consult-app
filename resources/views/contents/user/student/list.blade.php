@@ -75,6 +75,34 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="student-update" tabindex="-1" role="dialog" aria-labelledby="studentUpdate" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title white">Formulir Perubahan Data Mahasiswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('user.student.update.submit') }}" method="POST">
+
+                </form>
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Batalkan</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1" onclick="updateSubmit()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block"><i class="bx bx-check mr-1"></i>Simpan</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -82,6 +110,9 @@
     <script>
         let unverified_table;
         let verified_table;
+
+        let modal_update = $('#student-update');
+        let form_update = modal_update.find('form');
 
         $(function () {
             // unverified_table = $('#student-unverified-table').DataTable({
@@ -211,6 +242,33 @@
                     }
                 ]      
             });
+
+            form_update.submit(e => {
+                e.preventDefault();
+
+                let form_data = form_update.serializeArray().reduce((obj, item) => {
+                    obj[item.name] = item.value;
+                    return obj;
+                }, {});
+
+                modal_update.modal('hide');
+
+                $.post(form_update.attr('action'), form_data).done(result => {
+                    let modal_body = modal_update.find('.modal-body');
+                    
+                    removeAlert(modal_body);
+
+                    if (result.status == 'error') {
+                        showAlert('danger', 'bx-error', result.message, modal_body);
+                    } else {
+                        toastr.success(result.message, 'Berhasil');
+
+                        form_update.trigger('reset');
+
+                        faculty_table.draw(false);
+                    }
+                });
+            });
         });
 
         const modal_detail = $('#student-detail');
@@ -254,6 +312,29 @@
                     unverified_table.draw(false);
                 }
             });
+        }
+
+        const updateForm = (id) => {
+            $.get("{{ route('user.student.update.form') }}", {
+                id
+            }).done(function (result) {
+                form_update.html(result);
+                modal_update.modal('show');
+            });
+        }
+
+        const updateSubmit = () => {            
+            $.get("{{ route('user.student.check.email') }}", {
+                id: modal_update.find('input[name=id]').val(),
+                email: modal_update.find('input[name=email]').val()
+            }).done(function (result) {
+                if (result > 0) {                    
+                    toastr.error('Email sudah digunakan oleh akun lain!', 'Perhatian');
+                } else {
+                    modal_update.find(':submit').click();
+                }
+            });
+
         }
     </script>
 @endpush
