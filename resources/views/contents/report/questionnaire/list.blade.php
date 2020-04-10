@@ -92,7 +92,7 @@
                         <select class="form-control" name="category" required>
                             <option value="" selected disabled hidden>Pilih</option>
                             <option value="pre">Kuesioner Pra</option>
-                            <option value="pasca">Kuesioner Pasca</option>
+                            <option value="post">Kuesioner Pasca</option>
                             <option value="all">Semua</option>
                         </select>
                     </fieldset> 
