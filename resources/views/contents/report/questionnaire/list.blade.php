@@ -172,7 +172,8 @@
                     },
                     {
                         data: 'sum_score',
-                        name: 'sum_score'
+                        name: 'sum_score',
+                        searchable: false,
                     },
                     {
                         data: 'result.information',

@@ -22,6 +22,8 @@
             search: 'Cari:',
             info: 'Menampilkan _START_ ke _END_ dari _TOTAL_ baris',
         };
+
+        $.fn.dataTable.ext.errMode = 'none';
     </script>    
 @endpush
 

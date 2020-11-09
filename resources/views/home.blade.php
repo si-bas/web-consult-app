@@ -8,11 +8,7 @@
                 <h5 class="content-header-title float-left pr-1 mb-0">Dashboard</h5>
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb p-0 mb-0">
-                        <li class="breadcrumb-item"><a href="sk-layout-2-columns.html"><i class="bx bx-home-alt"></i></a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Starter Kit</a>
-                        </li>
-                        <li class="breadcrumb-item active">Fixed Layout
+                        <li class="breadcrumb-item active"><a href="sk-layout-2-columns.html"><i class="bx bx-home-alt"></i></a>
                         </li>
                     </ol>
                 </div>
@@ -22,14 +18,9 @@
 </div>
 <div class="content-body">
     <section id="description" class="card">
-        <div class="card-header">
-            <h4 class="card-title">Description</h4>
-        </div>
         <div class="card-content">
-            <div class="card-body">
-                <div class="card-text">
-                    <p>The fixed layout has a fixed navbar, navigation menu and footer, only content section is scrollable to user. In this page you can experience it. Fixed layout provide seamless UI on different screens.</p>
-                </div>
+            <div class="card-body text-center">
+                <h1 class="display-4">Selamat Datang!</h1>
             </div>
         </div>
     </section>
